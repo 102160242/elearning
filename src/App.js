@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import './config.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+
 /* Import Component */
 import Auth from './app/auth/Auth';
 import Pages from './app/pages/Pages';
@@ -14,12 +13,13 @@ import Loading from './app/Loading';
 /* Import Component */
 import { Route, Redirect, Switch } from 'react-router-dom';
 
+require('dotenv').config();
 class App extends React.Component {
   constructor(props)
   {
     super(props);
     this.state = {
-      isLoading: true
+      isLoading: true,
     }
   }
   componentDidMount()
@@ -28,6 +28,7 @@ class App extends React.Component {
       isLoading: false
     });
   }
+
   render()
   {
     if(this.state.isLoading)
