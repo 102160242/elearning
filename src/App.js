@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './config.js';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -41,7 +40,7 @@ class App extends React.Component {
       return (
         <div>
           <Switch>
-            <Route component={Auth} />
+            <Route path="/auth" component={Auth} />
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/404" component={_404} />
             <Route exact path="/403" component={_403} />

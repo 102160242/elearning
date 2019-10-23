@@ -1,0 +1,9 @@
+
+.row{
+    height: 100vh;
+}
+
+.slide{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
