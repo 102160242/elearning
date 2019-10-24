@@ -14,14 +14,13 @@ class Login extends React.Component {
                 <div className="d-flex justify-content-center p-2" >
                     <Link to="/">
                         <h1>
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-home big-icon "></i>
                         </h1>
                     </Link>
                     
                 </div>
                 <div className="d-flex justify-content-center p-2">
                     <h3>
-                        
                         Sign In
                     </h3>
                 </div>
@@ -42,7 +41,7 @@ class Login extends React.Component {
                         <button type="submit" class="btn btn-primary btn-lg btn">Sign In</button>
                     </div>
                     <div className="d-flex justify-content-center p-4">
-                        Don't have account yet?  
+                        <p>Don't have account yet? </p> 
                         <Link to="/auth/registration" >Sign Up</Link>
                     </div>
                 </form>
