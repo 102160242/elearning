@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link ,Route, Switch, Redirect} from 'react-router-dom';
-import './Registration.css'
+import './Auth.css';
 
 class Registration extends React.Component{
     constructor(props){

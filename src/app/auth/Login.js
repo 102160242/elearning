@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link ,Route, Switch, Redirect} from 'react-router-dom';
-import './Login.css'
+import './Auth.css';
 
 class Login extends React.Component {
     constructor(props) {
