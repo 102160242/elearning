@@ -21,7 +21,6 @@ class Login extends React.Component {
                 </div>
                 <div className="d-flex justify-content-center p-2">
                     <h3>
-                        
                         Sign In
                     </h3>
                 </div>
@@ -42,7 +41,7 @@ class Login extends React.Component {
                         <button type="submit" class="btn btn-primary btn-lg btn">Sign In</button>
                     </div>
                     <div className="d-flex justify-content-center p-4">
-                        Don't have account yet?  
+                        Don't have an account yet?  
                         <Link to="/auth/registration" >Sign Up</Link>
                     </div>
                 </form>
