@@ -1,14 +1,7 @@
 
-.row{
-    height: 100vh;
-    /* display: flex;
-    flex-direction: column; */
-}
-
 .slide{
     background-repeat: no-repeat;
     background-size: cover;
-    
 }
 
 .btn{
