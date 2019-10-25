@@ -15,9 +15,9 @@ class Auth extends React.Component {
 
         return (
             <>
-                <div className="container-fluid ">
+                <div className="container-fluid">
                     <div className="row slide d-flex justify-content-center align-items-center" style={{backgroundImage: `url(${Background})` , color : '#595d6e'}}>
-                        <div className="col-xl-4 mx-auto ">    
+                        <div className="col-sm-9 col-md-6 col-xl-4 mx-auto ">    
                             <Switch>
                                 <Redirect from="/auth" exact={true} to="/auth/login" />
                                 <Route exact path="/auth/login" component={Login} />
