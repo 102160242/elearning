@@ -15,13 +15,12 @@ import Footer from './partials/Footer';
 class Pages extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {};
     }
     render() {
         return (
-            <div>
-            <Header />
-            <div className="container">
+            <>
+                <Header />
                 <Switch>
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/categories" component={Categories} />
@@ -34,9 +33,8 @@ class Pages extends React.Component {
                     <Route exact path="/" component={Home} />
                     <Redirect to="/404" />
                 </Switch>
-            </div>
-            <Footer />
-            </div>
+                <Footer />
+            </>
         );
     }
 }

@@ -1,13 +1,38 @@
 import React from 'react';
-import { Link ,Route, Switch, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { userPostFetch } from '../../action'
 import './Auth.css';
 
 class Registration extends React.Component{
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={};
+        this.state = {
+            email: "",
+            name: "",
+            password: "",
+            password_confirmation: ""
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(e) {
+        //console.log(this.state.email);
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+    handleSubmit(e)
+    {
+        e.preventDefault();
+        this.props.userPostFetch(this.state);
+    }
+    componentDidMount()
+    {
+        document.title = 'Register';
     }
     render(){
+        console.log("Current user: " + JSON.stringify(this.props.currentUser))
         return(
             <>
             <div className="container-fluid ">
@@ -25,30 +50,30 @@ class Registration extends React.Component{
                     </h3>
                 </div>
                 <div className="d-flex justify-content-center p-2">
-                    <span style={{marginBottom:"50px"}}>Enter your details to create your account</span>
+                    <span className="mb-4">Enter your details to create your account</span>
                 </div>
-                <form >
+                <form onSubmit={this.handleSubmit}>
                     <div class="form-group">
-                        <input type="text" class="form-control border border-0 input_place" id="name" placeholder="Fullname" name="name" />
+                        <input type="text" class="form-control border-0 input_place" id="name" placeholder="Fullname" name="name" value={this.state.name} onChange={this.handleChange} />
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control border border-0 input_place" id="email" placeholder="Email" name="email" />
+                        <input type="email" class="form-control border-0 input_place" id="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange} />
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control border border-0 input_place" id="pwd" placeholder="Password" name="pswd"/>
+                        <input type="password" class="form-control border-0 input_place" id="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control border border-0 input_place" id="cfpwd" placeholder="Confirm Password" name="cfpswd"/>
+                        <input type="password" class="form-control border-0 input_place" id="password_confirmation" placeholder="Confirm Password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.handleChange}/>
                     </div>
-                    <div style={{marginTop:"30px"}} class="form-group form-check d-flex justify-content-between ">
+                    <div class="form-group form-check d-flex justify-content-between mt-3">
                         <label class="form-check-label ">
                             <input class="form-check-input" type="checkbox" name="agree"/> I Agree the <b>teams and conditions.</b>
                         </label>
                     </div>
-                    <div style={{marginTop:"40px"}} className="d-flex justify-content-center ">
-                        <button type="submit" class="btn btn-primary btn-lg btn">Sign Up</button>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
                         <Link to="/auth/login">
-                            <button style={{marginLeft:"20px"}} type="button" class="btn btn-light btn-lg btn">Cancel</button>
+                            <button type="button" class="btn btn-light btn-lg ml-4">Cancel</button>
                         </Link>
                     </div>
                 </form>
@@ -57,5 +82,16 @@ class Registration extends React.Component{
         );
     }
 }
+const mapStateToProps = (state /*, ownProps*/) => {
+    //console.log(state);
+    return {
+      currentUser: state.currentUser
+    }
+}
+const mapDispatchToProps = dispatch => ({
+    userPostFetch: (userInfo) => dispatch(userPostFetch(userInfo))
+  })
+  
+export default connect(mapStateToProps, mapDispatchToProps) (Registration);
 
-export default Registration;
+//export default Registration;

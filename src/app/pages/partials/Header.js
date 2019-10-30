@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Header extends React.Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
-                    <a className="navbar-brand" href={process.env.PUBLIC_URL}><i className="fas fa-home"></i> Home</a>
+                    <Link to="/" className="navbar-brand"><i className="fas fa-home"></i> Home</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -19,12 +20,12 @@ class Header extends React.Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="/categories"><i className="fas fa-atlas"></i> Categories</a>
+                                <Link className="nav-link" to="/categories"><i className="fas fa-atlas"></i> Categories</Link>
                             </li>
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="/users/1"><i className="fas fa-newspaper"></i> News Feed</a>
+                                <Link className="nav-link" to="/newsfeed"><i className="fas fa-newspaper"></i> News Feed</Link>
                             </li>
                             <li className="nav-item">
                                 <li className="nav-item dropdown">
@@ -32,13 +33,13 @@ class Header extends React.Component {
                                         <i className="fas fa-user"></i> Jess Klocko MD
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item" href="/admin/users"><i className="fas fa-user-shield"></i> Admin Dashboard</a>
+                                        <Link className="dropdown-item" to="/admin"><i className="fas fa-user-shield"></i> Admin Dashboard</Link>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="/users/edit.1"><i className="far fa-address-card"></i> Profile</a>
+                                        <Link className="dropdown-item" to="/profile"><i className="far fa-address-card"></i> Profile</Link>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="/learnt_words"><i className="fab fa-wikipedia-w"></i> Learnt Words</a>
+                                        <Link className="dropdown-item" to="/learnt_words"><i className="fab fa-wikipedia-w"></i> Learnt Words</Link>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" rel="nofollow" data-method="delete" href="/logout"><i className="fas fa-sign-out-alt"></i> Logout</a>
+                                        <Link className="dropdown-item" rel="nofollow" data-method="delete" to="/logout"><i className="fas fa-sign-out-alt"></i> Logout</Link>
                                     </div>
                                 </li>
                             </li>

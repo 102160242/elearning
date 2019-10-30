@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from '../Loading';
 
 class Following extends React.Component {
     constructor(props) {

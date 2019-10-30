@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link ,Route, Switch, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Auth.css';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  };
+    }
+    componentDidMount()
+    {
+        document.title = 'Login';
     }
     render() {
         return (

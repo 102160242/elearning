@@ -7,6 +7,10 @@ class ForgotPassword extends React.Component{
         super(props);
         this.state={};
     }
+    componentDidMount()
+    {
+        document.title = 'Forgot Password';
+    }
     render(){
         return(
             <>
