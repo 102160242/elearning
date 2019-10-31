@@ -29,7 +29,6 @@ class Login extends React.Component {
         document.title = 'Login';
     }
     render() {
-        console.log("Props: " + JSON.stringify(this.props))
         if (JSON.stringify(this.props.currentUser) != "{}") {
             return (
                 <Redirect to={process.env.REACT_APP_LOGIN_SUCCESS_URL}></Redirect>

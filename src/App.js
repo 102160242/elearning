@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import ReduxToastr from 'react-redux-toastr';
 
 /* Import Component */
 import Auth from './app/auth/Auth';
@@ -19,8 +21,7 @@ import { Route, Switch } from 'react-router-dom';
 
 require('dotenv').config();
 class App extends React.Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
     // console.log("Message: " + this.props.message)
 
@@ -28,12 +29,9 @@ class App extends React.Component {
     //   isLoading: true,
     // }
   }
-  componentDidMount()
-  {
+  componentDidMount() {
   }
-  render()
-  {
-    console.log("PROPS: " + JSON.stringify(this.props));
+  render() {
     return (
       <div>
         <Switch>
@@ -43,8 +41,18 @@ class App extends React.Component {
           <Route exact path="/403" component={_403} />
           <Route component={Pages} />
         </Switch>
+        <ReduxToastr
+          timeOut={5000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-right"
+          getState={(state) => state.toastr} // This is the default
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar={true}
+          closeOnToastrClick />
       </div>
-    ); 
+    );
   }
 }
 
