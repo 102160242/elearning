@@ -36,9 +36,9 @@ class ForgotPassword extends React.Component{
                     <input type="email" class="form-control border border-0 input_place" id="email" placeholder="Email" name="email" />
                     </div>
                     <div className="d-flex justify-content-center ">
-                        <button type="submit" class="btn btn-primary btn-lg btn">Request</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn_edit">Request</button>
                         <Link to="/auth/login">
-                            <button style={{marginLeft:"20px"}} type="button" class="btn btn-light btn-lg btn">Cancel</button>
+                            <button style={{marginLeft:"20px"}} type="button" class="btn btn-light btn-lg btn_edit">Cancel</button>
                         </Link> 
                     </div>
                     <div className="d-flex justify-content-center p-4">

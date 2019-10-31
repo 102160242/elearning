@@ -71,9 +71,9 @@ class Registration extends React.Component{
                         </label>
                     </div>
                     <div className="d-flex justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn_edit">Sign Up</button>
                         <Link to="/auth/login">
-                            <button type="button" class="btn btn-light btn-lg ml-4">Cancel</button>
+                            <button type="button" class="btn btn-light btn-lg ml-4 btn_edit">Cancel</button>
                         </Link>
                     </div>
                 </form>

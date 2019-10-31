@@ -42,7 +42,7 @@ class Login extends React.Component {
                     <Link to="/auth/forgotPassword">Forget Password?</Link>
                     </div>
                     <div className="d-flex justify-content-center ">
-                        <button type="submit" class="btn btn-primary btn-lg btn">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn_edit">Sign In</button>
                     </div>
                     <div className="d-flex justify-content-center p-4">
                         Don't have an account yet?  
