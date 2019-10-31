@@ -7,8 +7,6 @@ class Header extends React.Component {
         this.state = { a: 1 };
     }
     render() {
-        var style = {
-        }
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">

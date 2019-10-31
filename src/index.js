@@ -5,13 +5,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
-import { createStore, applyMiddleware } from 'redux';
-import reducer from './reducer'
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
+// Import Reducers
+import authReducer from './reducers/auth';
+import categoriesReducer from './reducers/categories';
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    categories: categoriesReducer
+  })
 const middleware = [thunk];
-const store = createStore(reducer, applyMiddleware(...middleware));
+const store = createStore(rootReducer, applyMiddleware(...middleware));
 const history = createBrowserHistory();
 
 ReactDOM.render(
