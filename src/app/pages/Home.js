@@ -4,19 +4,22 @@ import { Link } from 'react-router-dom';
 class Home extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        //this.state = {};
+    }
+    componentDidMount() {
+        this.setState({ isLoading: false })
     }
     render() {
         return (
             <div className="container-fluid p-0">
-                <header class="masthead text-white text-center">
-                    <div class="overlay"></div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-9 mx-auto">
-                                <h1 class="mb-5">Learn words & remember them in the fastest way with us!</h1>
+                <header className="masthead text-white text-center">
+                    <div className="overlay"></div>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-9 mx-auto">
+                                <h1 className="mb-5">Learn words & remember them in the fastest way with us!</h1>
                             </div>
-                            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                            <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
                                 <Link to="/categories" className="btn btn-block btn-lg btn-primary">Start Learning!</Link>
                             </div>
                         </div>

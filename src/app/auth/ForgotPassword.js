@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link ,Route, Switch, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Auth.css';
 
 class ForgotPassword extends React.Component{

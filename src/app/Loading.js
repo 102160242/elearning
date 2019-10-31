@@ -12,8 +12,12 @@ class Loading extends React.Component {
     }
     render() {
         return (
-            <div class={"spinner-grow text-" + this.random_color()} role="status" style={{ width: "6rem", height: "6rem" }}>
-                <span class="sr-only">Loading...</span>
+            <div className="container">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div className={"spinner-grow text-" + this.random_color()} role="status" style={{ width: "6rem", height: "6rem" }}>
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
             </div>
         );
     }

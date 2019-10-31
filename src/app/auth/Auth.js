@@ -2,7 +2,7 @@ import React from 'react';
 import Login from './Login';
 import ForgotPassword from './ForgotPassword';
 import Registration from './Registration';
-import { Link ,Route, Switch, Redirect} from 'react-router-dom';
+import { Route, Switch, Redirect} from 'react-router-dom';
 import Background from './Image/bg.jpg'
 import './Auth.css';
 
