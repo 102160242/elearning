@@ -43,7 +43,10 @@ export const userPostFetch = user => {
                 console.log("Không thể kết nối đến server! Mã lỗi: " + res.status);
             }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            toastr.error("Failed to Sign Up!", error);
+            console.log(error)
+        });
     }
 }
 
@@ -77,7 +80,10 @@ export const userLoginFetch = user => {
                 console.log(msg);
             }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            toastr.error("Failed to Login!", error);
+            console.log(error)
+        });
     }
 }
 

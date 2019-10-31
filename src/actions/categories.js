@@ -26,7 +26,10 @@ export const getCategories = () => {
                 console.log(msg);
             }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            toastr.error("Failed to get data from server!", error);
+            console.log(error)
+        });
     }
 }
 
