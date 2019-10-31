@@ -23,7 +23,7 @@ class Followers extends React.Component {
                     <div className="row d-flex justify-content-start">
                         {a.map(i => {
                             return <>
-                                <div className="col-sm-4 ">
+                                <div className="col-lg-6 col-xl-4">
                                     <div className="card shadow-sm mb-4  bg-white">
                                         <div className="card-body">
                                             <div className="row">
