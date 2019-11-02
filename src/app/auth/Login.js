@@ -29,8 +29,7 @@ class Login extends React.Component {
         document.title = 'Login';
     }
     render() {
-        console.log("Props: " + JSON.stringify(this.props))
-        if (JSON.stringify(this.props.currentUser) != "{}") {
+        if (this.props.isLoggedIn) {
             return (
                 <Redirect to={process.env.REACT_APP_LOGIN_SUCCESS_URL}></Redirect>
             )
@@ -79,8 +78,7 @@ class Login extends React.Component {
 const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
-        requestResponse: state.auth.requestResponse,
-        currentUser: state.auth.currentUser
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 const mapDispatchToProps = dispatch => ({

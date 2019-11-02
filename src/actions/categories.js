@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toastr} from 'react-redux-toastr';
 
 export const getCategories = () => {
     return dispatch => {
@@ -13,17 +14,22 @@ export const getCategories = () => {
                 else
                 {
                     var msg = "Couldn't get data from server!" + res.status;
+                    toastr.error(msg);
                     dispatch(getListFailed({"message": msg}));
                     console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
                 dispatch(getListFailed({"message": msg}));
                 console.log(msg);
             }
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            toastr.error("Failed to get data from server!", error);
+            console.log(error)
+        });
     }
 }
 

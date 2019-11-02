@@ -94,7 +94,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
       requestResponse: state.auth.requestResponse,
-      currentUser: state.auth.currentUser
+      currentUser: state.auth.currentUser,
+      isLoggedIn: state.auth.isLoggedIn
     }
 }
 const mapDispatchToProps = dispatch => ({

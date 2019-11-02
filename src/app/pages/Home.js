@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+//import { connect } from 'react-redux';
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
-        //this.state = {};
+        this.state = {};
     }
     componentDidMount() {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
     }
     render() {
         return (
@@ -30,4 +31,11 @@ class Home extends React.Component {
     }
 }
 
+// const mapStateToProps = (state /*, ownProps*/) => {
+//     return {
+//         currentUser: state.auth.currentUser,
+//         isLoggedIn: state.auth.isLoggedIn
+//     }
+// }
+// export default connect(mapStateToProps, null) (Home);
 export default Home;
