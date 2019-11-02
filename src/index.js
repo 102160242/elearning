@@ -3,11 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
+// Import Reducers
+import authReducer from './reducers/auth';
+import categoriesReducer from './reducers/categories';
+import {reducer as toastrReducer} from 'react-redux-toastr';
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    categories: categoriesReducer,
+    toastr: toastrReducer
+  })
+const middleware = [thunk];
+const store = createStore(rootReducer, applyMiddleware(...middleware));
+const history = createBrowserHistory();
 
 ReactDOM.render(
-    <Router><App /></Router>, 
+    <Provider store={store}>
+        <Router history={history}>
+            <App />
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );
 
