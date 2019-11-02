@@ -12,11 +12,13 @@ import thunk from 'redux-thunk';
 // Import Reducers
 import authReducer from './reducers/auth';
 import categoriesReducer from './reducers/categories';
+import userReducer from './reducers/user';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 
 const rootReducer = combineReducers({
     auth: authReducer,
     categories: categoriesReducer,
+    user: userReducer,
     toastr: toastrReducer
   })
 const middleware = [thunk];
