@@ -3,7 +3,7 @@ import {toastr} from 'react-redux-toastr';
 
 export const getCategories = () => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'categories.json?all=true')
+        return axios.get(process.env.REACT_APP_API_URL + 'categories')
         .then(res => {
             console.log(res);
             if (res.status === 200) {

@@ -76,5 +76,5 @@ const mapStateToProps = (state /*, ownProps*/) => {
         isLoggedIn: state.auth.isLoggedIn
     }
 }
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, null) (Header);
 // export default Header;

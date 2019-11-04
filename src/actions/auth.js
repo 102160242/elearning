@@ -3,7 +3,7 @@ import { toastr } from 'react-redux-toastr';
 
 export const userPostFetch = user => {
     return dispatch => {
-        return axios.post(process.env.REACT_APP_API_URL + 'api/signup', { "user": user })
+        return axios.post(process.env.REACT_APP_API_URL + 'signup', { "user": user })
             .then(res => {
                 //console.log(res);
                 if (res.status == 200) {
@@ -46,7 +46,7 @@ export const userPostFetch = user => {
 
 export const userLoginFetch = user => {
     return dispatch => {
-        return axios.post(process.env.REACT_APP_API_URL + 'api/login', { "user": user })
+        return axios.post(process.env.REACT_APP_API_URL + 'login', { "user": user })
             .then(res => {
                 //console.log(res);
                 if (res.status == 200) {
@@ -82,7 +82,7 @@ export const userLoginFetch = user => {
 
 export const getUserInfo = token => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'api/user/info',
+        return axios.get(process.env.REACT_APP_API_URL + 'user/info',
             {
                 headers: {
                     "Authorization": token,
