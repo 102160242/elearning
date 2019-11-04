@@ -33,7 +33,7 @@ class Registration extends React.Component{
     }
     render(){
         //console.log("PROPS: " + JSON.stringify(this.props));
-        if(!this.props.isLoggedIn) {
+        if(this.props.isLoggedIn) {
             return (
                 <Redirect to={process.env.REACT_APP_LOGIN_SUCCESS_URL}></Redirect>
             )

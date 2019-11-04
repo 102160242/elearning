@@ -9,9 +9,11 @@ class Categories extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
+            order: "asc",
             filteredList: []
         }
         this.searchHandler = this.searchHandler.bind(this);
+        this.orderHandler = this.orderHandler.bind(this);
     }
     searchHandler(e) {
         var keyword = e.target.value;
@@ -24,6 +26,14 @@ class Categories extends React.Component {
             this.setState({ filteredList: filteredList });
         }
         else this.setState({ filteredList: this.props.list });
+    }
+
+    orderHandler(e)
+    {
+        this.setState({
+            order: e.target.value,
+            filteredList: this.state.filteredList.reverse()
+        });
     }
 
     componentDidMount() {
@@ -57,7 +67,11 @@ class Categories extends React.Component {
                             <strong>Categories</strong> | {this.props.list.length} total
                         </div>
                         <form className="form-inline">
-                            <input type="text" className="form-control mb-2 mr-sm-2" placeholder="Search" onChange={this.searchHandler} />
+                            <input type="text" className="form-control mr-sm-2" placeholder="Search" onChange={this.searchHandler} />
+                            <select className="form-control" value={this.state.order} onChange={this.orderHandler}>
+                                <option value="acs">ASC</option>
+                                <option value="desc">DESC</option>
+                            </select>
                         </form>
                     </div>
                 </div>
@@ -81,6 +95,6 @@ const mapStateToProps = (state /*, ownProps*/) => {
 }
 const mapDispatchToProps = dispatch => ({
     getCategories: () => dispatch(getCategories())
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

@@ -61,12 +61,12 @@ class NewsFeed extends React.Component {
                                         <tbody>
                                             <tr>
                                                 <td>Joined</td>
-                                                <td>2019-10-23 14:42:23 UTC</td>
+                                                <td>{this.props.currentUser.created_at}</td>
                                             </tr>
                                             <tr>
                                                 <td>Learnt</td>
                                                 <td>
-                                                    <a href="#" class="badge badge-pill badge-primary">Words <span class="badge badge-light">9</span> </a>
+                                                    <a href="#" class="badge badge-pill badge-primary">Words <span class="badge badge-light"></span> </a>
                                                 </td>
                                             </tr>
                                             <tr>

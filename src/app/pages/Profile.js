@@ -1,17 +1,21 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
-
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { updateUser } from '../../actions/user';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             email: "",
             name: "",
-            };
-            this.handleChange = this.handleChange.bind(this);
-            this.handleSubmit = this.handleSubmit.bind(this);
+            current_password: "",
+            password: "",
+            password_confirmation: "",
+
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
         //console.log(this.state.email);
@@ -19,18 +23,21 @@ class Profile extends React.Component {
             [e.target.name]: e.target.value
         });
     }
-    handleSubmit(e)
-    {
+    handleSubmit(e) {
         e.preventDefault();
+        var token = localStorage.getItem('token');
+        //console.log("Thong tin form: ");
+        //console.log(e.target);
+        this.props.updateUser(token, this.state);
     }
     render() {
-        if(!this.props.isLoggedIn) {
+        //console.log(this.state);
+        if (!this.props.isLoggedIn) {
             return (
                 <Redirect to={process.env.REACT_APP_ROOT_URL}></Redirect>
             )
         }
-        else
-        {
+        else {
             return (
                 <div className="container">
                     <h3 className="mt-3">Profile</h3>
@@ -46,17 +53,15 @@ class Profile extends React.Component {
                         <div className="col-md-8 pt-2">
                             <div className="group-tabs">
                                 <div class="tab-content col-md-12">
-                                <div role="tabpanel" class="tab-pane in active" id="personal">
+                                    <div role="tabpanel" class="tab-pane in active" id="personal">
                                         <p>Personal Information:</p>
                                         User's Information...
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="password">
-                                        <p>Change Password:</p>
-    
                                         <form onSubmit={this.handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">Full Name</label>
-                                                <input type="text" className="form-control" placeholder="Full Name" id="name" value={this.state.name === "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
+                                                <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name == "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
                                             </div>
                                             <div className="form-group danger">
                                                 <label for="email">Email</label>
@@ -65,29 +70,22 @@ class Profile extends React.Component {
 
                                             <div className="form-group danger">
                                                 <label for="cpw">Current password</label>
-                                                <input type="password" className="form-control" id="pw" placeholder="Your current password"></input>
+                                                <input type="password" className="form-control" name="current_password" placeholder="Your current password" onChange={this.handleChange}></input>
                                             </div>
 
                                             <div className="form-group danger">
-                                                <label for="pw">Password</label>
-                                                <input type="password" className="form-control" id="pw"></input>
+                                                <label for="pw">New Password</label>
+                                                <input type="password" className="form-control" name="password" onChange={this.handleChange}></input>
                                             </div>
 
                                             <div className="form-group danger">
-                                                <label for="dpw">Password confirmation</label>
-                                                <input type="password" className="form-control" id="dpw" placeholder="Type your password once again"></input>
+                                                <label for="dpw">New Password confirmation</label>
+                                                <input type="password" className="form-control" name="password_confirmation" placeholder="Type your password once again" onChange={this.handleChange}></input>
                                             </div>
-                                            
-                                            <button type="submit" className="btn btn-outline-primary mr-3">Update</button>
-                                            <button type="clear" className="btn btn-outline-secondary">Clear</button>
+
+                                            <button type="submit" className="btn btn-outline-primary btn-block">Update</button>
                                         </form>
                                     </div>
-                                    {/* <div role="tabpanel" class="tab-pane" id="followers">
-                                        danh sach followers
-                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="following">
-                                        danh sach following
-                                     </div> */}
                                 </div>
                             </div>
                         </div>
@@ -95,17 +93,17 @@ class Profile extends React.Component {
                 </div>
             );
         }
-       
+
     }
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
-    //console.log(state);
     return {
-      currentUser: state.auth.currentUser,
-      isLoggedIn: state.auth.isLoggedIn
+        currentUser: state.auth.currentUser,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
-
-export default connect(mapStateToProps, null) (Profile);
-//export default Profile;
+const mapDispatchToProps = dispatch => ({
+    updateUser: (token, user) => dispatch(updateUser(token, user))
+});
+export default connect(mapStateToProps, mapDispatchToProps) (Profile);
