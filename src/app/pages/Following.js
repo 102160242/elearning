@@ -39,6 +39,10 @@ class Following extends React.Component {
             });
         });
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         var list = [];
         for(var i = 0; i < this.state.filterList.length; i++)

@@ -11,6 +11,10 @@ class _TestResult extends React.Component {
         document.title = "Test Result";
         this.props.changeLoadingStatus(false);
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         return (
             <div>Test Result Page</div>

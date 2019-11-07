@@ -47,7 +47,10 @@ class Categories extends React.Component {
             });
         })
     }
-
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         //console.log("Loading state is: " + this.props.isLoading);
         if (this.state.filteredList.length == 0) {
