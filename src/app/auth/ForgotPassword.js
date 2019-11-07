@@ -1,11 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { updateUser } from '../../actions/user';
 import './Auth.css';
 
 class ForgotPassword extends React.Component{
     constructor(props){
         super(props);
-        this.state={};
+        this.state={
+            email: "",
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        var token = localStorage.getItem('token');
+        this.props.updateUser(token, this.state);
     }
     componentDidMount()
     {
@@ -33,7 +49,7 @@ class ForgotPassword extends React.Component{
                 </div>
                 <form >
                     <div class="form-group">
-                    <input type="email" class="form-control border border-0 input_place" id="email" placeholder="Email" name="email" />
+                    <input type="email" class="form-control border border-0 input_place" id="email" placeholder="Email" name="email" value={this.props.currentUser.email} />
                     </div>
                     <div className="d-flex justify-content-center ">
                         <button type="submit" class="btn btn-primary btn-lg btn_edit">Request</button>
@@ -51,5 +67,12 @@ class ForgotPassword extends React.Component{
         );
     }
 }
-
-export default ForgotPassword;
+const mapStateToProps = (state /*, ownProps*/) => {
+    return {
+        currentUser: state.auth.currentUser,
+    }
+}
+const mapDispatchToProps = dispatch => ({
+    updateUser: (token, user) => dispatch(updateUser(token, user))
+});
+export default connect(mapStateToProps, mapDispatchToProps) (ForgotPassword);
