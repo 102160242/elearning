@@ -9,6 +9,7 @@ class Home extends React.Component {
     }
     componentDidMount() {
         this.setState({ isLoading: false });
+        document.title = 'E-Learning System';
     }
     render() {
         return (
