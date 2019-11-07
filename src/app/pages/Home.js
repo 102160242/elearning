@@ -12,6 +12,10 @@ class Home extends React.Component {
         this.props.changeLoadingStatus(false);
         document.title = 'E-Learning System';
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         return (
             <div className="container-fluid p-0">

@@ -11,6 +11,10 @@ class _DoTest extends React.Component {
         document.title = "Do Test";
         this.props.changeLoadingStatus(false);
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         return (
             <div>Do Test Page</div>

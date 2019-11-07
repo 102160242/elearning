@@ -11,6 +11,10 @@ class Words extends React.Component {
         document.title = "Words";
         this.props.changeLoadingStatus(false);
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         return (
             <div>Words Page</div>

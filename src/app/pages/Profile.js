@@ -22,6 +22,10 @@ class Profile extends React.Component {
         document.title = "Profile";
         this.props.changeLoadingStatus(false);
     }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     handleChange(e) {
         //console.log(this.state.email);
         this.setState({
