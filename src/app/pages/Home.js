@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { changeLoadingStatus } from '../../actions/app';
 
 class Home extends React.Component {
     constructor(props) {
@@ -8,7 +9,8 @@ class Home extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        this.setState({ isLoading: false });
+        this.props.changeLoadingStatus(false);
+        document.title = 'E-Learning System';
     }
     render() {
         return (
@@ -31,11 +33,8 @@ class Home extends React.Component {
     }
 }
 
-// const mapStateToProps = (state /*, ownProps*/) => {
-//     return {
-//         currentUser: state.auth.currentUser,
-//         isLoggedIn: state.auth.isLoggedIn
-//     }
-// }
-// export default connect(mapStateToProps, null) (Home);
-export default Home;
+const mapDispatchToProps = dispatch => ({
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+});
+
+export default connect(null, mapDispatchToProps) (Home);

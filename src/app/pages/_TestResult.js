@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { changeLoadingStatus } from '../../actions/app';
 
 class _TestResult extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  };
+    }
+    componentDidMount() {
+        document.title = "Test Result";
+        this.props.changeLoadingStatus(false);
     }
     render() {
         return (
@@ -12,4 +18,7 @@ class _TestResult extends React.Component {
     }
 }
 
-export default _TestResult;
+const mapDispatchToProps = dispatch => ({
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+});
+export default connect(null, mapDispatchToProps) (_TestResult);

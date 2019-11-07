@@ -11,6 +11,9 @@ import Words from './Words';
 import Home from './Home';
 import Header from './partials/Header';
 import Footer from './partials/Footer';
+import Loading from '../Loading';
+
+import { connect } from 'react-redux';
 
 class Pages extends React.Component {
     constructor(props) {
@@ -19,7 +22,8 @@ class Pages extends React.Component {
     }
     render() {
         return (
-            <>
+            <>  
+                {this.props.isLoading && <Loading />}
                 <Header />
                 <Switch>
                     <Route exact path="/profile" component={Profile} />
@@ -39,4 +43,10 @@ class Pages extends React.Component {
     }
 }
 
-export default Pages;
+const mapStateToProps = (state /*, ownProps*/) => {
+    return {
+        isLoading: state.app.isLoading
+    }
+}
+
+export default connect(mapStateToProps, null) (Pages);
