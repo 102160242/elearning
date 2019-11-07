@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getFollowing } from '../../actions/user';
 import _Following_Follower_Card from './_Following_Follower_Card';
 
+import { changeLoadingStatus } from '../../actions/app';
 
 class Following extends React.Component {
     constructor(props) {
@@ -29,8 +30,10 @@ class Following extends React.Component {
 
     componentDidMount()
     {
+        document.title = "Following List";
         var token = localStorage.getItem('token');
         this.props.getFollowing(token).then(() =>{
+            this.props.changeLoadingStatus(false);
             this.setState({
                 filterList: this.props.followingList
             });
@@ -72,7 +75,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getFollowing: (token) => dispatch(getFollowing(token))
+    getFollowing: (token) => dispatch(getFollowing(token)),
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Following);
+export default connect(mapStateToProps, mapDispatchToProps) (Following);

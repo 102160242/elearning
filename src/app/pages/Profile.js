@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateUser } from '../../actions/user';
+import { changeLoadingStatus } from '../../actions/app';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class Profile extends React.Component {
     }
     componentDidMount() {
         document.title = "Profile";
+        this.props.changeLoadingStatus(false);
     }
     handleChange(e) {
         //console.log(this.state.email);
@@ -37,7 +39,7 @@ class Profile extends React.Component {
         // //console.log(this.state);
         if (!this.props.isLoggedIn) {
             return (
-                <Redirect to={process.env.REACT_APP_ROOT_URL}></Redirect>
+                <></>
             )
         }
         else {
@@ -135,6 +137,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    updateUser: (token, user) => dispatch(updateUser(token, user))
+    updateUser: (token, user) => dispatch(updateUser(token, user)),
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps) (Profile);

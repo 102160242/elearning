@@ -1,8 +1,8 @@
 import React from 'react';
 import _CategoryCard from './_CategoryCard';
-import Loading from '../Loading';
 import { connect } from 'react-redux';
 import { getCategories } from '../../actions/categories';
+import { changeLoadingStatus } from '../../actions/app';
 
 class Categories extends React.Component {
     constructor(props) {
@@ -41,16 +41,18 @@ class Categories extends React.Component {
         document.title = 'Categories';
         // Gọi API lấy dữ liệu
         this.props.getCategories().then(() => {
+            this.props.changeLoadingStatus(false);
             this.setState({
-                isLoading: false,
                 filteredList: this.props.list
             });
         })
     }
 
     render() {
+        //console.log("Loading state is: " + this.props.isLoading);
         if (this.state.filteredList.length == 0) {
-            var cards = this.state.isLoading ? <Loading /> : "There is nothing to show";
+            //var cards = this.state.isLoading ? <Loading /> : "There is nothing to show";
+            var cards = "There is nothing to show";
         }
         else {
             console.log(this.state.filteredList);
@@ -86,15 +88,16 @@ class Categories extends React.Component {
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
-    //console.log(state);
     return {
         list: state.categories.list,
         status: state.categories.status,
         message: state.categories.message,
+        isLoading: state.app.isLoading
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getCategories: () => dispatch(getCategories())
+    getCategories: () => dispatch(getCategories()),
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps) (Categories);
