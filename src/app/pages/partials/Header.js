@@ -20,8 +20,7 @@ class Header extends React.Component {
                                 <i className="fas fa-user"></i> { this.props.currentUser.name }
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link className="dropdown-item" to="/admin"><i className="fas fa-user-shield"></i> Admin Dashboard</Link>
-                                <div className="dropdown-divider"></div>
+                                { this.props.currentUser.admin && <><Link className="dropdown-item" to="/admin"><i className="fas fa-user-shield"></i> Admin Dashboard</Link> <div className="dropdown-divider"></div></> }
                                 <Link className="dropdown-item" to="/profile"><i className="far fa-address-card"></i> Profile</Link>
                                 <div className="dropdown-divider"></div>
                                 <Link className="dropdown-item" to="/learnt_words"><i className="fab fa-wikipedia-w"></i> Learnt Words</Link>

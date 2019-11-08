@@ -1,16 +1,25 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { changeLoadingStatus } from '../../actions/app';
 
 class NewsFeed extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            name:"",
-            email:"",
-         };
-         this.handleChange = this.handleChange.bind(this);
-         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            name: "",
+            email: "",
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentDidMount() {
+        document.title = "News Feed";
+        this.props.changeLoadingStatus(false);
+    }
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
     }
     handleChange(e) {
         //console.log(this.state.email);
@@ -18,37 +27,36 @@ class NewsFeed extends React.Component {
             [e.target.name]: e.target.value
         });
     }
-    handleSubmit(e)
-    {
+    handleSubmit(e) {
         e.preventDefault();
     }
     render() {
-        if(!this.props.isLoggedIn) {
+        if (!this.props.isLoggedIn) {
             return (
-                <Redirect to={process.env.REACT_APP_ROOT_URL}></Redirect>
+                <></>
             )
-        }else{
+        } else {
             return (
                 <div>
                     <div className="container mt-6">
-                       <div className="information">
+                        <div className="information">
                             <div className="row">
                                 <div className="col-auto">
                                     <div className="anh mt-5">
-                                        <img src="https://www.thepaintedturtle.org/sites/main/files/main-images/camera_lense_0.jpeg" alt="image" class="img-responsive" width="60" height="60"></img>  
+                                        <img src="https://www.thepaintedturtle.org/sites/main/files/main-images/camera_lense_0.jpeg" alt="image" class="img-responsive" width="60" height="60"></img>
                                     </div>
                                 </div>
                                 <div className="col mb-3  ml-md-n2">
-                                   <div className="mt-5">
-                                   <p>{this.props.currentUser.name}</p>
-                                   </div>
-                                   <div className="mt-2">
-                                    <p><i class="far fa-envelope mt-2 mr-2"></i>{this.props.currentUser.email}</p>
-                                   </div>
+                                    <div className="mt-5">
+                                        <p>{this.props.currentUser.name}</p>
+                                    </div>
+                                    <div className="mt-2">
+                                        <p><i class="far fa-envelope mt-2 mr-2"></i>{this.props.currentUser.email}</p>
+                                    </div>
                                 </div>
                             </div>
-                       </div>
-                       <hr></hr>
+                        </div>
+                        <hr></hr>
                     </div>
                     <div className="container mt-4">
                         <div className="row">
@@ -91,15 +99,18 @@ class NewsFeed extends React.Component {
                 </div>
             );
         }
-       
+
     }
 }
 const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
-      currentUser: state.auth.currentUser,
-      isLoggedIn: state.auth.isLoggedIn
+        currentUser: state.auth.currentUser,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
+const mapDispatchToProps = dispatch => ({
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+});
 
-export default connect(mapStateToProps, null) (NewsFeed);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);

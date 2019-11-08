@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getFollowers, getFollowing, follow, unfollow } from '../../actions/user';
 import _Following_Follower_Card from './_Following_Follower_Card';
+import { changeLoadingStatus } from '../../actions/app';
 
 class Followers extends React.Component {
     constructor(props) {
@@ -32,8 +33,10 @@ class Followers extends React.Component {
 
     componentDidMount()
     {
+        document.title = "Followers List";
         var token = localStorage.getItem('token');
         this.props.getFollowers(token).then(() => {
+            this.props.changeLoadingStatus(false);
             this.setState({
                 FollowerList: this.props.followersList
             });
@@ -68,6 +71,10 @@ class Followers extends React.Component {
         this.props.unfollow(token, val);
     }
 
+    componentWillUnmount()
+    {
+        this.props.changeLoadingStatus(true);
+    }
     render() {
         var list = [];
         for(var i = 0; i < this.state.FollowerList.length; i++)
@@ -112,5 +119,7 @@ const mapDispatchToProps = dispatch => ({
     getFollowers: (token) => dispatch(getFollowers(token)),
     follow: (token, id) => dispatch(follow(token, id)),
     unfollow: (token, id) => dispatch(unfollow(token, id))
+    getFollowers: (token) => dispatch(getFollowers(token)),
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Followers);

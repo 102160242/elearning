@@ -13,12 +13,14 @@ import thunk from 'redux-thunk';
 import authReducer from './reducers/auth';
 import categoriesReducer from './reducers/categories';
 import userReducer from './reducers/user';
+import appReducer from './reducers/app';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 
 const rootReducer = combineReducers({
     auth: authReducer,
     categories: categoriesReducer,
     user: userReducer,
+    app: appReducer,
     toastr: toastrReducer
   })
 const middleware = [thunk];
