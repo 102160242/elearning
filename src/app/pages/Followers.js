@@ -118,7 +118,7 @@ const mapDispatchToProps = dispatch => ({
     getFollowing: (token) => dispatch(getFollowing(token)),
     getFollowers: (token) => dispatch(getFollowers(token)),
     follow: (token, id) => dispatch(follow(token, id)),
-    unfollow: (token, id) => dispatch(unfollow(token, id))
+    unfollow: (token, id) => dispatch(unfollow(token, id)),
     getFollowers: (token) => dispatch(getFollowers(token)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })

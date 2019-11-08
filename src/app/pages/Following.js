@@ -84,7 +84,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 }
 const mapDispatchToProps = dispatch => ({
     getFollowing: (token) => dispatch(getFollowing(token)),
-    unfollow: (token, id) => dispatch(unfollow(token, id))
+    unfollow: (token, id) => dispatch(unfollow(token, id)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })
 
