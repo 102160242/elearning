@@ -1,29 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getFollowers } from '../../actions/user';
+import { getFollowers, getFollowing, follow, unfollow } from '../../actions/user';
 import _Following_Follower_Card from './_Following_Follower_Card';
 
 class Followers extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            filterList: []
+            FollowingList: [],
+            FollowerList: []
          };
          this.searchHandler = this.searchHandler.bind(this);
+         this.handleFollowClick = this.handleFollowClick.bind(this);
+         this.checkFollow = this.checkFollow.bind(this);
+         this.handleUnFollowClick = this.handleUnFollowClick.bind(this);
     }
 
     searchHandler(e){
         var keyword = e.target.value;
         if(keyword != ""){
-            var filterList = [];
+            var FollowerList = [];
             for(var i = 0; i < this.props.followersList.length; i ++)
             {
                 var item = this.props.followersList[i];
-                if (item.name.toLowerCase().includes(keyword.toLowerCase())) filterList.push(item);
+                if (item.name.toLowerCase().includes(keyword.toLowerCase())) FollowerList.push(item);
             }
-            this.setState({filterList: filterList})
+            this.setState({FollowerList: FollowerList})
         }
-        else this.setState({filterList: this.props.followersList})
+        else this.setState({FollowerList: this.props.followersList})
     }
 
     componentDidMount()
@@ -31,15 +35,48 @@ class Followers extends React.Component {
         var token = localStorage.getItem('token');
         this.props.getFollowers(token).then(() => {
             this.setState({
-                filterList: this.props.followersList
+                FollowerList: this.props.followersList
+            });
+        });
+        this.props.getFollowing(token).then(() =>{
+            this.setState({
+                FollowingList: this.props.followingList
             });
         });
     }
+
+    checkFollow(obj){
+        var temp = false;
+        for(var i = 0; i < this.state.FollowingList.length; i++)
+        {
+            if(obj == this.state.FollowingList[i].id){
+                temp = true;
+                break;
+            }
+        }
+        return temp;
+    }
+
+    handleFollowClick(val){
+        var token = localStorage.getItem('token');
+        console.log(token);
+        this.props.follow(token, val);
+    }
+
+    handleUnFollowClick(val){
+        var token = localStorage.getItem('token');
+        this.props.unfollow(token, val);
+    }
+
     render() {
         var list = [];
-        for(var i = 0; i < this.state.filterList.length; i++)
+        for(var i = 0; i < this.state.FollowerList.length; i++)
         {
-            var item = <_Following_Follower_Card name={this.state.filterList[i].name} />;
+            var check = this.checkFollow(this.state.FollowerList[i].id);
+            if(check == true)
+                {var item = <_Following_Follower_Card name={this.state.FollowerList[i].name} id={this.state.FollowerList[i].id} fun={this.handleUnFollowClick} check={check} />;}
+            else
+                {var item = <_Following_Follower_Card name={this.state.FollowerList[i].name} id={this.state.FollowerList[i].id} fun={this.handleFollowClick} check={check} />;}
             list.push(item);
         }
         return (
@@ -67,9 +104,13 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
         followersList: state.user.followersList,
+        followingList: state.user.followingList,
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getFollowers: (token) => dispatch(getFollowers(token))
+    getFollowing: (token) => dispatch(getFollowing(token)),
+    getFollowers: (token) => dispatch(getFollowers(token)),
+    follow: (token, id) => dispatch(follow(token, id)),
+    unfollow: (token, id) => dispatch(unfollow(token, id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Followers);
