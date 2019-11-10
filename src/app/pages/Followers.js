@@ -38,10 +38,6 @@ class Followers extends React.Component {
             });
         });
     }
-    componentWillUnmount()
-    {
-        this.props.changeLoadingStatus(true);
-    }
     render() {
         var list = [];
         for(var i = 0; i < this.state.filterList.length; i++)
@@ -62,25 +58,6 @@ class Followers extends React.Component {
                     </div>
                     <hr></hr>
                     <div className="row d-flex justify-content-start">
-                        {a.map(i => {
-                            return <>
-                                <div className="col-lg-6 col-xl-4">
-                                    <div className="card shadow-sm mb-4  bg-white">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-auto "> <h1><i class="fas fa-user-circle "></i> </h1></div>
-                                                <div className="col ml-n2">
-                                                    <h4>{i}</h4>
-                                                    <p className="card-text small text-muted mb-1">No test done</p>
-                                                    <p className="card-text small"><span className="text-default">•</span>Offline</p>
-                                                    <button type="button" class="btn btn-outline-info btn-block">Info</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        })}
                         {list}
                     </div>
                 </div>

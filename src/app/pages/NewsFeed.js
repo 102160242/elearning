@@ -1,7 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { changeLoadingStatus } from '../../actions/app';
+import { changeLoadingStatus } from '../../actions/app'; 
+import {getFollowing ,getFollowers} from '../../actions/user';
 
 class NewsFeed extends React.Component {
     constructor(props) {
@@ -9,6 +10,8 @@ class NewsFeed extends React.Component {
         this.state = {
             name: "",
             email: "",
+            following_list:[],
+            followers_list:[],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,6 +19,25 @@ class NewsFeed extends React.Component {
     componentDidMount() {
         document.title = "News Feed";
         this.props.changeLoadingStatus(false);
+
+        document.title = "Following List";
+        var token = localStorage.getItem('token');
+        this.props.getFollowing(token).then(() =>{
+            this.props.changeLoadingStatus(false);
+            this.setState({
+                following_list: this.props.followingList
+            });
+        });
+
+        document.title = "Followers List";
+        var token = localStorage.getItem('token');
+        this.props.getFollowers(token).then(() => {
+            this.props.changeLoadingStatus(false);
+            this.setState({
+                followers_list: this.props.followersList
+            });
+        });
+
     }
     componentWillUnmount()
     {
@@ -26,6 +48,27 @@ class NewsFeed extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+        var keyword = e.target.value;
+        if(keyword != ""){
+            var following_list = [];
+            for(var i = 0; i < this.props.followingList.length; i ++)
+            {
+                var item = this.props.followingList[i];
+                if (item.name.toLowerCase().includes(keyword.toLowerCase())) following_list.push(item);
+            }
+            this.setState({following_list: following_list})
+        }
+        else this.setState({following_list: this.props.followingList});
+        if(keyword != ""){
+            var followers_list = [];
+            for(var i = 0; i < this.props.followersList.length; i ++)
+            {
+                var item = this.props.followersList[i];
+                if (item.name.toLowerCase().includes(keyword.toLowerCase())) followers_list.push(item);
+            }
+            this.setState({followers_list: followers_list})
+        }
+        else this.setState({followers_list: this.props.followersList});
     }
     handleSubmit(e) {
         e.preventDefault();
@@ -74,19 +117,19 @@ class NewsFeed extends React.Component {
                                             <tr>
                                                 <td>Learnt</td>
                                                 <td>
-                                                    <a href="#" class="badge badge-pill badge-primary">Words <span class="badge badge-light"></span> </a>
+                                                    <Link to="/learnt_words" class="badge badge-pill badge-primary">Words <span class="badge "></span> </Link>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Following</td>
                                                 <td>
-                                                    <a href="#" class="badge badge-pill badge-success">Users <span class="badge badge-light">5</span> </a>
+                                                    <Link to="/following" class="badge badge-pill badge-info p-2">Users <span class="badge badge-info">{this.props.followingList.length}</span> </Link>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Followers</td>
                                                 <td>
-                                                    <a href="#" class="badge badge-pill badge-info">Users <span class="badge badge-light">13</span> </a>
+                                                    <Link to="/followers" class="badge badge-pill badge-warning p-2">Users <span class="badge badge-warning">{this.props.followersList.length}</span> </Link>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -106,11 +149,16 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
         currentUser: state.auth.currentUser,
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        followingList: state.user.followingList,
+        followersList: state.user.followersList,
     }
 }
 const mapDispatchToProps = dispatch => ({
-    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status)),
+    getFollowing: (token) => dispatch(getFollowing(token)),
+    getFollowers: (token) => dispatch(getFollowers(token)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);

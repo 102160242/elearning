@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateUser } from '../../actions/user';
 import './Auth.css';
 
 class ForgotPassword extends React.Component{
@@ -72,7 +71,5 @@ const mapStateToProps = (state /*, ownProps*/) => {
         currentUser: state.auth.currentUser,
     }
 }
-const mapDispatchToProps = dispatch => ({
-    updateUser: (token, user) => dispatch(updateUser(token, user))
-});
-export default connect(mapStateToProps, mapDispatchToProps) (ForgotPassword);
+
+export default connect(mapStateToProps, null) (ForgotPassword);
