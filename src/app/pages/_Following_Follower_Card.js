@@ -25,21 +25,14 @@ class _Following_Follower_Card extends React.Component {
                                     <p className="card-text small text-muted mb-1">No test done</p>
                                     <p className="card-text small"><span className="text-default">•</span>Offline</p>
                                 </div>
-                                <div className="dropdown col-auto">
-                                    <label  data-toggle="dropdown">
-                                        <i className="fas fa-ellipsis-h"></i>
-                                    </label>
-                                    <div className="dropdown-menu ">
-                                        <a className="dropdown-item" href="#"> <i className="fas fa-info"></i> <strong>Infomation</strong></a>
-                                    <div className="dropdown-divider"></div>
-                                        {
-                                            this.props.check ? (
-                                                <Link className="dropdown-item" onClick={this.getid} to="#" > <i className="far fa-eye-slash"></i> <strong>Unfollow</strong> </Link>
-                                            ) : (
-                                                <Link className="dropdown-item" onClick={this.getid} to="#" > <i className="far fa-eye"></i> <strong>Follow</strong> </Link>
-                                            )
-                                        }
-                                    </div>
+                                <div className=" col-auto">
+                                    {
+                                        this.props.check ? (
+                                            <button className="btn btn-outline-warning" data-toggle="tooltip" title="Unfollow this User" onClick={this.getid}><i className="far fa-eye-slash"></i></button>
+                                        ) : (
+                                            <button className="btn btn-outline-success" data-toggle="tooltip" title="Follow this User" onClick={this.getid} >  <i className="far fa-eye"></i> </button>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>

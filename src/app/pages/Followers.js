@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getFollowers, getFollowing, follow, unfollow } from '../../actions/user';
+import { getFollowers, follow, unfollow } from '../../actions/user';
 import _Following_Follower_Card from './_Following_Follower_Card';
 import { changeLoadingStatus } from '../../actions/app';
 
@@ -8,27 +8,45 @@ class Followers extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            FollowingList: [],
-            FollowerList: []
+            followersList: []
          };
          this.searchHandler = this.searchHandler.bind(this);
          this.handleFollowClick = this.handleFollowClick.bind(this);
-         this.checkFollow = this.checkFollow.bind(this);
          this.handleUnFollowClick = this.handleUnFollowClick.bind(this);
+         this.ElementChange = this.ElementChange.bind(this);
     }
 
     searchHandler(e){
         var keyword = e.target.value;
         if(keyword != ""){
-            var FollowerList = [];
+            var followersList = [];
             for(var i = 0; i < this.props.followersList.length; i ++)
             {
                 var item = this.props.followersList[i];
-                if (item.name.toLowerCase().includes(keyword.toLowerCase())) FollowerList.push(item);
+                if (item.name.toLowerCase().includes(keyword.toLowerCase())) followersList.push(item);
             }
-            this.setState({FollowerList: FollowerList})
+            this.setState({followersList: followersList})
         }
-        else this.setState({FollowerList: this.props.followersList})
+        else this.setState({followersList: this.props.followersList})
+    }
+
+    ElementChange(id)
+    {
+        var arr = [];
+        for(var i = 0; i < this.props.followersList.length; i++)
+        {
+            var item = this.props.followersList[i];
+            if(item.id == id)
+                if(item.is_following)
+                    item.is_following = false;
+                else
+                    item.is_following = true;
+            arr.push(item);
+        }
+        console.log(this.props.followersList);
+        // this.setState({followersList: this.props.followersList})
+        console.log(this.state.followersList);
+        console.log(arr);
     }
 
     componentDidMount()
@@ -38,37 +56,34 @@ class Followers extends React.Component {
         this.props.getFollowers(token).then(() => {
             this.props.changeLoadingStatus(false);
             this.setState({
-                FollowerList: this.props.followersList
+                followersList: this.props.followersList
             });
         });
-        this.props.getFollowing(token).then(() =>{
-            this.setState({
-                FollowingList: this.props.followingList
-            });
-        });
-    }
-
-    checkFollow(obj){
-        var temp = false;
-        for(var i = 0; i < this.state.FollowingList.length; i++)
-        {
-            if(obj == this.state.FollowingList[i].id){
-                temp = true;
-                break;
-            }
-        }
-        return temp;
     }
 
     handleFollowClick(val){
         var token = localStorage.getItem('token');
-        console.log(token);
-        this.props.follow(token, val);
+        //console.log(token);
+        this.props.follow(token, val).then(() => {
+            if(this.props.status == "success")
+            {
+                this.ElementChange(val);
+            }
+        });
+        console.log("From handleFollowCLick")
+        console.log(this.props.followersList)
     }
 
     handleUnFollowClick(val){
         var token = localStorage.getItem('token');
-        this.props.unfollow(token, val);
+        this.props.unfollow(token, val).then(() => {
+            if(this.props.status == "success")
+            {
+                this.ElementChange(val);
+            }
+        });
+        console.log("From handleUnfollowCLick")
+        console.log(this.props.followersList)
     }
 
     componentWillUnmount()
@@ -77,13 +92,13 @@ class Followers extends React.Component {
     }
     render() {
         var list = [];
-        for(var i = 0; i < this.state.FollowerList.length; i++)
+        for(var i = 0; i < this.state.followersList.length; i++)
         {
-            var check = this.checkFollow(this.state.FollowerList[i].id);
-            if(check == true)
-                {var item = <_Following_Follower_Card name={this.state.FollowerList[i].name} id={this.state.FollowerList[i].id} fun={this.handleUnFollowClick} check={check} />;}
+            var item = this.state.followersList[i];
+            if(item.is_following)
+                {var item = <_Following_Follower_Card name={item.name} id={item.id} fun={this.handleUnFollowClick} check={item.is_following}  />;}
             else
-                {var item = <_Following_Follower_Card name={this.state.FollowerList[i].name} id={this.state.FollowerList[i].id} fun={this.handleFollowClick} check={check} />;}
+                {var item = <_Following_Follower_Card name={item.name} id={item.id} fun={this.handleFollowClick} check={item.is_following}  />;}
             list.push(item);
         }
         return (
@@ -111,15 +126,13 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
         followersList: state.user.followersList,
-        followingList: state.user.followingList,
+        status: state.user.status,
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getFollowing: (token) => dispatch(getFollowing(token)),
     getFollowers: (token) => dispatch(getFollowers(token)),
     follow: (token, id) => dispatch(follow(token, id)),
     unfollow: (token, id) => dispatch(unfollow(token, id)),
-    getFollowers: (token) => dispatch(getFollowers(token)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Followers);

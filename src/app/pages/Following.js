@@ -13,6 +13,7 @@ class Following extends React.Component {
         };
         this.searchHandler = this.searchHandler.bind(this);
         this.handleClick = this. handleClick.bind(this);
+        this.getInfo = this.getInfo.bind(this);
     }
 
     searchHandler(e){
@@ -31,10 +32,15 @@ class Following extends React.Component {
 
     handleClick(val){
         var token = localStorage.getItem('token');
-        this.props.unfollow(token, val);
+        this.props.unfollow(token, val).then(() => {
+            if(this.props.unfollowStatus == "success")
+            {
+                this.getInfo();
+            }
+        });
     }
 
-    componentDidMount()
+    getInfo()
     {
         document.title = "Following List";
         var token = localStorage.getItem('token');
@@ -44,6 +50,11 @@ class Following extends React.Component {
                 FollowingList: this.props.followingList
             });
         });
+    }
+
+    componentDidMount()
+    {
+        this.getInfo();
     }
     componentWillUnmount()
     {
@@ -80,6 +91,7 @@ class Following extends React.Component {
 const mapStateToProps = (state /*, ownProps*/) => {
     return {
         followingList: state.user.followingList,
+        unfollowStatus: state.user.status,
     }
 }
 const mapDispatchToProps = dispatch => ({
