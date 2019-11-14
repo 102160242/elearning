@@ -89,10 +89,10 @@ export const updateUser = (token, user) => {
         )
         .then(res => {
             //console.log(res);
-            if (res.status == 200) {
+            if (res.status === 200) {
                 var d = res.data;
                 //console.log(d);
-                if (d.status == "success") {
+                if (d.status === "success") {
                     toastr.success(d.message);
                     dispatch(updateUserSuccessfully(d));
                 }

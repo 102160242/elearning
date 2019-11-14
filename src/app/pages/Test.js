@@ -12,7 +12,7 @@ class Test extends React.Component {
         return (
             <Switch>
                 <Route exact path="/test/:test_id/do" component={_DoTest}></Route>
-                <Route exact path="/test/:test_id" component={_TestResult}></Route>
+                <Route exact path="/test/:test_id/result" component={_TestResult}></Route>
             </Switch>
         );
     }
