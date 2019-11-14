@@ -16,9 +16,9 @@ class Header extends React.Component {
                     </li>
                     <li className="nav-item">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-user"></i> { this.props.currentUser.name }
-                            </a>
+                            </Link>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 { this.props.currentUser.admin && <><Link className="dropdown-item" to="/admin"><i className="fas fa-user-shield"></i> Admin Dashboard</Link> <div className="dropdown-divider"></div></> }
                                 <Link className="dropdown-item" to="/profile"><i className="far fa-address-card"></i> Profile</Link>

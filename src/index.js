@@ -3,35 +3,45 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 
 // Import Reducers
+import { reducer as toastrReducer } from 'react-redux-toastr';
 import authReducer from './reducers/auth';
 import categoriesReducer from './reducers/categories';
 import userReducer from './reducers/user';
 import appReducer from './reducers/app';
-import {reducer as toastrReducer} from 'react-redux-toastr';
+import testReducer from './reducers/test';
 
-const rootReducer = combineReducers({
+const rootReducer = (history) => combineReducers({
+    router: connectRouter(history),
     auth: authReducer,
     categories: categoriesReducer,
     user: userReducer,
+    test: testReducer,
     app: appReducer,
     toastr: toastrReducer
-  })
+});
 const middleware = [thunk];
-const store = createStore(rootReducer, applyMiddleware(...middleware));
 const history = createBrowserHistory();
-
+const store = createStore(
+    rootReducer(history),
+    compose(
+        applyMiddleware(
+            routerMiddleware(history),
+            ...middleware
+        )
+    )
+);
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history}>
+        <ConnectedRouter history={history}>
             <App />
-        </Router>
+        </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
 );
