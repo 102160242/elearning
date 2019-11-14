@@ -89,10 +89,10 @@ export const updateUser = (token, user) => {
         )
         .then(res => {
             //console.log(res);
-            if (res.status == 200) {
+            if (res.status === 200) {
                 var d = res.data;
                 //console.log(d);
-                if (d.status == "success") {
+                if (d.status === "success") {
                     toastr.success(d.message);
                     dispatch(updateUserSuccessfully(d));
                 }
@@ -127,6 +127,88 @@ export const updateUser = (token, user) => {
 }
 
 
+export const unfollow = (token, id) => {
+    return dispatch => {
+        return axios.delete(process.env.REACT_APP_API_URL + 'user/unfollow',
+            {
+                data: {
+                id: id
+            },
+                headers: {
+                    "Authorization": token,
+                }
+            }
+        )
+        .then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                var d = res.data;
+                if (d.status === "success") {
+                    dispatch(unfollowSuccessfully(d.data));
+                }
+                else
+                {
+                    var msg = "Failed to send request to server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(unfollowUserFailed({"message": msg}));
+                    console.log(msg);
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(unfollowUserFailed({"message": msg}));
+                console.log(msg);
+            }
+        })
+        .catch(error => {
+            toastr.error("Failed to send request to server!", error);
+            console.log(error)
+        })
+    }
+}
+
+export const follow = (token, id) => {
+    return dispatch => {
+        return axios.post(process.env.REACT_APP_API_URL + 'user/follow',
+            {
+                id: id
+            },
+            {
+                headers: {
+                    "Authorization": token,
+                }
+            }
+        )
+        .then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                var d = res.data;
+                if (d.status === "success") {
+                    dispatch(followSuccessfully(d.data));
+                }
+                else
+                {
+                    var msg = "Failed to send request to server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(followUserFailed({"message": msg}));
+                    console.log(msg);
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(followUserFailed({"message": msg}));
+                console.log(msg);
+            }
+        })
+        .catch(error => {
+            toastr.error("Failed to send request to server!", error);
+            console.log(error)
+        })
+    }
+}
+
 const returnFollowersList = data => ({
     type: 'GET_FOLLOWERS',
     status: 'success',
@@ -153,6 +235,30 @@ const updateUserSuccessfully = data => ({
 
 const updateUserFailed = data => ({
     type: 'UPDATE_USER_FAILED',
+    status: 'error',
+    message: data
+});
+
+const unfollowSuccessfully = data => ({
+    type: 'UNFOLLOW_USER_SUCCESSFULLY',
+    status: 'success',
+    message: data
+});
+
+const followSuccessfully = data => ({
+    type: 'FOLLOW_USER_SUCCESSFULLY',
+    status: 'success',
+    message: data
+});
+
+const unfollowUserFailed = data => ({
+    type: 'UNFOLLOW_USER_FAILED',
+    status: 'error',
+    message: data
+});
+
+const followUserFailed = data => ({
+    type: 'FOLLOW_USER_FAILED',
     status: 'error',
     message: data
 });

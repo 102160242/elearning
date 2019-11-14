@@ -15,6 +15,12 @@ export default function userReducer(state = defaultState, action)
         case 'UPDATE_USER_SUCCESSFULLY':
             return { ...state, status: action.status, message: action.message }
         case 'UPDATE_USER_FAILED':
+        case 'UNFOLLOW_USER_SUCCESSFULLY':
+            return {...state, status: action.status, message: action.message}
+        case 'FOLLOW_USER_SUCCESSFULLY':
+                return {...state, status: action.status, message: action.message}
+        case 'UNFOLLOW_USER_FAILED':
+        case 'FOLLOW_USER_FAILED':
         case 'GET_FOLLOWING_FAILED':
         case 'GET_FOLLOWING_FAILED':
             return { ...state, status: action.status, message: action.message }
