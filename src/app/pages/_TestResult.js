@@ -36,9 +36,9 @@ class _TestResult extends React.Component {
     }
     render() {
         return (
-            <div className="container-fluid mb-2">
+            <div className="container mb-2">
                 <div className="row d-flex justify-content-center mt-5">
-                    <div className="col-md-9 col-xl-8">
+                    <div className="">
                         <div className="card">
                             <div className="card-header">
                                 <h4>Test Result</h4>
@@ -124,7 +124,7 @@ class _TestResult extends React.Component {
                                                         question && question.answers && question.answers.map((answer, aIndex) => {
                                                             var checked = "";
                                                             var textClass = "";
-                                                            if (question.chosen_answer_id == answer.id) checked = "checked";
+                                                            if (question.chosen_answer_id === answer.id) checked = "checked";
                                                             if (answer.right_answer) textClass = "text-success";
                                                             return (
                                                                 <div className="form-check" key={aIndex}>

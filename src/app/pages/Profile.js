@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateUser } from '../../actions/user';
 import { changeLoadingStatus } from '../../actions/app';
@@ -65,7 +65,7 @@ class Profile extends React.Component {
                                             <div className="card-body">
                                                 <div className="row d-flex justify-content-center">
                                                     <div className="col-md-3 border border-success border-left-0 border-top-0 border-bottom-0">
-                                                        <img src={this.props.currentUser.avatar_url} className="rounded" />
+                                                        <img src={this.props.currentUser.avatar_url} alt="Avatar" className="rounded" />
                                                     </div>
                                                     <div className="col-md-9">
                                                         <div className="mb-3 d-flex justify-content-center">
@@ -98,7 +98,7 @@ class Profile extends React.Component {
                                         <form onSubmit={this.handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">Full Name</label>
-                                                <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name == "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
+                                                <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name === "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
                                             </div>
                                             <div className="form-group danger">
                                                 <label for="email">Email</label>

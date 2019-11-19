@@ -43,17 +43,18 @@ class Followers extends React.Component {
                     item.is_following = true;
             arr.push(item);
         }
-        console.log(this.props.followersList);
+        //console.log(this.props.followersList);
         // this.setState({followersList: this.props.followersList})
-        console.log(this.state.followersList);
-        console.log(arr);
+        //console.log(this.state.followersList);
+        //console.log(arr);
     }
 
     componentDidMount()
     {
         document.title = "Followers List";
+        var user_id = this.props.match.params.user_id;
         var token = localStorage.getItem('token');
-        this.props.getFollowers(token).then(() => {
+        this.props.getFollowers(token, user_id).then(() => {
             this.props.changeLoadingStatus(false);
             this.setState({
                 followersList: this.props.followersList
@@ -70,8 +71,8 @@ class Followers extends React.Component {
                 this.ElementChange(val);
             }
         });
-        console.log("From handleFollowCLick")
-        console.log(this.props.followersList)
+        //console.log("From handleFollowCLick")
+        //console.log(this.props.followersList)
     }
 
     handleUnFollowClick(val){
@@ -82,8 +83,8 @@ class Followers extends React.Component {
                 this.ElementChange(val);
             }
         });
-        console.log("From handleUnfollowCLick")
-        console.log(this.props.followersList)
+        //console.log("From handleUnfollowCLick")
+        //console.log(this.props.followersList)
     }
 
     componentWillUnmount()
@@ -130,7 +131,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getFollowers: (token) => dispatch(getFollowers(token)),
+    getFollowers: (token, user_id) => dispatch(getFollowers(token, user_id)),
     follow: (token, id) => dispatch(follow(token, id)),
     unfollow: (token, id) => dispatch(unfollow(token, id)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))

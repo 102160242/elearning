@@ -44,7 +44,8 @@ class Following extends React.Component {
     {
         document.title = "Following List";
         var token = localStorage.getItem('token');
-        this.props.getFollowing(token).then(() =>{
+        var user_id = this.props.match.params.user_id;
+        this.props.getFollowing(token, user_id).then(() =>{
             this.props.changeLoadingStatus(false);
             this.setState({
                 FollowingList: this.props.followingList
@@ -95,7 +96,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    getFollowing: (token) => dispatch(getFollowing(token)),
+    getFollowing: (token, user_id) => dispatch(getFollowing(token, user_id)),
     unfollow: (token, id) => dispatch(unfollow(token, id)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 })
