@@ -24,6 +24,8 @@ class _DoTest extends React.Component {
         var id = this.props.match.params.test_id;
         this.props.getTest(token, id).then(() => {
             this.props.changeLoadingStatus(false);
+            var display = document.querySelector('#timer');
+            this.startTimer(this.props.test.timeLeft, display);
         });
     }
     componentWillUnmount() {
@@ -128,12 +130,6 @@ class _DoTest extends React.Component {
         if(this.props.isLoggedIn === false)
         {
             this.props.history.push("/403");
-        }
-
-        if(this.props.test.length !== 0)
-        {
-            var display = document.querySelector('#timer');
-            this.startTimer(this.props.test.timeLeft, display);
         }
         return (
             <div className="container mt-3 mb-3">

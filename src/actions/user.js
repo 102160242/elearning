@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getFollowers = (token, user_id) => {
+export const getFollowers = (token, user_id, params = {}) => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + 'user/' + user_id + '/followers',
             {
+                params: params,
                 headers: {
                     "Authorization": token,
                 }
@@ -168,11 +169,11 @@ export const unfollow = (token, id) => {
     }
 }
 
-export const follow = (token, id) => {
+export const follow = (token, user_id) => {
     return dispatch => {
         return axios.post(process.env.REACT_APP_API_URL + 'user/follow',
             {
-                id: id
+                id: user_id
             },
             {
                 headers: {
@@ -249,7 +250,7 @@ export const getNewsFeed = (token, user_id) => {
 const returnFollowersList = data => ({
     type: 'GET_FOLLOWERS',
     status: 'success',
-    followersList: data
+    followersData: data
 });
 
 const returnFollowingList = data => ({

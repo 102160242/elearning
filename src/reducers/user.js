@@ -1,5 +1,13 @@
 const defaultState = {
-    followersList: [],
+    followersData: {
+        paginate: {
+            // current_page => 0,
+            // previous_page =>0,
+            // next_page: 0,
+            // last_page: 0
+        },
+        list: []
+    },
     followingList: [],
     newsFeed: {},
     status: "",
@@ -10,7 +18,7 @@ export default function userReducer(state = defaultState, action)
 {
     switch (action.type) {
         case 'GET_FOLLOWERS':
-            return { ...state, followersList: action.followersList, status: action.status, message: action.message }
+            return { ...state, followersData: action.followersData, status: action.status, message: action.message }
         case 'GET_FOLLOWING':
             return { ...state, followingList: action.followingList, status: action.status, message: action.message }
         case 'UPDATE_USER_SUCCESSFULLY':
