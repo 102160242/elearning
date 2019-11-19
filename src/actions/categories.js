@@ -1,9 +1,11 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getCategories = () => {
+export const getCategories = (params) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'categories')
+        return axios.get(process.env.REACT_APP_API_URL + 'categories',
+                    { params: params}
+        )
         .then(res => {
             //console.log(res);
             if (res.status === 200) {
@@ -36,7 +38,7 @@ export const getCategories = () => {
 const returnList = data => ({
     type: 'RETURN_LIST',
     status: 'success',
-    list: data
+    data: data
 });
 
 const getListFailed = data => ({

@@ -28,6 +28,10 @@ class Followers extends React.Component {
         var queries = this.getQueries();
         queries["search"] = e.target.value;
         queries["page"] = 1;
+        this.setState({
+            search: queries["search"],
+            page: queries["page"]
+        })
         this.props.history.push({
             search: "?" + new URLSearchParams(queries).toString()
         });
@@ -117,12 +121,12 @@ class Followers extends React.Component {
         document.title = "Followers List";
         var user_id = this.props.match.params.user_id;
         var token = localStorage.getItem('token');
-        /*this.props.getFollowers(token, user_id, this.getQueries()).then(() => {
+        this.props.getFollowers(token, user_id, this.getQueries()).then(() => {
             this.props.changeLoadingStatus(false);
-            this.setState({
-                followersList: this.props.followersList
-            });
-        });*/
+            // this.setState({
+            //     followersList: this.props.followersList
+            // });
+        });
     }
     componentWillUnmount()
     {
