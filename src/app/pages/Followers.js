@@ -16,7 +16,8 @@ class Followers extends React.Component {
          this.ElementChange = this.ElementChange.bind(this);
     }
 
-    searchHandler(e){
+    searchHandler(e)
+    {
         var keyword = e.target.value;
         if(keyword != ""){
             var followersList = [];
@@ -25,7 +26,9 @@ class Followers extends React.Component {
                 var item = this.props.followersList[i];
                 if (item.name.toLowerCase().includes(keyword.toLowerCase())) followersList.push(item);
             }
-            this.setState({followersList: followersList})
+            this.setState({followersList: followersList});
+            console.log(this.state.followersList)
+
         }
         else this.setState({followersList: this.props.followersList})
     }
@@ -43,12 +46,7 @@ class Followers extends React.Component {
                     item.is_following = true;
             arr.push(item);
         }
-        //console.log(this.props.followersList);
-        // this.setState({followersList: this.props.followersList})
-        //console.log(this.state.followersList);
-        //console.log(arr);
     }
-
     componentDidMount()
     {
         document.title = "Followers List";
@@ -61,7 +59,6 @@ class Followers extends React.Component {
             });
         });
     }
-
     handleFollowClick(val){
         var token = localStorage.getItem('token');
         //console.log(token);
@@ -92,6 +89,7 @@ class Followers extends React.Component {
         this.props.changeLoadingStatus(true);
     }
     render() {
+        //console.log(this.state)
         var list = [];
         for(var i = 0; i < this.state.followersList.length; i++)
         {
@@ -127,6 +125,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
         followersList: state.user.followersList,
+        isLoggedIn: state.auth.isLoggedIn,
         status: state.user.status,
     }
 }

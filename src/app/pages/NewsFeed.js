@@ -8,24 +8,29 @@ class NewsFeed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            email: "",
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderActivities = this.renderActivities.bind(this);
     }
+    static getDerivedStateFromProps(props, prevState){
+        if(props.isLoggedIn === true && Object.keys(props.newsFeed).length == 0)
+        {
+            // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
+            var user_id = props.match.params.user_id;
+            var token = localStorage.getItem("token");
+            props.getNewsFeed(token, user_id).then(() => {
+                props.changeLoadingStatus(false);
+            })
+        }
+        else if(props.isLoggedIn === false)
+        {
+            props.history.push("/403");
+        }
+        return null;
+    }
     componentDidMount() {
         document.title = "News Feed";
-        //console.log("Params: ")
-        //console.log(this.props.match.params.user_id)
-
-        // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
-        var user_id = this.props.match.params.user_id;
-        var token = localStorage.getItem("token");
-        this.props.getNewsFeed(token, user_id).then(() => {
-            this.props.changeLoadingStatus(false);
-        })
     }
     componentWillUnmount() {
         this.props.changeLoadingStatus(true);
@@ -46,26 +51,26 @@ class NewsFeed extends React.Component {
         else {
             return this.props.newsFeed && this.props.newsFeed.timeline && this.props.newsFeed.timeline.map((i, key) => {
                 return (
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <Link to={"/" + i.user_id + "/newsfeed"} class="avatar">
-                                            <img src={this.props.currentUser.avatar_url} alt="Avatar" class="avatar-img rounded-circle" style={{ height: "50px" }} />
+                    <div className="card mb-2" key={key}>
+                        <div className="card-body">
+                            <div className="mb-3">
+                                <div className="row align-items-center">
+                                    <div className="col-auto">
+                                        <Link to={"/" + i.user_id + "/newsfeed"} className="avatar">
+                                            <img src={this.props.currentUser.avatar_url} alt="Avatar" className="avatar-img rounded-circle" style={{ height: "50px" }} />
                                         </Link>
                                     </div>
-                                    <div class="col ml-n2">
-                                        <h4 class="card-title mb-1">
+                                    <div className="col ml-n2">
+                                        <h4 className="card-title mb-1">
                                             {i.user == this.props.currentUser.email ? "Me" : i.user}
                                         </h4>
-                                        <p class="card-text small text-muted">
-                                            <span class="fe fe-clock"></span> <time>{i.time} ago</time>
+                                        <p className="card-text small text-muted">
+                                            <span className="fe fe-clock"></span> <time>{i.time} ago</time>
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="card-body p-0" key={key}>
+                            <div className="card-body p-0">
                                 <div className="card">
                                     <div className="card-body">
                                         <div className="row align-items-center">
@@ -114,7 +119,7 @@ class NewsFeed extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <Link to={"/test/" + i.id + "/result"} className="btn btn-outline-info m-2 mt-0"><i class="fas fa-star-half-alt"></i>&nbsp;Result</Link>
+                                    <Link to={"/test/" + i.id + "/result"} className="btn btn-outline-info m-2 mt-0"><i className="fas fa-star-half-alt"></i>&nbsp;Result</Link>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +129,8 @@ class NewsFeed extends React.Component {
         }
     }
     render() {
-
-        console.log(this.props.newsFeed)
+        //console.log(this.state);
+        //console.log(this.props.newsFeed)
         if (!this.props.isLoggedIn) {
             return (
                 <></>

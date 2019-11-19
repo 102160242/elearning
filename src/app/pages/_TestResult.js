@@ -29,7 +29,7 @@ class _TestResult extends React.Component {
             // Neu tao thanh cong thi chuyen huong sang bai test moi
             if(this.props.status === "success")
             {
-                console.log(this.props.test);
+                //console.log(this.props.test);
                 this.props.history.push("/test/" + this.props.test.id + "/do");
             }
         });

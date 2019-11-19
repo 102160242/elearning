@@ -1,6 +1,6 @@
 const defaultState = {
-    followersList: {},
-    followingList: {},
+    followersList: [],
+    followingList: [],
     newsFeed: {},
     status: "",
     message: ""

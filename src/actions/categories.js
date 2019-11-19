@@ -5,7 +5,7 @@ export const getCategories = () => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + 'categories')
         .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.status === 200) {
                 var d = res.data;
                 if (d.status === "success") {

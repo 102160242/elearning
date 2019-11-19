@@ -58,7 +58,7 @@ class Categories extends React.Component {
             var cards = "There is nothing to show";
         }
         else {
-            console.log(this.state.filteredList);
+            //console.log(this.state.filteredList);
             var cards = this.state.filteredList.map((data, i) =>
                 <_CategoryCard data={data} />
             );
