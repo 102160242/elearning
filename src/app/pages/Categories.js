@@ -66,13 +66,14 @@ class Categories extends React.Component {
     static getDerivedStateFromProps(nextProps, prevState)
     {
         //console.log("getDerivedStateFromProps called")
+        //console.log(nextProps)
         var query = queryString.parse(nextProps.location.search, { ignoreQueryPrefix: true });
         var queries = {};
         queries["search"] = query.search ? query.search : "";
         queries["page"] = query.page ? query.page : 1;
         queries["order"] = query.order ? query.order : "asc";
-        console.log(queries);
-        console.log(prevState);
+        //console.log(queries);
+        //console.log(prevState);
         if(queries["search"] !== prevState.search || parseInt(queries["page"]) != prevState.page || queries["order"] !== prevState.order)
         {
             nextProps.getCategories(queries);
@@ -82,6 +83,7 @@ class Categories extends React.Component {
         return null;
     }
     componentDidMount() {
+        //console.log("componentDidMount called")
         // Thay đổi title trang
         document.title = 'Categories';
         // Gọi API lấy dữ liệu
@@ -98,13 +100,13 @@ class Categories extends React.Component {
     }
     render() {
         //console.log("Loading state is: " + this.props.isLoading);
-        if (this.props.categoriesData.list && this.props.categoriesData.list.length == 0) {
+        if (this.props.categoriesData && this.props.categoriesData.list && this.props.categoriesData.list.length == 0) {
             //var cards = this.state.isLoading ? <Loading /> : "There is nothing to show";
             var cards = "There is nothing to show";
         }
         else {
             //console.log(this.state.filteredList);
-            var cards = this.props.categoriesData.list && this.props.categoriesData.list.map((data, i) =>
+            var cards = this.props.categoriesData && this.props.categoriesData.list && this.props.categoriesData.list.map((data, i) =>
                 <_CategoryCard data={data} />
             );
         }
@@ -114,7 +116,7 @@ class Categories extends React.Component {
                 <div className="container title-bar mt-3">
                     <div className="row d-flex justify-content-between">
                         <div className="d-inline">
-                            <strong>Categories</strong> | {this.props.categoriesData.list && this.props.categoriesData.list.length} total
+                            <strong>Categories</strong> | { this.props.categoriesData && this.props.categoriesData.list && this.props.categoriesData.list.length} total
                         </div>
                         <form className="form-inline">
                             <input type="text" className="form-control mr-sm-2" placeholder="Search" onChange={this.searchHandler} />
@@ -129,7 +131,7 @@ class Categories extends React.Component {
                     <div className="row d-flex justify-content-center">
                         {cards}
                     </div>
-                    <Paginator paginate={this.props.categoriesData.paginate } queries={this.getQueries()}/>
+                    <Paginator paginate={this.props.categoriesData && this.props.categoriesData.paginate } queries={this.getQueries()}/>
                 </div>
             </>
         );
