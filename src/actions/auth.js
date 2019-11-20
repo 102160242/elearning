@@ -109,19 +109,61 @@ export const getUserInfo = token => {
                             dispatch(getUserInfoFailed(res.data));
                         }
                         break;
-                    case 401: // User not Authenticated
-                        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                     default:
                         console("Auth to get User's Info. Message: " + res.data.message);
                         dispatch(getUserInfoFailed(res.data));
                 }
             })
             .catch(error => {
-                console.log("getUserInfo: " + error)
+                if(error.response.status == 401)
+                {
+                    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                    dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+                }
+                console.log(error)
             });
     }
 }
 
+export const logoutUser = token => {
+    return dispatch => {
+        return axios.delete(process.env.REACT_APP_API_URL + 'logout',
+            {
+                headers: {
+                    "Authorization": token,
+                }
+            })
+            .then(res => {
+                //console.log("getUserInfo: " + res);              
+                switch(res.status)
+                {
+                    case 200:
+                        if(res.data.status == "success")
+                        {
+                            dispatch(logoutUserSuccessfully(res.data));
+                            localStorage.removeItem("token");
+                            toastr.success(res.data.message, "");
+                        }
+                        else
+                        {
+                            dispatch(logoutUserFailed(res.data));
+                        }
+                        break;
+                    default:
+                        console("Message: " + res.data.message);
+                        dispatch(logoutUserFailed(res.data));
+                }
+            })
+            .catch(error => {
+                if(error.response.status == 401)
+                {
+                    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                    dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+                }
+                console.log(error);
+            });
+    }
+}
 
 const loginUser = userObj => ({
     type: 'LOGIN_USER',
@@ -164,3 +206,20 @@ const getUserInfoFailed = data => ({
     },
     isLoggedIn: false
 });
+const logoutUserSuccessfully = data => ({
+    type: 'LOGOUT_USER_SUCCESSFULLY',
+    requestResponse: {
+        status: "success",
+        message: data.message
+    },
+    currentUser: {},
+    isLoggedIn: null
+});
+const logoutUserFailed = data => ({
+    type: 'LOGOUT_USER_FAILED',
+    requestResponse: {
+        status: 'error',
+        message: data.message
+    },
+});
+export { getUserInfoFailed };

@@ -9,7 +9,10 @@ const defaultState = {
         list: []
     },
     followingList: [],
-    newsFeed: {},
+    newsFeed: {
+        timeline: [],
+        user_info: {}
+    },
     status: "",
     message: ""
 }

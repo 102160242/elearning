@@ -24,7 +24,7 @@ class Pages extends React.Component {
         return (
             <>  
                 {this.props.isLoading && <Loading />}
-                <Header />
+                <Route component={Header} />
                 <div className="wrapper">
                     <Switch>
                         <Route exact path="/profile" component={Profile} />
@@ -39,7 +39,7 @@ class Pages extends React.Component {
                         <Redirect to="/404" />
                     </Switch>
                 </div>
-                <Footer />
+                <Route component={Footer} />
             </>
         );
     }
