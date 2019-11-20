@@ -25,10 +25,10 @@ class App extends React.Component {
 
     // Check if token exists
     var token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
-    if(token !== null)
-    {
+    //if(token !== null)
+    //{
       this.props.getUserInfo(token);
-    }
+    //}
   }
   componentDidMount() {
   }

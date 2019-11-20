@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getFollowers = (token) => {
+export const getFollowers = (token, user_id, params = {}) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'user/followers',
+        return axios.get(process.env.REACT_APP_API_URL + 'user/' + user_id + '/followers',
             {
+                params: params,
                 headers: {
                     "Authorization": token,
                 }
@@ -38,9 +39,9 @@ export const getFollowers = (token) => {
     }
 }
 
-export const getFollowing = (token) => {
+export const getFollowing = (token, user_id) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'user/following',
+        return axios.get(process.env.REACT_APP_API_URL + 'user/' + user_id + '/following',
             {
                 headers: {
                     "Authorization": token,
@@ -168,11 +169,11 @@ export const unfollow = (token, id) => {
     }
 }
 
-export const follow = (token, id) => {
+export const follow = (token, user_id) => {
     return dispatch => {
         return axios.post(process.env.REACT_APP_API_URL + 'user/follow',
             {
-                id: id
+                id: user_id
             },
             {
                 headers: {
@@ -209,10 +210,47 @@ export const follow = (token, id) => {
     }
 }
 
+export const getNewsFeed = (token, user_id) => {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_API_URL + 'user/' + user_id + '/newsfeed',
+            {
+                headers: {
+                    "Authorization": token,
+                }
+            }
+        )
+        .then(res => {
+            //console.log(res);
+            if (res.status === 200) {
+                var d = res.data;
+                if (d.status === "success") {
+                    dispatch(getNewsFeedSuccessfully(d.data));
+                }
+                else
+                {
+                    var msg = "Failed to send request to server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(getNewsFeedFailed({"message": msg}));
+                    console.log(msg);
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(getNewsFeedFailed({"message": msg}));
+                console.log(msg);
+            }
+        })
+        .catch(error => {
+            toastr.error("Failed to send request to server!", error);
+            console.log(error)
+        })
+    }
+}
 const returnFollowersList = data => ({
     type: 'GET_FOLLOWERS',
     status: 'success',
-    followersList: data
+    followersData: data
 });
 
 const returnFollowingList = data => ({
@@ -230,7 +268,6 @@ const getListFailed = data => ({
 const updateUserSuccessfully = data => ({
     type: 'UPDATE_USER_SUCCESSFULLY',
     status: 'success',
-    message: data
 });
 
 const updateUserFailed = data => ({
@@ -242,13 +279,11 @@ const updateUserFailed = data => ({
 const unfollowSuccessfully = data => ({
     type: 'UNFOLLOW_USER_SUCCESSFULLY',
     status: 'success',
-    message: data
 });
 
 const followSuccessfully = data => ({
     type: 'FOLLOW_USER_SUCCESSFULLY',
     status: 'success',
-    message: data
 });
 
 const unfollowUserFailed = data => ({
@@ -259,6 +294,17 @@ const unfollowUserFailed = data => ({
 
 const followUserFailed = data => ({
     type: 'FOLLOW_USER_FAILED',
+    status: 'error',
+});
+
+const getNewsFeedSuccessfully = data => ({
+    type: 'GET_NEWS_FEED_SUCCESSFULLY',
+    status: 'success',
+    newsFeed: data
+});
+
+const getNewsFeedFailed = data => ({
+    type: 'GET_NEWS_FEED_FAILED',
     status: 'error',
     message: data
 });

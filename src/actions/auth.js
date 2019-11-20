@@ -82,6 +82,12 @@ export const userLoginFetch = user => {
 
 export const getUserInfo = token => {
     return dispatch => {
+        if(token === null) 
+        {
+            dispatch(getUserInfoFailed({ message: "User is not logged in yet" }));
+            return;
+        }
+        else
         return axios.get(process.env.REACT_APP_API_URL + 'user/info',
             {
                 headers: {
@@ -135,8 +141,9 @@ const registrationFailed = data => ({
 });
 const loginFailed = data => ({
     type: 'LOGIN_FAILED',
+    isLoggedIn: false,
     requestResponse: {
-        status: 'success',
+        status: 'error',
         message: data.message
     }
 });
@@ -154,5 +161,6 @@ const getUserInfoFailed = data => ({
     requestResponse: {
         status: 'error',
         message: data.message
-    }
+    },
+    isLoggedIn: false
 });

@@ -61,7 +61,7 @@ class Registration extends React.Component{
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
-                            <input type="text" className="form-control border-0 input_place" id="name" placeholder="Fullname" name="name" value={this.state.name} onChange={this.handleChange} />
+                            <input type="text" className="form-control border-0 input_place" id="name" placeholder="Full name" name="name" value={this.state.name} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                             <input type="email" className="form-control border-0 input_place" id="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleChange} />

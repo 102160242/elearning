@@ -12,11 +12,11 @@ class Header extends React.Component {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/newsfeed"><i className="fas fa-newspaper"></i> News Feed</Link>
+                        <Link className="nav-link" to={ "/" + this.props.currentUser.id + "/newsfeed" }><i className="fas fa-newspaper"></i> News Feed</Link>
                     </li>
                     <li className="nav-item">
                         <li className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fas fa-user"></i> { this.props.currentUser.name }
                             </Link>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">

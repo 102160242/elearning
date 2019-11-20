@@ -29,10 +29,10 @@ class Pages extends React.Component {
                     <Switch>
                         <Route exact path="/profile" component={Profile} />
                         <Route exact path="/categories" component={Categories} />
-                        <Route exact path="/followers" component={Followers} />
-                        <Route exact path="/following" component={Following} />
+                        <Route exact path="/:user_id/followers" component={Followers} />
+                        <Route exact path="/:user_id/following" component={Following} />
                         <Route exact path="/learnt_words" component={LearntWords} />
-                        <Route exact path="/newsfeed" component={NewsFeed} />
+                        <Route exact path="/:user_id/newsfeed" component={NewsFeed} />
                         <Route path="/test" component={Test} />
                         <Route exact path="/words/:category_id" component={Words} />
                         <Route exact path="/" component={Home} />
