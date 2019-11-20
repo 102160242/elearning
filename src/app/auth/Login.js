@@ -22,7 +22,11 @@ class Login extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.userLoginFetch(this.state);
+        var btnSubmit = document.getElementById("submitBtn");
+        btnSubmit.disabled = true;
+        this.props.userLoginFetch(this.state).then(() => {
+            btnSubmit.disabled = false;
+        });
     }
 
     componentDidMount() {
@@ -41,7 +45,7 @@ class Login extends React.Component {
                         <div className="d-flex justify-content-center p-2" >
                             <Link to="/">
                                 <h1>
-                                    <i class="fas fa-home big-icon "></i>
+                                    <i className="fas fa-home big-icon "></i>
                                 </h1>
                             </Link>
                         </div>
@@ -49,24 +53,24 @@ class Login extends React.Component {
                             <h3>Sign In</h3>
                         </div>
                         <form onSubmit={this.handleSubmit}>
-                            <div class="form-group">
-                                <input type="email" class="form-control border border-0 input_place" id="email" placeholder="Email" name="email" onChange={this.handleChange} />
+                            <div className="form-group">
+                                <input type="email" className="form-control border border-0 input_place" id="email" placeholder="Email" name="email" onChange={this.handleChange} />
                             </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control border border-0 input_place" id="password" placeholder="Password" name="password" onChange={this.handleChange} />
+                            <div className="form-group">
+                                <input type="password" className="form-control border border-0 input_place" id="password" placeholder="Password" name="password" onChange={this.handleChange} />
                             </div>
-                            <div class="form-group form-check d-flex justify-content-between ">
-                                <label class="form-check-label ">
-                                    <input class="form-check-input" type="checkbox" name="remember" onChange={this.handleChange} /> Remember me
+                            <div className="form-group form-check d-flex justify-content-between ">
+                                <label className="form-check-label ">
+                                    <input className="form-check-input" type="checkbox" name="remember" onChange={this.handleChange} /> Remember me
                                 </label>
                                 <Link to="/auth/forgotPassword">Forget Password?</Link>
                             </div>
                             <div className="d-flex justify-content-center ">
-                                <button type="submit" class="btn btn-primary btn-lg btn">Sign In</button>
+                                <button id="submitBtn" type="submit" className="btn btn-primary btn-lg btn">Sign In</button>
                             </div>
                             <div className="d-flex justify-content-center p-4">
-                                Don't have an account yet?
-                                <Link to="/auth/registration" >Sign Up</Link>
+                                Don't have an account yet?&nbsp;
+                                <Link to="/auth/registration">Sign Up</Link>
                             </div>
                         </form>
                     </div>

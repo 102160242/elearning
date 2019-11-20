@@ -19,12 +19,12 @@ class _DoTest extends React.Component {
     }
     componentDidMount() {
         document.title = "Do Test";
+        // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
         var token = localStorage.getItem("token");
         var id = this.props.match.params.test_id;
         this.props.getTest(token, id).then(() => {
             this.props.changeLoadingStatus(false);
             var display = document.querySelector('#timer');
-            // Bat dau dem gio
             this.startTimer(this.props.test.timeLeft, display);
         });
     }
@@ -127,6 +127,10 @@ class _DoTest extends React.Component {
         );
     }
     render() {
+        if(this.props.isLoggedIn === false)
+        {
+            this.props.history.push("/403");
+        }
         return (
             <div className="container mt-3 mb-3">
                 <form onSubmit={this.handleSubmit}>
@@ -157,6 +161,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
         test: state.test.test,
+        isLoggedIn: state.auth.isLoggedIn,
         status: state.test.status
     }
 }
