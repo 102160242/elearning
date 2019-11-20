@@ -109,7 +109,6 @@ class Profile extends React.Component {
                                             <label for="email">Email</label>
                                             <input type="email" className="form-control" id="email" value={this.props.currentUser.email} disabled></input>
                                         </div>
-
                                         <div className="form-group danger">
                                             <label for="cpw">Current password</label>
                                             <input type="password" className="form-control" name="current_password" placeholder="Your current password" onChange={this.handleChange}></input>

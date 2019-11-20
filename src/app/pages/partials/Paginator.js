@@ -14,6 +14,10 @@ export default class Paginator extends React.Component {
         // console.log(this.props)
         // console.log("Page cuoi la " + this.props.paginate.last_page);
         // console.log("Page hien tai la " + this.props.paginate.current_page);
+        if(!this.props.paginate)
+        {
+            return <></>
+        }
         var pageNumber = []; 
         if(this.props.paginate.last_page < 10)
         {
