@@ -14,14 +14,23 @@ class NewsFeed extends React.Component {
         this.renderActivities = this.renderActivities.bind(this);
     }
     static getDerivedStateFromProps(props, prevState){
-        if(props.isLoggedIn === true && Object.keys(props.newsFeed).length == 0)
+        //console.log("getDerivedStateFromProps called")
+        //console.log(props);
+        if(props.isLoggedIn === true)
         {
-            // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
-            var user_id = props.match.params.user_id;
-            var token = localStorage.getItem("token");
-            props.getNewsFeed(token, user_id).then(() => {
+            if(Object.keys(props.newsFeed).length == 0)
+            {
+                // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
+                var user_id = props.match.params.user_id;
+                var token = localStorage.getItem("token");
+                props.getNewsFeed(token, user_id).then(() => {
+                    props.changeLoadingStatus(false);
+                })
+            }
+            else
+            {
                 props.changeLoadingStatus(false);
-            })
+            }
         }
         else if(props.isLoggedIn === false)
         {
