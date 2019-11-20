@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-export const getWords = (token, category_id) => {
+export const getWords = (token, category_id, params={}) => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + "words?category_id=" + category_id,
         {
+            params: params,
             headers: {
                 "Authorization": token,
             }

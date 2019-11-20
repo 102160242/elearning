@@ -3,145 +3,171 @@ import _WordCard from './_WordCard';
 import { connect } from 'react-redux';
 import { getWords, learntWord, unlearntWord } from '../../actions/word';
 import { changeLoadingStatus } from '../../actions/app';
+import queryString from 'query-string';
+import Paginator from '../pages/partials/Paginator';
 import './Words.css'
 
 class Words extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
+            category_name: "",
+            page: 1,
+            search: "",
+            order: "asc",
+            filter: "All",
             wordsList: [],
         }
         this.searchHandler = this.searchHandler.bind(this);
-        this.sortAtoZ = this.sortAtoZ.bind(this);
-        this.sortZtoA = this.sortZtoA.bind(this);
+        this.orderhandler = this.orderhandler.bind(this);
         this.learntWordhandler = this.learntWordhandler.bind(this);
         this.unlearntWordhandler = this.unlearntWordhandler.bind(this);
-        this.AllFilterhandler = this.AllFilterhandler.bind(this);
-        this.UnLearntWordFilterhandler = this.UnLearntWordFilterhandler.bind(this);
-        this.LearntWordFilterhandler = this.LearntWordFilterhandler.bind(this);
+        this.Filterhandler = this.Filterhandler.bind(this);
     }
+
+    getQueries() {
+        const params = new URLSearchParams(this.props.location.search);
+        const name = params.get('name');
+        var query = queryString.parse(this.props.location.search, { ignoreQueryPrefix: true });
+        var queries = {};
+        queries["name"] = name;
+        queries["search"] = query.search ? query.search : "";
+        queries["page"] = query.page ? query.page : 1;
+        queries["order"] = "";
+        queries["filter"] = "All";
+        return queries;
+    }
+
     componentDidMount() {
         document.title = "Words";
 
         var token = localStorage.getItem('token');
         let category_id = this.props.match.params.category_id;
+        var queries = this.getQueries();
 
-        this.props.getWords(token, category_id).then(() => {
+        this.props.getWords(token, category_id, queries).then(() => {
             this.props.changeLoadingStatus(false);
             this.setState({
-                wordsList: this.props.wordsList
+                category_name: queries["name"],
+                search: queries["search"],
+                wordsList: this.props.wordsList.list,
             });
         })
     }
 
-    searchHandler(e){
-        var keyword = e.target.value;
-        if(keyword !== ""){
-            var arr = [];
-            for(var i = 0; i < this.props.wordsList.length; i ++)
-            {
-                var item = this.props.wordsList[i];
-                if (item.word.toLowerCase().includes(keyword.toLowerCase())) arr.push(item);
-            }
-            this.setState({wordsList: arr});
-        }
-        else this.setState({wordsList: this.props.wordsList})
+    searchHandler(e) {
+        var category_id = this.props.match.params.category_id;
+        var token = localStorage.getItem('token');
+
+        // Params
+        var queries = this.getQueries();
+        queries["search"] = e.target.value;
+        queries["page"] = 1;
+        this.setState({
+            search: queries["search"],
+            page: queries["page"]
+        })
+        this.props.history.push({
+            search: "?" + new URLSearchParams(queries).toString()
+        });
+        this.props.getWords(token, category_id, queries).then(() => {
+            this.setState({
+                search: queries["search"],
+                wordsList: this.props.wordsList.list,
+            });
+        });
+        // var keyword = e.target.value;
+        // if(keyword !== ""){
+        //     var arr = [];
+        //     for(var i = 0; i < this.props.wordsList.length; i ++)
+        //     {
+        //         var item = this.props.wordsList[i];
+        //         if (item.word.toLowerCase().includes(keyword.toLowerCase())) arr.push(item);
+        //     }
+        //     this.setState({wordsList: arr});
+        // }
+        // else this.setState({wordsList: this.props.wordsList})
     }
 
-    sortAtoZ(){
-        var arr = [...this.state.wordsList];
-        for(var i = 0; i < arr.length -1; i++)
-            for(var j = 0; j < arr.length -1; j++)
-                if(arr[j].word > arr[j+1].word)
-                {
-                    var item = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = item;
-                }
-        this.setState({wordsList: arr});
-        console.log(arr.length)
+    orderhandler(e) {
+        // var arr = [...this.state.wordsList];
+        // for(var i = 0; i < arr.length -1; i++)
+        //     for(var j = 0; j < arr.length -1; j++)
+        //         if(arr[j].word < arr[j+1].word)
+        //         {
+        //             var item = arr[j];
+        //             arr[j] = arr[j+1];
+        //             arr[j+1] = item;
+        //         }
+        // this.setState({wordsList: arr});
+        var category_id = this.props.match.params.category_id;
+        var token = localStorage.getItem('token');
+        var queries = this.getQueries();
+        queries["order"] = e.target.value;
+        this.setState({
+            order: e.target.value
+        });
+        this.props.history.push({
+            search: "?" + new URLSearchParams(queries).toString()
+        });
+        this.props.getWords(token, category_id, queries).then(() => {
+            this.setState({
+                order: queries["order"],
+                wordsList: this.props.wordsList.list,
+            });
+        });
     }
 
-    sortZtoA(){
-        var arr = [...this.state.wordsList];
-        for(var i = 0; i < arr.length -1; i++)
-            for(var j = 0; j < arr.length -1; j++)
-                if(arr[j].word < arr[j+1].word)
-                {
-                    var item = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = item;
-                }
-        this.setState({wordsList: arr});
+    Filterhandler(e) {
+        var category_id = this.props.match.params.category_id;
+        var token = localStorage.getItem('token');
+        var queries = this.getQueries();
+        queries["filter"] = e.target.value;
+        this.setState({
+            filter: e.target.value
+        });
+        this.props.history.push({
+            search: "?" + new URLSearchParams(queries).toString()
+        });
+        this.props.getWords(token, category_id, queries).then(() => {
+            this.setState({
+                filter: queries["filter"],
+                wordsList: this.props.wordsList.list,
+            });
+        });
     }
 
-    AllFilterhandler()
-    {
-        this.setState({wordsList: this.props.wordsList});
-    }
-
-    LearntWordFilterhandler()
-    {
-        var arr = [];
-        for(var i = 0; i < this.props.wordsList.length; i++)
-        {
-            var item = this.props.wordsList[i];
-            if(item.learnt)
-                arr.push(item);
-        }
-        this.setState({wordsList: arr});
-    }
-
-    UnLearntWordFilterhandler()
-    {
-        var arr = [];
-        for(var i = 0; i < this.props.wordsList.length; i++)
-        {
-            var item = this.props.wordsList[i];
-            if(!item.learnt)
-                arr.push(item);
-        }
-        this.setState({wordsList: arr});
-    }
-
-    learntWordhandler(word_id)
-    {
+    learntWordhandler(word_id) {
         var token = localStorage.getItem('token');
         this.props.learntWord(token, word_id).then(() => {
-            if(this.props.status === "success")
-            {
+            if (this.props.status === "success") {
                 var arr = [...this.state.wordsList];
-                for(var i = 0; i < arr.length; i++)
-                    if(arr[i].id === word_id)
-                    {
+                for (var i = 0; i < arr.length; i++)
+                    if (arr[i].id === word_id) {
                         arr[i].learnt = true;
                         break;
                     }
-                this.setState({wordsList: arr});
+                this.setState({ wordsList: arr });
             }
         });
     }
 
-    unlearntWordhandler(word_id)
-    {
+    unlearntWordhandler(word_id) {
         var token = localStorage.getItem('token');
         this.props.unlearntWord(token, word_id).then(() => {
-            if(this.props.status === "success")
-            {
+            if (this.props.status === "success") {
                 var arr = [...this.state.wordsList];
-                for(var i = 0; i < arr.length; i++)
-                    if(arr[i].id === word_id)
-                    {
+                for (var i = 0; i < arr.length; i++)
+                    if (arr[i].id === word_id) {
                         arr[i].learnt = false;
                         break;
                     }
-                this.setState({wordsList: arr});
+                this.setState({ wordsList: arr });
             }
         });
     }
 
-    componentWillUnmount()
-    {
+    componentWillUnmount() {
         this.props.changeLoadingStatus(true);
     }
     // handleCollapseDropdown(e)
@@ -151,12 +177,10 @@ class Words extends React.Component {
     //     e.target.nextElementSibling.className = "dropdown-menu show";
     // }
     render() {
-        var cards = this.state.wordsList && this.state.wordsList.map((data, key) => 
+        var cards = this.props.wordsList && this.props.wordsList.list && this.props.wordsList.list.map((data, key) =>
             <_WordCard data={data} key={key} learntWordhandler={this.learntWordhandler} unlearntWordhandler={this.unlearntWordhandler} />
         );
         // let category_name = this.props.location.search;
-        const params = new URLSearchParams(this.props.location.search);
-        const name = params.get('name');
         return (
             <>
                 <div className="container">
@@ -165,7 +189,7 @@ class Words extends React.Component {
                             <div className="row mt-3 align-items-center">
                                 <div className="col-md-6">
                                     <h4>
-                                        Words List of {name}
+                                        Words List of {this.state.category_name}
                                     </h4>
                                 </div>
                                 <div className="col-md-6 col-sm-12 ">
@@ -176,11 +200,11 @@ class Words extends React.Component {
                                                     <i className="fas fa-sort"></i> <span>Filter</span>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                    <button className="dropdown-item btn btn-outline-primary" onClick={this.AllFilterhandler} >All</button>
-                                                    <button className="dropdown-item btn btn-outline-primary" onClick={this.LearntWordFilterhandler} >Learnt Words</button>
-                                                    <button className="dropdown-item btn btn-outline-primary" onClick={this.UnLearntWordFilterhandler} >Unlearnt Words</button>
+                                                    <button className="dropdown-item btn btn-outline-primary" value="all" onClick={this.Filterhandler} >All</button>
+                                                    <button className="dropdown-item btn btn-outline-primary" value="learnt" onClick={this.Filterhandler} >Learnt Words</button>
+                                                    <button className="dropdown-item btn btn-outline-primary" value="unlearnt" onClick={this.Filterhandler} >Unlearnt Words</button>
                                                 </div>
-                                            </div>    
+                                            </div>
                                         </div>
                                         <div className="col-auto">
                                             <div id="order" className="dropdown" /*onMouseEnter={this.handleCollapseDropdown}*/>
@@ -188,13 +212,13 @@ class Words extends React.Component {
                                                     <i className="fas fa-sort"></i> <span>Sort</span>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                    <button className="dropdown-item btn btn-outline-primary " onClick={this.sortAtoZ} >A-Z</button>
-                                                    <button className="dropdown-item btn btn-outline-primary " onClick={this.sortZtoA} >Z-A</button>
+                                                    <button className="dropdown-item btn btn-outline-primary " value="asc" onClick={this.orderhandler} >A-Z</button>
+                                                    <button className="dropdown-item btn btn-outline-primary " value="desc" onClick={this.orderhandler} >Z-A</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-auto">
-                                            <input className="form-control mr-sm-2 " type="search" placeholder="Search" onChange={this.searchHandler} />
+                                            <input className="form-control mr-sm-2 " type="search" placeholder="Search" value={this.state.search} onChange={this.searchHandler} />
                                         </div>
                                     </div>
                                 </div>
@@ -204,27 +228,6 @@ class Words extends React.Component {
                             {cards}
                         </div>
                     </div>
-                    <div className="m-3">
-                        <nav>
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
             </>
         );
@@ -232,16 +235,16 @@ class Words extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         wordsList: state.words.list,
         status: state.words.status,
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    getWords: (token, category_id) => dispatch(getWords(token, category_id)),
+    getWords: (token, category_id, params) => dispatch(getWords(token, category_id, params)),
     learntWord: (token, word_id) => dispatch(learntWord(token, word_id)),
     unlearntWord: (token, word_id) => dispatch(unlearntWord(token, word_id)),
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
 });
-export default connect(mapStateToProps, mapDispatchToProps) (Words);
+export default connect(mapStateToProps, mapDispatchToProps)(Words);
