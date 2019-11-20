@@ -98,7 +98,7 @@ class Profile extends React.Component {
                                         <form onSubmit={this.handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">Full Name</label>
-                                                <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name == "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
+                                                <input type="text" className="form-control" placeholder="Full Name" name="name" value={this.state.name === "" ? this.props.currentUser.name : this.state.name} onChange={this.handleChange}></input>
                                             </div>
                                             <div className="form-group danger">
                                                 <label for="email">Email</label>
