@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
+import { getUserInfoFailed } from '../actions/auth';
 
 export const getTest = (token, test_id) => {
     return dispatch => {
@@ -30,8 +31,16 @@ export const getTest = (token, test_id) => {
             }
         })
         .catch(error => {
-            toastr.error("Failed to get data from server!", error);
-            console.log(error)
+            if(error.response.status == 401)
+            {
+                localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+            }
+            else
+            {
+                toastr.error("Failed to send request to server!", error);
+                console.log(error)
+            }
         });
     }
 }
@@ -101,8 +110,16 @@ export const submitTest = (token, data) => {
             }
         })
         .catch(error => {
-            toastr.error("Failed to send data to server!", error);
-            console.log(error)
+            if(error.response.status == 401)
+            {
+                localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+            }
+            else
+            {
+                toastr.error("Failed to send request to server!", error);
+                console.log(error)
+            }
         });
     }
 }
@@ -138,8 +155,16 @@ export const createNewTest = (token, category_id) => {
             }
         })
         .catch(error => {
-            toastr.error("Failed to send data to server!", error);
-            console.log(error)
+            if(error.response.status == 401)
+            {
+                localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+            }
+            else
+            {
+                toastr.error("Failed to send request to server!", error);
+                console.log(error)
+            }
         });
     }
 }

@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logoutUser } from '../../../actions/auth';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.logoutUser = this.logoutUser.bind(this);
+    }
+    logoutUser()
+    {
+        //console.log("Logout User func called")
+        var token = localStorage.getItem("token");
+        this.props.logoutUser(token);
     }
     renderJSX() {
         if (this.props.isLoggedIn) {
@@ -25,7 +33,7 @@ class Header extends React.Component {
                                 <div className="dropdown-divider"></div>
                                 <Link className="dropdown-item" to="/learnt_words"><i className="fab fa-wikipedia-w"></i> Learnt Words</Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" rel="nofollow" data-method="delete" to="/logout"><i className="fas fa-sign-out-alt"></i> Logout</Link>
+                                <Link className="dropdown-item" rel="nofollow" to="#" onClick={this.logoutUser}><i className="fas fa-sign-out-alt"></i> Logout</Link>
                             </div>
                         </li>
                     </li>
@@ -37,7 +45,7 @@ class Header extends React.Component {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/auth/login"><i className="fas fa-sign-in-alt"></i> Login</Link>
+                        <Link className="nav-link" to={{pathname: '/auth/login', state: { prevPath: this.props.history.location.pathname }}}><i className="fas fa-sign-in-alt"></i> Login</Link>
                     </li>
                 </>
             );
@@ -75,5 +83,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
         isLoggedIn: state.auth.isLoggedIn
     }
 }
-export default connect(mapStateToProps, null) (Header);
+const mapDispatchToProps = dispatch => ({
+    logoutUser: (token) => dispatch(logoutUser(token))
+});
+export default connect(mapStateToProps, mapDispatchToProps) (Header);
 // export default Header;
