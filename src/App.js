@@ -37,7 +37,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route path="/auth" component={Auth} />
-          <Route exact path="/admin" component={Admin} />
+          <Route path="/admin" component={Admin} />
           <Route exact path="/404" component={_404} />
           <Route exact path="/403" component={_403} />
           <Route component={Pages} />

@@ -1,18 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logoutUser } from '../../../actions/auth';
+import swal from 'sweetalert';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.logoutUser = this.logoutUser.bind(this);
+    }
+    logoutUser()
+    {
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to logout?",
+            icon: "warning",
+            buttons: ["Go back", "Log me out!"],
+            dangerMode: true,
+          })
+          .then((willLogout) => {
+            if (willLogout) {
+                var token = localStorage.getItem("token");
+                this.props.logoutUser(token);
+            }
+          });
+        //console.log("Logout User func called")
     }
     renderJSX() {
         if (this.props.isLoggedIn) {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to={ "/" + this.props.currentUser.id + "/newsfeed" }><i className="fas fa-newspaper"></i> News Feed</Link>
+                        <Link className="nav-link" to={ "/" + this.props.currentUser.id + "/newsfeed" } key="News feed"><i className="fas fa-newspaper"></i> News Feed</Link>
                     </li>
                     <li className="nav-item">
                         <li className="nav-item dropdown">
@@ -25,7 +45,7 @@ class Header extends React.Component {
                                 <div className="dropdown-divider"></div>
                                 <Link className="dropdown-item" to="/learnt_words"><i className="fab fa-wikipedia-w"></i> Learnt Words</Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" rel="nofollow" data-method="delete" to="/logout"><i className="fas fa-sign-out-alt"></i> Logout</Link>
+                                <Link className="dropdown-item" rel="nofollow" to="#" onClick={this.logoutUser}><i className="fas fa-sign-out-alt"></i> Logout</Link>
                             </div>
                         </li>
                     </li>
@@ -37,7 +57,7 @@ class Header extends React.Component {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/auth/login"><i className="fas fa-sign-in-alt"></i> Login</Link>
+                        <Link className="nav-link" to={{pathname: '/auth/login', state: { prevPath: this.props.history.location.pathname }}} key="Login"><i className="fas fa-sign-in-alt"></i> Login</Link>
                     </li>
                 </>
             );
@@ -75,5 +95,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
         isLoggedIn: state.auth.isLoggedIn
     }
 }
-export default connect(mapStateToProps, null) (Header);
+const mapDispatchToProps = dispatch => ({
+    logoutUser: (token) => dispatch(logoutUser(token))
+});
+export default connect(mapStateToProps, mapDispatchToProps) (Header);
 // export default Header;

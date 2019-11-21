@@ -20,9 +20,9 @@ class NewsFeed extends React.Component {
     static getDerivedStateFromProps(props, prevState){
         //console.log("getDerivedStateFromProps called")
         //console.log(props);
-        if(props.isLoggedIn === true)
-        {
-            if(Object.keys(props.newsFeed).length == 0)
+        //if(props.isLoggedIn === true)
+        //{
+            if(props.newsFeed.timeline.length == 0 && Object.keys(props.newsFeed.user_info).length == 0) // Neu chua co du lieu Newsfeed duoc lay ve
             {
                 // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
                 var user_id = props.match.params.user_id;
@@ -35,11 +35,11 @@ class NewsFeed extends React.Component {
             {
                 props.changeLoadingStatus(false);
             }
-        }
-        else if(props.isLoggedIn === false)
-        {
-            props.history.push("/403");
-        }
+        //}
+        // else if(props.isLoggedIn === false)
+        // {
+        //     props.history.push("/403");
+        // }
         return null;
     }
     componentDidMount() {
@@ -104,6 +104,7 @@ class NewsFeed extends React.Component {
         }
         else {
             return this.props.newsFeed && this.props.newsFeed.timeline && this.props.newsFeed.timeline.map((i, key) => {
+                var user_info = this.props.newsFeed.user_info;
                 return (
                     <div className="card mb-2" key={key}>
                         <div className="card-body">
@@ -111,7 +112,7 @@ class NewsFeed extends React.Component {
                                 <div className="row align-items-center">
                                     <div className="col-auto">
                                         <Link to={"/" + i.user_id + "/newsfeed"} className="avatar">
-                                            <img src={this.props.currentUser.avatar_url} alt="Avatar" className="avatar-img rounded-circle" style={{ height: "50px" }} />
+                                            <img src={user_info.avatar_url} alt="Avatar" className="avatar-img rounded-circle" style={{ height: "50px" }} />
                                         </Link>
                                     </div>
                                     <div className="col ml-n2">
@@ -184,13 +185,15 @@ class NewsFeed extends React.Component {
     }
     render() {
         //console.log(this.state);
-        //console.log(this.props.newsFeed)
-        if (!this.props.isLoggedIn) {
-            return (
-                <></>
-            )
-        } else {
+        //console.log(this.props)
+        // if (!this.props.isLoggedIn) {
+        //     return (
+        //         <></>
+        //     )
+        //} else {
+            if(!this.props.newsFeed) return <></>
             var activities = this.renderActivities();
+            var user_info = this.props.newsFeed.user_info;
             return (
                 <div>
                     <div className="container mt-6">
@@ -198,15 +201,15 @@ class NewsFeed extends React.Component {
                             <div className="row">
                                 <div className="col-auto">
                                     <div className="anh mt-5">
-                                        <img src={this.props.currentUser.avatar_url} alt="image" className="img-responsive" width="60" height="60"></img>
+                                        <img src={user_info.avatar_url} alt="image" className="img-responsive" width="60" height="60"></img>
                                     </div>
                                 </div>
                                 <div className="col mb-3  ml-md-n2">
                                     <div className="mt-5">
-                                        <p>{this.props.currentUser.name}</p>
+                                        <p>{user_info.name}</p>
                                     </div>
                                     <div className="mt-2">
-                                        <p><i className="far fa-envelope mt-2 mr-2"></i>{this.props.currentUser.email}</p>
+                                        <p><i className="far fa-envelope mt-2 mr-2"></i>{user_info.email}</p>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +227,7 @@ class NewsFeed extends React.Component {
                                         <tbody>
                                             <tr>
                                                 <td>Joined</td>
-                                                <td>{this.props.currentUser.created_at}</td>
+                                                <td>{user_info.created_at}</td>
                                             </tr>
                                             <tr>
                                                 <td>Learnt</td>
@@ -235,7 +238,7 @@ class NewsFeed extends React.Component {
                                             <tr>
                                                 <td>Following</td>
                                                 <td>
-                                                    <Link to={"/" + this.props.currentUser.id + "/following"} className="badge badge-pill badge-success">Users <span className="badge badge-light">{this.props.currentUser.total_following}</span></Link>
+                                                    <Link to={"/" + this.props.currentUser.id + "/following"} className="badge badge-pill badge-success">Users <span className="badge badge-light">{user_info.total_following}</span></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -255,7 +258,7 @@ class NewsFeed extends React.Component {
             );
         }
 
-    }
+    //}
 }
 const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);

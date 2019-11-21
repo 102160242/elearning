@@ -8,6 +8,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            prevPath: process.env.REACT_APP_LOGIN_SUCCESS_URL,
             email: "",
             password: "",
             remember_me: 0
@@ -25,12 +26,25 @@ class Login extends React.Component {
         var btnSubmit = document.getElementById("submitBtn");
         btnSubmit.disabled = true;
         this.props.userLoginFetch(this.state).then(() => {
+            if(this.props.requestResponse.status === "success")
+            {
+                // Neu dang nhap thanh cong
+                this.props.history.push(this.state.prevPath);
+            }            
             btnSubmit.disabled = false;
         });
     }
 
     componentDidMount() {
         document.title = 'Login';
+
+        // Kiem tra xem co prevPath khong
+        if(typeof this.props.history.location.state !== "undefined" && this.props.history.location.state.prevPath)
+        {
+            this.setState({
+                prevPath: this.props.history.location.state.prevPath
+            })
+        }
     }
     render() {
         if (this.props.isLoggedIn) {
@@ -82,7 +96,8 @@ class Login extends React.Component {
 const mapStateToProps = (state /*, ownProps*/) => {
     //console.log(state);
     return {
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        requestResponse: state.auth.requestResponse
     }
 }
 const mapDispatchToProps = dispatch => ({
