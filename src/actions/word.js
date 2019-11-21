@@ -31,7 +31,7 @@ export const getWords = (token, category_id, params={}) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -73,7 +73,7 @@ export const getMyWords = (token, params={}) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -120,7 +120,7 @@ export const learntWord = (token, id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -168,7 +168,7 @@ export const unlearntWord = (token, id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));

@@ -80,7 +80,7 @@ export const getFollowing = (token, user_id, params = {}) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -139,7 +139,7 @@ export const updateUser = (token, user) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -189,7 +189,7 @@ export const unfollow = (token, id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -238,7 +238,7 @@ export const follow = (token, user_id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
