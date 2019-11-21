@@ -20,16 +20,16 @@ export default function Paginator(props) {
         for (var i = 0; i < 3; i++) {
             pageNumber.push(i + 1);
         }
-        pageNumber.push(props.paginate.previous_page);
+        props.paginate.previous_page && pageNumber.push(props.paginate.previous_page);
         pageNumber.push(props.paginate.current_page);
-        pageNumber.push(props.paginate.next_page);
+        props.paginate.next_page && pageNumber.push(props.paginate.next_page);
         for (var i = props.paginate.last_page; i > props.paginate.last_page - 3; i--) {
             pageNumber.push(i);
         }
         // Xoa key duplicate va sap xep lai
         pageNumber = [...new Set(pageNumber)].sort(function (a, b) { return a - b });
     }
-
+    console.log(pageNumber)
     var previousArrow = <li className="page-item"><Link className="page-link" to={createQueries(props.paginate.previous_page)}><span aria-hidden="true">&laquo;</span></Link></li>;
 
     /*var pageBtn = pageNumber.map((v, k) => {

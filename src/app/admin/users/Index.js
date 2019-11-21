@@ -30,7 +30,7 @@ export default function Users_Index(props) {
   useEffect(() => {
     // Neu da xac thuc user hop le
     if (auth.isLoggedIn == true) {
-      // Lay danh sach categories
+      // Lay danh sach users
       dispatch(getUsers(localStorage.getItem("token"), getQueries()))
     }
     else if (auth.isLoggedIn == false) {
@@ -120,10 +120,10 @@ export default function Users_Index(props) {
     <div className="container-fluid">
       <h1>Users</h1>
       <div className="row justify-content-between mt-4">
-        <Link to="/admin/categories/new" className="btn btn-outline-success">New User</Link>
+        <Link to="/admin/users/new" className="btn btn-outline-success">New User</Link>
         <div className="row align-items-center">
           <div className="col-auto">
-            <input type="text" className="form-control mr-3 d-inline" placeholder="For example: juxtaposition" value={searchValue} onChange={searchHandler} title="Search Category"/>
+            <input type="text" className="form-control mr-3 d-inline" placeholder="For example: juxtaposition" value={searchValue} onChange={searchHandler} title="Search User"/>
           </div>
           <div className="col-auto">
             <select className="custom-select mr-3 d-inline" value={orderValue} onChange={orderHandler} title="Order">
