@@ -16,10 +16,14 @@ import categoriesReducer from './reducers/categories';
 import userReducer from './reducers/user';
 import appReducer from './reducers/app';
 import testReducer from './reducers/test';
-import wordsReducer from './reducers/word'
+import wordsReducer from './reducers/word';
+import adminCategoriesReducer from './reducers/admin/categories';
 
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
+    admin: combineReducers({
+        categories: adminCategoriesReducer
+    }),
     auth: authReducer,
     categories: categoriesReducer,
     words: wordsReducer,
