@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/auth';
+import swal from 'sweetalert';
 
 class Header extends React.Component {
     constructor(props) {
@@ -11,16 +12,27 @@ class Header extends React.Component {
     }
     logoutUser()
     {
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to logout?",
+            icon: "warning",
+            buttons: ["Go back", "Log me out!"],
+            dangerMode: true,
+          })
+          .then((willLogout) => {
+            if (willLogout) {
+                var token = localStorage.getItem("token");
+                this.props.logoutUser(token);
+            }
+          });
         //console.log("Logout User func called")
-        var token = localStorage.getItem("token");
-        this.props.logoutUser(token);
     }
     renderJSX() {
         if (this.props.isLoggedIn) {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to={ "/" + this.props.currentUser.id + "/newsfeed" }><i className="fas fa-newspaper"></i> News Feed</Link>
+                        <Link className="nav-link" to={ "/" + this.props.currentUser.id + "/newsfeed" } key="News feed"><i className="fas fa-newspaper"></i> News Feed</Link>
                     </li>
                     <li className="nav-item">
                         <li className="nav-item dropdown">
@@ -45,7 +57,7 @@ class Header extends React.Component {
             return (
                 <>
                     <li className="nav-item">
-                        <Link className="nav-link" to={{pathname: '/auth/login', state: { prevPath: this.props.history.location.pathname }}}><i className="fas fa-sign-in-alt"></i> Login</Link>
+                        <Link className="nav-link" to={{pathname: '/auth/login', state: { prevPath: this.props.history.location.pathname }}} key="Login"><i className="fas fa-sign-in-alt"></i> Login</Link>
                     </li>
                 </>
             );
