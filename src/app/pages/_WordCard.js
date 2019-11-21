@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 class _WordCard extends React.Component{
     constructor(props) {
@@ -11,11 +12,18 @@ class _WordCard extends React.Component{
     dofunLearnt(){
         var id = this.props.data.id;
         this.props.learntWordhandler(id);
+        var btnDiv = document.querySelector("#btn_"+id);
+        var btn = <button className="btn btn-warning" onClick={this.dofunUnLearnt} > Remove From List </button>
+        ReactDOM.render(btn, btnDiv);
+
     }
 
     dofunUnLearnt(){
         var id = this.props.data.id;
         this.props.unlearntWordhandler(id);
+        var btnDiv = document.querySelector("#btn_"+id);
+        var btn = <button className="btn btn-success" onClick={this.dofunLearnt} > Check as Learnt </button>
+        ReactDOM.render(btn, btnDiv);
     }
 
     render() {
@@ -30,12 +38,18 @@ class _WordCard extends React.Component{
                             <p className="text-muted"> /{data.ipa}/ </p>                         
                             <p> {data.meaning} </p>
                             {
-                                data.learnt ? (
-                                    <button className="btn btn-warning" onClick={this.dofunUnLearnt} > Remove From List </button>
-                                ) : (
-                                    <button className="btn btn-success" onClick={this.dofunLearnt} > Check as Learnt </button>
-                                )
-                            }
+                                this.props.type ? (
+                                <div id={"btn_" + data.id}> 
+                                {
+                                    data.learnt ? (
+                                        <button className="btn btn-warning" onClick={this.dofunUnLearnt} > Remove From List </button>
+                                    ) : (
+                                        <button className="btn btn-success" onClick={this.dofunLearnt} > Check as Learnt </button>
+                                    )
+                                }
+                                </div>) : ( <> </>)
+                            }       
+
                         </div>
                         <div className="content-right col-md-4 col-sm-6 col-xs-6">
                             <div className="img-thumbnail">

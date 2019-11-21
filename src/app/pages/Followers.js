@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { getFollowers, follow, unfollow } from '../../actions/user';
 import _Following_Follower_Card from './_Following_Follower_Card';
 import { changeLoadingStatus } from '../../actions/app';
@@ -14,9 +15,8 @@ class Followers extends React.Component {
             search: ""
          };
          this.searchHandler = this.searchHandler.bind(this);
-         this.handleFollowClick = this.handleFollowClick.bind(this);
-         this.handleUnFollowClick = this.handleUnFollowClick.bind(this);
-         this.ElementChange = this.ElementChange.bind(this);
+        //  this.handleFollowClick = this.handleFollowClick.bind(this);
+        //  this.handleUnFollowClick = this.handleUnFollowClick.bind(this);
     }
 
     searchHandler(e)
@@ -58,47 +58,23 @@ class Followers extends React.Component {
         queries["page"] = query.page ? query.page : 1;
         return queries;
     }
-    ElementChange(id)
-    {
-        var arr = [];
-        for(var i = 0; i < this.props.followersList.length; i++)
-        {
-            var item = this.props.followersList[i];
-            if(item.id == id)
-                if(item.is_following)
-                    item.is_following = false;
-                else
-                    item.is_following = true;
-            arr.push(item);
-        }
-    }
-    handleFollowClick(val){
-        var token = localStorage.getItem('token');
-        //console.log(token);
-        this.props.follow(token, val).then(() => {
-            if(this.props.status == "success")
-            {
-                this.ElementChange(val);
-            }
-        });
-        //console.log("From handleFollowCLick")
-        //console.log(this.props.followersList)
-    }
+    // handleFollowClick(val){
+    //     var token = localStorage.getItem('token');
+    //     //console.log(token);
+    //     this.props.follow(token, val);
+    //     //console.log("From handleFollowCLick")
+    //     //console.log(this.props.followersList)
+    // }
 
-    handleUnFollowClick(val){
-        var token = localStorage.getItem('token');
-        this.props.unfollow(token, val).then(() => {
-            if(this.props.status == "success")
-            {
-                this.ElementChange(val);
-            }
-        });
-        //console.log("From handleUnfollowCLick")
-        //console.log(this.props.followersList)
-    }
+    // handleUnFollowClick(val){
+    //     var token = localStorage.getItem('token');
+    //     this.props.unfollow(token, val);
+    //     //console.log("From handleUnfollowCLick")
+    //     //console.log(this.props.followersList)
+    // }
     static getDerivedStateFromProps(nextProps, prevState)
     {
-        //console.log("getDerivedStateFromProps called")
+        console.log("getDerivedStateFromProps called")
         var query = queryString.parse(nextProps.location.search, { ignoreQueryPrefix: true });
         var queries = {};
         queries["search"] = query.search ? query.search : "";
@@ -134,15 +110,16 @@ class Followers extends React.Component {
     }
     render() {
         //console.log(this.state);
-        //console.log(this.props.followersData.list)
+        // console.log(this.props.isLoggedIn)
+        if(!this.props.isLoggedIn)
+        {
+            return (<Redirect to={"/auth/login"} />);
+        }
         var list = [];
         for(var i = 0; i < this.props.followersData.list.length; i++)
         {
-            var item = this.props.followersData.list[i];
-            if(item.is_following)
-                {var item = <_Following_Follower_Card name={item.name} id={item.id} fun={this.handleUnFollowClick} check={item.is_following}  />;}
-            else
-                {var item = <_Following_Follower_Card name={item.name} id={item.id} fun={this.handleFollowClick} check={item.is_following}  />;}
+            var d = this.props.followersData.list[i];
+            {var item = <_Following_Follower_Card data={d}  key={d.id} />;}
             list.push(item);
         }
         return (
@@ -150,7 +127,7 @@ class Followers extends React.Component {
                 <div class="container">
                     <div className="row mt-3 d-flex justify-content-between ">
                         <div className="col-sm-4 ">
-                            <h3>Total <span class="badge badge-primary p-2">{this.props.followersData.list.length}</span></h3>
+                            <h3>Total <span class="badge badge-primary p-2">{this.props.followersData.paginate.total_item}</span></h3>
                         </div>
                         <div class="col-md-3">
                             <input class="form-control mr-sm-2 " type="search" placeholder="Search" onChange={this.searchHandler} value={this.getQueries().search}/>

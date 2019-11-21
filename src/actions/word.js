@@ -12,7 +12,6 @@ export const getWords = (token, category_id, params={}) => {
             }
         })
         .then(res => {
-            //console.log(res)
             if (res.status === 200) {
                 var d = res.data;
                 if (d.status === "success") {
@@ -23,14 +22,12 @@ export const getWords = (token, category_id, params={}) => {
                     var msg = "Couldn't get data from server!" + res.status;
                     toastr.error(msg);
                     dispatch(getListFailed({"message": msg}));
-                    console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
                 dispatch(getListFailed({"message": msg}));
-                console.log(msg);
             }
         })
         .catch(error => {
@@ -42,7 +39,48 @@ export const getWords = (token, category_id, params={}) => {
             else
             {
                 toastr.error("Failed to send request to server!", error);
-                console.log(error)
+            }
+        });
+    }
+}
+
+export const getMyWords = (token, params={}) => {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_API_URL + "/words/myword",
+        {
+            params: params,
+            headers: {
+                "Authorization": token,
+            }
+        })
+        .then(res => {
+            if (res.status === 200) {
+                var d = res.data;
+                if (d.status === "success") {
+                    dispatch(returnMyWord(d.data));
+                }
+                else
+                {
+                    var msg = "Couldn't get data from server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(getListFailed({"message": msg}));
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(getListFailed({"message": msg}));
+            }
+        })
+        .catch(error => {
+            if(error.response.status == 401)
+            {
+                localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
+                dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
+            }
+            else
+            {
+                toastr.error("Failed to send request to server!", error);
             }
         });
     }
@@ -147,35 +185,41 @@ export const unlearntWord = (token, id) => {
 const unlearntWordSuccessfully = data => ({
     type: 'UNLEARNT_SUCCESSFULLY',
     status: 'success',
-    list: data
+    data: data
 });
 
 const unlearntWordFailed = data => ({
     type: 'UNLEARNT_FAILED',
     status: 'error',
-    list: data
+    data: data
 });
 
 const learntWordSuccessfully = data => ({
     type: 'LEARNT_SUCCESSFULLY',
     status: 'success',
-    list: data
+    data: data
 });
 
 const learntWordFailed = data => ({
     type: 'LEARNT_FAILED',
     status: 'error',
-    list: data
+    data: data
 });
 
 const returnList = data => ({
     type: 'RETURN_LIST',
     status: 'success',
-    list: data
+    data: data
 });
 
 const getListFailed = data => ({
     type: 'GET_LIST_FAILED',
     status: 'error',
     message: data
+});
+
+const returnMyWord = data => ({
+    type: 'RETURN_MY_WORD',
+    status: 'success',
+    data: data
 });

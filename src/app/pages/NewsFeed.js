@@ -18,7 +18,7 @@ class NewsFeed extends React.Component {
         //console.log(props);
         //if(props.isLoggedIn === true)
         //{
-            if(props.newsFeed.timeline.length == 0 && Object.keys(props.newsFeed.user_info).length == 0) // Neu chua co du lieu Newsfeed duoc lay ve
+            if(props.newsFeed.timeline.length === 0 && Object.keys(props.newsFeed.user_info).length === 0) // Neu chua co du lieu Newsfeed duoc lay ve
             {
                 // Lay ID user theo params neu truy cap vao duong dan /user_id/newsfeed
                 var user_id = props.match.params.user_id;
@@ -54,7 +54,7 @@ class NewsFeed extends React.Component {
         e.preventDefault();
     }
     renderActivities() {
-        if (this.props.newsFeed.timeline && this.props.newsFeed.timeline.length == 0) {
+        if (this.props.newsFeed.timeline && this.props.newsFeed.timeline.length === 0) {
             return <p>There is no activity to show</p>
         }
         else {
@@ -72,7 +72,7 @@ class NewsFeed extends React.Component {
                                     </div>
                                     <div className="col ml-n2">
                                         <h4 className="card-title mb-1">
-                                            {i.user == this.props.currentUser.email ? "Me" : i.user}
+                                            {i.user === this.props.currentUser.email ? "Me" : i.user}
                                         </h4>
                                         <p className="card-text small text-muted">
                                             <span className="fe fe-clock"></span> <time>{i.time} ago</time>

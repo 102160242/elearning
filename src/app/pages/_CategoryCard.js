@@ -11,14 +11,14 @@ class _CategoryCard extends React.Component {
         return (
             <div class="col-sm-6 col-md-4">
         <div class="card mb-4">
-          <Link to={"/words/" + data.id + "?name=" + data.name}>
+          <Link to={"/words/" + data.id}>
             <img src={ data.image_url } className="card-img-top img-thumbnail" style={{ maxWidth: "500px;max-height:500px"}} alt={ data.name }/>
           </Link>
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col">
                 <h4 class="card-title name d-inline">
-                    <Link to={"/words/" + data.id + "?name=" + data.name} style={{ textDecoration: "none" }}>{ data.name }</Link>
+                    <Link to={"/words/" + data.id} style={{ textDecoration: "none" }}>{ data.name }</Link>
                 </h4>
               </div>
               <span class="badge badge-primary d-inline p-2">{ data.total_words } words</span>

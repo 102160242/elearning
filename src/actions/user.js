@@ -34,7 +34,7 @@ export const getFollowers = (token, user_id, params = {}) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -48,10 +48,11 @@ export const getFollowers = (token, user_id, params = {}) => {
     }
 }
 
-export const getFollowing = (token, user_id) => {
+export const getFollowing = (token, user_id, params = {}) => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + 'user/' + user_id + '/following',
             {
+                params: params,
                 headers: {
                     "Authorization": token,
                 }
@@ -297,7 +298,7 @@ const returnFollowersList = data => ({
 const returnFollowingList = data => ({
     type: 'GET_FOLLOWING',
     status: 'success',
-    followingList: data
+    followingData: data
 });
 
 const getListFailed = data => ({
