@@ -1,15 +1,10 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getCategories = (token, params) => {
+export const getCategories = (params) => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + 'admin/categories',
-            { 
-                params: params,
-                headers: {
-                    "Authorization": token,
-                }
-            }
+                    { params: params}
         )
         .then(res => {
             if (res.status === 200) {
@@ -77,14 +72,16 @@ export const deleteCategory = (token, id) => {
     }
 }
 
-export const createCategory = (token, formData) => {
+export const createUser = (token, data) => {
     return dispatch => {
-        return axios.post(process.env.REACT_APP_API_URL + 'admin/categories',
-            formData,
+        return axios.post(process.env.REACT_APP_API_URL + 'admin/users',
+            {
+                user: data
+            }    
+            ,
             {
                 headers: {
                     "Authorization": token,
-                    'content-type': 'multipart/form-data'
                 }
             }
         )
@@ -93,7 +90,7 @@ export const createCategory = (token, formData) => {
                 var d = res.data;
                 if (d.status === "success") {
                     toastr.success(d.message);
-                    dispatch(createCategorySuccessfully(d.data));
+                    dispatch(createUserSuccessfully(d.data));
                 }
                 else
                 {
@@ -108,14 +105,14 @@ export const createCategory = (token, formData) => {
                         }
                         toastr.error("Failed to create new Category!", msg);
                     }
-                    dispatch(createCategoryFailed({"message": msg}));
+                    dispatch(createUserFailed({"message": msg}));
                     console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
-                dispatch(createCategoryFailed({"message": msg}));
+                dispatch(createUserFailed({"message": msg}));
                 console.log(msg);
             }
         })
@@ -124,7 +121,7 @@ export const createCategory = (token, formData) => {
             if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
-                dispatch(createCategoryFailed({ 'message': 'Invalid Token' }));
+                dispatch(createUserFailed({ 'message': 'Invalid Token' }));
                 var msg = "Failed to send data to Server!";
                 console.log(msg);
                 toastr.error("", msg);
@@ -135,7 +132,7 @@ export const createCategory = (token, formData) => {
                 toastr.error("Failed to get data from server!", msg);
                 console.log(error)
             }
-            dispatch(createCategoryFailed({"message": msg}));
+            dispatch(createUserFailed({"message": msg}));
         });
     }
 }
@@ -146,6 +143,7 @@ export const clearResponse = () => {
         })
     }
 }
+
 const getListSuccessfully = data => ({
     type: 'GET_LIST_SUCCESSFULLY',
     status: 'success',
@@ -167,13 +165,13 @@ const deleteCategoryFailed = data => ({
     status: 'error',
     message: data.message
 });
-const createCategorySuccessfully = data => ({
-    type: 'CREATE_CATEGORY_SUCCESSFULLY',
+const createUserSuccessfully = data => ({
+    type: 'CREATE_USER_SUCCESSFULLY',
     status: 'success',
     message: data
 });
-const createCategoryFailed = data => ({
-    type: 'CREATE_CATEGORY_FAILED',
+const createUserFailed = data => ({
+    type: 'CREATE_USER_FAILED',
     status: 'error',
-    message: data.message
+    message: data
 });

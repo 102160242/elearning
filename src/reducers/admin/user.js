@@ -9,21 +9,21 @@ const defaultState = {
         },
         list: []
     },
+    user: {},
     status: "",
     message: ""
 }
 
-export default function adminCategoriesReducer(state = defaultState, action)
+export default function adminUsersReducer(state = defaultState, action)
 {
     switch (action.type) {
         case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status }
-        case 'CREATE_CATEGORY_SUCCESSFULLY':
-        case 'DELETE_CATEGORY_SUCCESSFULLY':
-            return { ...state, status: action.status, message: action.message }
+        case 'CREATE_USER_SUCCESSFULLY':
+        case 'DELETE_USER_SUCCESSFULLY':
         case 'GET_LIST_FAILED':
-        case 'CREATE_CATEGORY_FAILED':
-        case 'DELETE_CATEGORY_FAILED':
+        case 'CREATE_USER_FAILED':
+        case 'DELETE_USER_FAILED':
             return { ...state, status: action.status, message: action.message }
         case 'CLEAR_RESPONSE':
             return { ...state, status: "", message: "" }

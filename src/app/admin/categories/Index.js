@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories, deleteCategory } from '../../../actions/admin/categories';
+import { getCategories, deleteCategory, clearResponse } from '../../../actions/admin/categories';
 import { changeLoadingStatus } from '../../../actions/app';
 import { Link } from 'react-router-dom';
 import Paginator from '../partials/Paginator';
@@ -12,7 +12,7 @@ export default function Categories_Index(props) {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const categoriesData = useSelector(state => state.admin.categories);
-
+  const requestStatus = useSelector(state => state.admin.categories.status)
   const [orderValue, setOrderValue] = useState("asc");
   const [searchValue, setSearchValue] = useState("");
   const [perPageValue, setPerPageValue] = useState(5);
@@ -23,6 +23,7 @@ export default function Categories_Index(props) {
     //console.log(props.history.location.search)
     return () => {
       dispatch(changeLoadingStatus(true));
+      dispatch(clearResponse()); // Clear response moi luc chuyen sang trang khac
     }
   }, []);
 
@@ -31,7 +32,7 @@ export default function Categories_Index(props) {
     // Neu da xac thuc user hop le
     if (auth.isLoggedIn == true) {
       // Lay danh sach categories
-      dispatch(getCategories(getQueries()))
+      dispatch(getCategories(localStorage.getItem("token"), getQueries()))
     }
     else if (auth.isLoggedIn == false) {
       // Xac thuc that bai, chuyen huong den trang chinh
@@ -56,8 +57,13 @@ export default function Categories_Index(props) {
     setOrderValue(queries.order ? queries.order : "asc");
     setPerPageValue(queries.per_page ? queries.per_page : 5);
 
-    dispatch(getCategories(queries));
+    dispatch(getCategories(localStorage.getItem("token"), queries));
   }, [props.history.location.search]);
+
+  // Clear Response sau moi lan refresh du lieu
+  useEffect(() => {
+    dispatch(clearResponse());
+  }, [requestStatus]);
 
   const getQueries = () => {
     var query = queryString.parse(props.location.search, { ignoreQueryPrefix: true });
@@ -106,7 +112,7 @@ export default function Categories_Index(props) {
       if (willLogout) {
           var token = localStorage.getItem("token");
           dispatch(deleteCategory(token, id)).then(() => {
-            dispatch(getCategories(getQueries()));
+            dispatch(getCategories(token, getQueries()));
           });
       }
     });
@@ -158,9 +164,9 @@ export default function Categories_Index(props) {
                     <td>{i.total_words}</td>
                     <td><img src={i.image_url} alt={i.name} style={{ width: "100px" }} /></td>
                     <td>
-                      <Link to={"/admin/categories/" + i.id } className="mr-3" title="Show"><i class="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={"/admin/categories/" + i.id + "/edit" } className="mr-3" title="Edit"><i class="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i class="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/categories/" + i.id } className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/categories/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
                     </td>
                   </tr>
                 )
