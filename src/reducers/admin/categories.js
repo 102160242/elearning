@@ -19,7 +19,8 @@ export default function adminCategoriesReducer(state = defaultState, action)
         case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status }
         case 'DELETE_CATEGORY_SUCCESSFULLY':
-        case 'ADMIN_GET_LIST_FAILED':
+        case 'GET_LIST_FAILED':
+        case 'CREATE_CATEGORY_FAILED':
         case 'DELETE_CATEGORY_FAILED':
             return { ...state, status: action.status, message: action.message }
         default:

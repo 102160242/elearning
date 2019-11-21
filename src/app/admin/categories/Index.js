@@ -41,7 +41,7 @@ export default function Categories_Index(props) {
 
   // Goi khi categoriesData co su thay doi
   useEffect(() => {
-    // Neu load thanh cong 
+    // Neu load thanh cong
     if (categoriesData.data.status != "") {
       dispatch(changeLoadingStatus(false));
     }
@@ -56,7 +56,7 @@ export default function Categories_Index(props) {
     setOrderValue(queries.order ? queries.order : "asc");
     setPerPageValue(queries.per_page ? queries.per_page : 5);
 
-    dispatch(getCategories(queries))
+    dispatch(getCategories(queries));
   }, [props.history.location.search]);
 
   const getQueries = () => {
@@ -95,7 +95,6 @@ export default function Categories_Index(props) {
   }
 
   const deleteItem = (id) => {
-    console.log("ID la " + id)
     swal({
       title: "Are you sure?",
       text: "Do you want to delete this category?",
@@ -106,7 +105,9 @@ export default function Categories_Index(props) {
     .then((willLogout) => {
       if (willLogout) {
           var token = localStorage.getItem("token");
-          dispatch(deleteCategory(token, id));
+          dispatch(deleteCategory(token, id)).then(() => {
+            dispatch(getCategories(getQueries()));
+          });
       }
     });
   }
@@ -150,16 +151,16 @@ export default function Categories_Index(props) {
             </thead>
             <tbody>
               {
-                categoriesData.data.list && categoriesData.data.list.map((i, key) =>
-                  <tr key={key}>
+                categoriesData.data.list && categoriesData.data.list.map((i) =>
+                  <tr key={i.id}>
                     <td>{i.id}</td>
                     <td>{i.name}</td>
                     <td>{i.total_words}</td>
                     <td><img src={i.image_url} alt={i.name} style={{ width: "100px" }} /></td>
                     <td>
-                      <Link to="#" className="mr-3" title="Show"><i class="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to="#" className="mr-3" title="Edit"><i class="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to="#" className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i class="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/categories/" + i.id } className="mr-3" title="Show"><i class="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/categories/" + i.id + "/edit" } className="mr-3" title="Edit"><i class="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i class="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
                     </td>
                   </tr>
                 )
