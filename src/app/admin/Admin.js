@@ -38,9 +38,9 @@ export default function Admin() {
   })
 
   return (
-    <div class="page-wrapper chiller-theme toggled">
+    <div className="page-wrapper chiller-theme toggled">
         <Sidebar />
-        <main class="page-content">
+        <main className="page-content">
             <Switch>
                 <Route exact path="/admin/users" component={Users_Index} />
                 <Route exact path="/admin/users/new" component={Users_Create} />

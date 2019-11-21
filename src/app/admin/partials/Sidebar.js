@@ -29,62 +29,62 @@ export default function Sidebar() {
     }
     return(
         <>
-            <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-                <i class="fas fa-bars"></i>
+            <a id="show-sidebar" className="btn btn-sm btn-dark" href="#">
+                <i className="fas fa-bars"></i>
             </a>
-            <nav id="sidebar" class="sidebar-wrapper">
-            <div class="sidebar-content">
-                <div class="sidebar-brand">
+            <nav id="sidebar" className="sidebar-wrapper">
+            <div className="sidebar-content">
+                <div className="sidebar-brand">
                     <Link to="#">Admin CP</Link>
                     <div id="close-sidebar">
-                        <i class="fas fa-times"></i>
+                        <i className="fas fa-times"></i>
                     </div>
                 </div>
-                <div class="sidebar-header">
-                    <div class="user-pic">
-                        <img class="img-responsive img-rounded"
+                <div className="sidebar-header">
+                    <div className="user-pic">
+                        <img className="img-responsive img-rounded"
                             src={currentUser.avatar_url}
                             alt="User picture" />
                     </div>
-                    <div class="user-info">
-                        <span class="user-name">{currentUser.name}<br />
+                    <div className="user-info">
+                        <span className="user-name">{currentUser.name}<br />
                         <strong>{currentUser.email}</strong>
                         </span>
-                        <span class="user-role">Administrator</span>
-                        <span class="user-status">
-                            <i class="fa fa-circle"></i>
+                        <span className="user-role">Administrator</span>
+                        <span className="user-status">
+                            <i className="fa fa-circle"></i>
                             <span>Online</span>
                         </span>
                     </div>
                 </div>
-                {/* <div class="sidebar-search">
+                {/* <div className="sidebar-search">
                     <div>
-                        <div class="input-group">
-                            <input type="text" class="form-control search-menu" placeholder="Search..." />
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
+                        <div className="input-group">
+                            <input type="text" className="form-control search-menu" placeholder="Search..." />
+                            <div className="input-group-append">
+                                <span className="input-group-text">
+                                    <i className="fa fa-search" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div> */}
-                <div class="sidebar-menu">
+                <div className="sidebar-menu">
                     <ul>
-                        <li class="header-menu">
+                        <li className="header-menu">
                             <span>Menu</span>
                         </li>
-                        {/* <li class="sidebar-dropdown">
+                        {/* <li className="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-tachometer-alt"></i>
+                                <i className="fa fa-tachometer-alt"></i>
                                 <span>Dashboard</span>
-                                <span class="badge badge-pill badge-warning">New</span>
+                                <span className="badge badge-pill badge-warning">New</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div className="sidebar-submenu">
                                 <ul>
                                     <li>
                                         <a href="#">Dashboard 1
-                                <span class="badge badge-pill badge-success">Pro</span>
+                                <span className="badge badge-pill badge-success">Pro</span>
                                         </a>
                                     </li>
                                     <li>
@@ -96,13 +96,13 @@ export default function Sidebar() {
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
+                        <li className="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-shopping-cart"></i>
+                                <i className="fa fa-shopping-cart"></i>
                                 <span>E-commerce</span>
-                                <span class="badge badge-pill badge-danger">3</span>
+                                <span className="badge badge-pill badge-danger">3</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div className="sidebar-submenu">
                                 <ul>
                                     <li>
                                         <a href="#">Products
@@ -118,12 +118,12 @@ export default function Sidebar() {
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
+                        <li className="sidebar-dropdown">
                             <a href="#">
-                                <i class="far fa-gem"></i>
+                                <i className="far fa-gem"></i>
                                 <span>Components</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div className="sidebar-submenu">
                                 <ul>
                                     <li>
                                         <a href="#">General</a>
@@ -143,12 +143,12 @@ export default function Sidebar() {
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
+                        <li className="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-chart-line"></i>
+                                <i className="fa fa-chart-line"></i>
                                 <span>Charts</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div className="sidebar-submenu">
                                 <ul>
                                     <li>
                                         <a href="#">Pie chart</a>
@@ -165,12 +165,12 @@ export default function Sidebar() {
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
+                        <li className="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-globe"></i>
+                                <i className="fa fa-globe"></i>
                                 <span>Maps</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div className="sidebar-submenu">
                                 <ul>
                                     <li>
                                         <a href="#">Google maps</a>
@@ -181,74 +181,74 @@ export default function Sidebar() {
                                 </ul>
                             </div>
                         </li>
-                        <li class="header-menu">
+                        <li className="header-menu">
                             <span>Extra</span>
                         </li> */}
                         <li>
                             <Link to="/admin">
-                                <i class="fas fa-home"></i>
+                                <i className="fas fa-home"></i>
                                 <span className="ml-2">Dashboard</span>
-                                {/* <span class="badge badge-pill badge-primary">Beta</span> */}
+                                {/* <span className="badge badge-pill badge-primary">Beta</span> */}
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/users">
-                                <i class="fas fa-users"></i>
+                                <i className="fas fa-users"></i>
                                 <span className="ml-2">Users</span>
-                                {/* <span class="badge badge-pill badge-primary">Beta</span> */}
+                                {/* <span className="badge badge-pill badge-primary">Beta</span> */}
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/categories">
-                                <i class="fas fa-atlas"></i>
+                                <i className="fas fa-atlas"></i>
                                 <span className="ml-2">Categories</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/words">
-                                <i class="far fa-file-word"></i>
+                                <i className="far fa-file-word"></i>
                                 <span className="ml-2">Words</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/questions">
-                                <i class="far fa-question-circle"></i>
+                                <i className="far fa-question-circle"></i>
                                 <span className="ml-2">Questions</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/answers">
-                                <i class="fas fa-font"></i>
+                                <i className="fas fa-font"></i>
                                 <span className="ml-2">Answers</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/admin/tests">
-                                <i class="fas fa-file-alt"></i>
+                                <i className="fas fa-file-alt"></i>
                                 <span className="ml-2">Tests</span>
                             </Link>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="sidebar-footer">
+            <div className="sidebar-footer">
                 {/* <a href="#">
-                    <i class="fa fa-bell"></i>
-                    <span class="badge badge-pill badge-warning notification">3</span>
+                    <i className="fa fa-bell"></i>
+                    <span className="badge badge-pill badge-warning notification">3</span>
                 </a>
                 <a href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">7</span>
+                    <i className="fa fa-envelope"></i>
+                    <span className="badge badge-pill badge-success notification">7</span>
                 </a>
                 <a href="#">
-                    <i class="fa fa-cog"></i>
-                    <span class="badge-sonar"></span>
+                    <i className="fa fa-cog"></i>
+                    <span className="badge-sonar"></span>
                 </a> */}
                 <Link to="/">
-                    <i class="fas fa-chalkboard"></i>
+                    <i className="fas fa-chalkboard"></i>
                 </Link>
                 <Link to="#" onClick={logout}>
-                    <i class="fa fa-power-off"></i>
+                    <i className="fa fa-power-off"></i>
                 </Link>
             </div>
         </nav>
