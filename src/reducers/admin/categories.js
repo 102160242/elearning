@@ -13,12 +13,14 @@ const defaultState = {
     message: ""
 }
 
-export default function categoriesReducer(state = defaultState, action)
+export default function adminCategoriesReducer(state = defaultState, action)
 {
     switch (action.type) {
-        case 'RETURN_LIST':
+        case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status }
-        case 'GET_LIST_FAILED':
+        case 'DELETE_CATEGORY_SUCCESSFULLY':
+        case 'ADMIN_GET_LIST_FAILED':
+        case 'DELETE_CATEGORY_FAILED':
             return { ...state, status: action.status, message: action.message }
         default:
             return state;
