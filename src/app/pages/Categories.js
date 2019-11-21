@@ -107,7 +107,7 @@ class Categories extends React.Component {
         else {
             //console.log(this.state.filteredList);
             var cards = this.props.categoriesData && this.props.categoriesData.list && this.props.categoriesData.list.map((data, i) =>
-                <_CategoryCard data={data} />
+                <_CategoryCard data={data} key={i}/>
             );
         }
 

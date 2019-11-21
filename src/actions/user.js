@@ -48,7 +48,7 @@ export const getFollowing = (token, user_id) => {
                 }
             })
         .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.status === 200) {
                 var d = res.data;
                 if (d.status === "success") {
