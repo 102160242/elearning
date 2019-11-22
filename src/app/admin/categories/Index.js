@@ -145,7 +145,7 @@ export default function Categories_Index(props) {
         </div>
         <div className="table-responsive mt-3">
           <div className="text-info mb-2 h6"> 
-            Showing { categoriesData.data.list.length } of { categoriesData.data.paginate.total_item } items
+            Showing { categoriesData.data &&  categoriesData.data.list && categoriesData.data.list.length } of {categoriesData.data &&  categoriesData.data.list && categoriesData.data.paginate.total_item } items
           </div>
           <table className="table">
             <thead className="thead-dark">
@@ -160,7 +160,7 @@ export default function Categories_Index(props) {
             </thead>
             <tbody>
               {
-                categoriesData.data.list && categoriesData.data.list.map((i, index) =>
+                categoriesData.data && categoriesData.data.list && categoriesData.data.list.map((i, index) =>
                   <tr key={i.id}>
                     <td>{index + 1}</td>
                     <td>{i.id}</td>
@@ -177,7 +177,7 @@ export default function Categories_Index(props) {
               }
             </tbody>
           </table>
-          <Paginator paginate={categoriesData.data.paginate} queries={getQueries()} />
+          <Paginator paginate={categoriesData.data && categoriesData.data.paginate} queries={getQueries()} />
         </div>
       </div>
     </div>

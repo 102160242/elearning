@@ -216,8 +216,9 @@ export const getCategoryInfo = (token, id) => {
         .then(res => {
             if (res.status === 200) {
                 var d = res.data;
+                // console.log(d.category)
                 if (d.status === "success") {
-                    dispatch(getInfoSuccessfully(d.data));
+                    dispatch(getInfoSuccessfully(d.category));
                 }
                 else
                 {

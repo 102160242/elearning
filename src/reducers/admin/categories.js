@@ -9,6 +9,7 @@ const defaultState = {
         },
         list: []
     },
+    category: [],
     status: "",
     message: "",
     redirect: false
@@ -17,9 +18,11 @@ const defaultState = {
 export default function adminCategoriesReducer(state = defaultState, action)
 {
     switch (action.type) {
-        case 'GET_LIST_SUCCESSFULLY':
         case 'UPDATE_CATEGORY_SUCCESSFULLY':
+            return { ...state, status: action.status, redirect: true }
         case 'GET_INFO_SUCCESSFULLY': 
+            return { ...state, category: action.data, status: action.status, redirect: false }
+        case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status, redirect: false }
         case 'CREATE_CATEGORY_SUCCESSFULLY':
             return { ...state, status: action.status, message: action.message, redirect: true }
