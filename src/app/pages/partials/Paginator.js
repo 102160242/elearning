@@ -29,9 +29,9 @@ export default class Paginator extends React.Component {
             {
                 pageNumber.push(i + 1);
             }
-            pageNumber.push(this.props.paginate.previous_page);
+            this.props.paginate.previous_page && pageNumber.push(this.props.paginate.previous_page);
             pageNumber.push(this.props.paginate.current_page);
-            pageNumber.push(this.props.paginate.next_page);
+            this.props.paginate.next_page && pageNumber.push(this.props.paginate.next_page);
             for(var i = this.props.paginate.last_page; i > this.props.paginate.last_page - 3; i--)
             {
                 pageNumber.push(i);

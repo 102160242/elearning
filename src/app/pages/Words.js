@@ -169,12 +169,12 @@ class Words extends React.Component {
     //     e.target.nextElementSibling.className = "dropdown-menu show";
     // }
     render() {
-        if(!this.props.isLoggedIn)
+        if(this.props.isLoggedIn === false)
         {
             return (<Redirect to={"/auth/login"} />);
         }
         var cards;
-        if (this.props.wordsData && this.props.wordsData.list.length === 0) {
+        if (this.props.wordsData && this.props.wordsData.list && this.props.wordsData.list.length === 0) {
             cards = <p>There is nothing to show</p>;
         }
         else {

@@ -1,10 +1,15 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getCategories = (params) => {
+export const getUsers = (token, params) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'admin/categories',
-                    { params: params}
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/users',
+        { 
+            params: params,
+            headers: {
+                "Authorization": token,
+            }
+        }
         )
         .then(res => {
             if (res.status === 200) {
@@ -34,9 +39,9 @@ export const getCategories = (params) => {
     }
 }
 
-export const deleteCategory = (token, id) => {
+export const deleteUser = (token, id) => {
     return dispatch => {
-        return axios.delete(process.env.REACT_APP_API_URL + 'admin/categories/' + id,
+        return axios.delete(process.env.REACT_APP_API_URL + 'admin/users/' + id,
             {
                 headers: {
                     "Authorization": token
@@ -48,20 +53,20 @@ export const deleteCategory = (token, id) => {
                 var d = res.data;
                 if (d.status === "success") {
                     toastr.success(d.message);
-                    dispatch(deleteCategorySuccessfully(d.data));
+                    dispatch(deleteUserSuccessfully(d.data));
                 }
                 else
                 {
                     var msg = "Couldn't get data from server!" + res.status;
                     toastr.error(msg);
-                    dispatch(deleteCategoryFailed({"message": msg}));
+                    dispatch(deleteUserFailed({"message": msg}));
                     console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
-                dispatch(deleteCategoryFailed({"message": msg}));
+                dispatch(deleteUserFailed({"message": msg}));
                 console.log(msg);
             }
         })
@@ -155,13 +160,13 @@ const getListFailed = data => ({
     status: 'error',
     message: data
 });
-const deleteCategorySuccessfully = data => ({
-    type: 'DELETE_CATEGORY_SUCCESSFULLY',
+const deleteUserSuccessfully = data => ({
+    type: 'DELETE_USER_SUCCESSFULLY',
     status: 'success',
     message: data
 });
-const deleteCategoryFailed = data => ({
-    type: 'DELETE_CATEGORY_FAILED',
+const deleteUserFailed = data => ({
+    type: 'DELETE_USER_FAILED',
     status: 'error',
     message: data.message
 });

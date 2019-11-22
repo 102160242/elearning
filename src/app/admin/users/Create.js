@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLoadingStatus } from '../../../actions/app';
-import { createUser, clearResponse } from '../../../actions/admin/user';
+import { createUser, clearResponse } from '../../../actions/admin/users';
 
 export default function Users_Create(props) {
 
@@ -11,7 +11,7 @@ export default function Users_Create(props) {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfrimation] = useState("");
   const dispatch = useDispatch();
-  const requestStatus = useSelector(state => state.admin.users.status);
+  const redirect = useSelector(state => state.admin.users.redirect);
 
   useEffect(() => {
     document.title = 'Create new User';
@@ -22,14 +22,14 @@ export default function Users_Create(props) {
 
   // Xu ly ket qua Request
   useEffect(() => {
-    if(requestStatus == "success")
+    if(redirect)
     {
       props.history.push("/admin/users");
     }
     return () => {
       dispatch(clearResponse());
     }
-  }, [requestStatus]);
+  }, [redirect]);
 
   const submitHandler = (e) => 
   {
@@ -54,8 +54,8 @@ export default function Users_Create(props) {
               <input type="text" className="form-control" id="name" placeholder="Enter the name" value={name} onChange={(e) => {setName(e.target.value)}} required />
             </div>
             <div className="form-group">
-              <label htmlFor="name">Email</label>
-              <input type="name" className="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter the email address" value={email} onChange={(e) => {setEmail(e.target.value)}} required />
+              <label htmlFor="email">Email</label>
+              <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter the email address" value={email} onChange={(e) => {setEmail(e.target.value)}} required />
               <small id="emailHelp" className="form-text text-muted">Email address will be used to login!</small>
             </div>
             <div className="form-group">
