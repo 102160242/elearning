@@ -120,7 +120,7 @@ export default function Users_Index(props) {
     <div className="container-fluid">
       <h1>Users</h1>
       <div className="row justify-content-between mt-4">
-        <Link to="/admin/users/new" className="btn btn-outline-success">New User</Link>
+        <Link to="/admin/users/new" className="btn btn-outline-success"><i class="far fa-plus-square mr-3"></i>New User</Link>
         <div className="row align-items-center">
           <div className="col-auto">
             <input type="text" className="form-control mr-3 d-inline" placeholder="For example: juxtaposition" value={searchValue} onChange={searchHandler} title="Search User"/>
@@ -169,9 +169,9 @@ export default function Users_Index(props) {
                     <td>{i.admin == true ? "Yes" : "No"}</td>
                     <td>{i.created_at}</td>
                     <td>
-                      <Link to={"/admin/users/" + i.id } className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={"/admin/users/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/users/" + i.id } className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem",color:"#007bff" }}></i></Link>
+                      <Link to={"/admin/users/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545" }}></i></Link>
                     </td>
                   </tr>
                 )

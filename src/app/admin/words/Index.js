@@ -120,7 +120,7 @@ export default function Words_Index(props) {
     <div className="container-fluid">
       <h1>Words</h1>
       <div className="row justify-content-between mt-4">
-        <Link to="/admin/words/new" className="btn btn-outline-success">New Word</Link>
+        <Link to="/admin/words/new" className="btn btn-outline-success"><i class="far fa-plus-square mr-3"></i>New Word</Link>
         <div className="row align-items-center">
           <div className="col-auto">
             <input type="text" className="form-control mr-3 d-inline" placeholder="For example: juxtaposition" value={searchValue} onChange={searchHandler} title="Search Word"/>
@@ -169,8 +169,8 @@ export default function Words_Index(props) {
                     <td><img src={i.image_url} alt={i.name} style={{ width: "100px" }} /></td>
                     <td>
                       <Link to={"/admin/words/" + i.id } className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={"/admin/words/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem" }}></i></Link>
-                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem" }}></i></Link>
+                      <Link to={"/admin/words/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545"  }}></i></Link>
                     </td>
                   </tr>
                 )

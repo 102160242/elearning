@@ -13,7 +13,7 @@ export default function Questions_Index(props) {
   const auth = useSelector(state => state.auth);
   const questionsData = useSelector(state => state.admin.questions);
 
-  const [orderValue, setOrderValue] = useState("asc");
+  const [orderValue, setOrderValue] = useState("desc");
   const [searchValue, setSearchValue] = useState("");
   const [perPageValue, setPerPageValue] = useState(10);
 
@@ -123,7 +123,7 @@ export default function Questions_Index(props) {
     <div className="container-fluid">
       <h1>Questions</h1>
       <div className="row justify-content-between mt-4">
-        <Link to="/admin/questions/new" className="btn btn-outline-success">New Question</Link>
+        <Link to="/admin/questions/new" className="btn btn-outline-success" ><i class="far fa-plus-square mr-3"></i>New Question</Link>
         <div className="row align-items-center">
           <div className="col-auto">
             <input type="text" className="form-control mr-3 d-inline" placeholder="For example: a mind..." value={searchValue} onChange={searchHandler} title="Search Question"/>
@@ -165,9 +165,9 @@ export default function Questions_Index(props) {
                     <td>{i.question_content}</td>
                     <td>{i.category_name}</td>
                     <td>
-                      <Link to={"admin/questions" + i.id} className="mr-3" title="Show"><i class="far fa-eye" style={{ fontSize: "1.3rem",color:"#007bff" }}></i></Link>
-                      <Link to={"admin/questions" + i.id + "/edit"} className="mr-3" title="Edit"><i class="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
-                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i class="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545" }}></i></Link>
+                      <Link to={"admin/questions" + i.id} className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem",color:"#007bff" }}></i></Link>
+                      <Link to={"admin/questions" + i.id + "/edit"} className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545" }}></i></Link>
                     </td>
                   </tr>
                 )
