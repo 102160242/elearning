@@ -39,14 +39,15 @@ export const getQuestions = (token, params) => {
     }
 }
 
-export const createQuestion = (token, formData) => {
+export const createQuestion = (token, data) => {
     return dispatch => {
         return axios.post(process.env.REACT_APP_API_URL + 'admin/questions',
-            formData,
+            {
+                question: data
+            },
             {
                 headers: {
                     "Authorization": token,
-                    'content-type': 'multipart/form-data'
                 }
             }
         )
@@ -130,6 +131,43 @@ export const deleteQuestion = (token, id) => {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
                 dispatch(deleteQuestionFailed({"message": msg}));
+                console.log(msg);
+            }
+        })
+        .catch(error => {
+            toastr.error("Failed to get data from server!", error);
+            console.log(error)
+        });
+    }
+}
+
+export const getOptions = (token) => {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/questions/options',
+            { 
+                headers: {
+                    "Authorization": token,
+                }
+            }
+        )
+        .then(res => {
+            if (res.status === 200) {
+                var d = res.data;
+                if (d.status === "success") {
+                    dispatch(getOptionsSuccessfully(d.data));
+                }
+                else
+                {
+                    var msg = "Couldn't get data from server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(getOptionsFailed({"message": msg}));
+                    console.log(msg);
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(getOptionsFailed({"message": msg}));
                 console.log(msg);
             }
         })

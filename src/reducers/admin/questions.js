@@ -5,7 +5,6 @@ const defaultState = {
     },
     options: {
         categories: [],
-        class: [],
     },
     status: "",
     message: "",
