@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { changeLoadingStatus } from '../../actions/app';
+import { changeLoadingStatus, getStatistics } from '../../actions/app';
 
 class Home extends React.Component {
     constructor(props) {
@@ -9,11 +9,12 @@ class Home extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        this.props.changeLoadingStatus(false);
         document.title = 'E-Learning System';
+        this.props.getStatistics().then(() => {
+            this.props.changeLoadingStatus(false);
+        })
     }
-    componentWillUnmount()
-    {
+    componentWillUnmount() {
         this.props.changeLoadingStatus(true);
     }
     render() {
@@ -30,6 +31,40 @@ class Home extends React.Component {
                                 <Link to="/categories" className="btn btn-block btn-lg btn-primary">Start Learning!</Link>
                             </div>
                         </div>
+                        <div class="row mt-5" style={{ fontSize: "1rem" }}>
+                            <div class="col-md-3 pb-1">
+                                <div class="card card-inverse bg-inverse h-100 text-center pt-4 p-2 bg-dark">
+                                    <div class="card-block card-title">
+                                        <h1 class="mb-2"><i className="align-middle md_18 material-icons display-2 fas fa-user-friends"></i></h1>
+                                        <h6 class="text-light">{this.props.statistics.total_users} Users</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pb-1">
+                                <div class="card card-inverse card-primary h-100 text-center pt-4 p-2 bg-info">
+                                    <div class="card-block card-title">
+                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 fas fa-archive"></i></h1>
+                                        <h6 class="text-light">{this.props.statistics.total_categories} Categories</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pb-1">
+                                <div class="card card-inverse card-primary h-100 text-center pt-4 p-2 bg-success">
+                                    <div class="card-block card-title">
+                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 far fa-sticky-note"></i></h1>
+                                        <h6 class="text-light">{this.props.statistics.total_words} Words</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pb-1">
+                                <div class="card card-inverse card-success h-100 text-center pt-4 p-2 bg-warning">
+                                    <div class="card-block card-title">
+                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 fas fa-question"></i></h1>
+                                        <h6 class="text-light">{this.props.statistics.total_questions} Questions</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </header>
             </div>
@@ -38,7 +73,12 @@ class Home extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status)),
+    getStatistics: () => dispatch(getStatistics())
 });
-
-export default connect(null, mapDispatchToProps) (Home);
+const mapStateToProps = (state /*, ownProps*/) => {
+    return {
+        statistics: state.app.statistics,
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
