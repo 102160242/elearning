@@ -20,13 +20,15 @@ import wordsReducer from './reducers/word';
 import adminCategoriesReducer from './reducers/admin/categories';
 import adminUsersReducer from './reducers/admin/user';
 import adminWordsReducer from './reducers/admin/words';
+import adminQuestionsReducer from './reducers/admin/questions';
 
 const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     admin: combineReducers({
         categories: adminCategoriesReducer,
         users: adminUsersReducer,
-        words: adminWordsReducer
+        words: adminWordsReducer,
+        questions: adminQuestionsReducer,
     }),
     auth: authReducer,
     categories: categoriesReducer,
