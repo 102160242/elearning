@@ -31,7 +31,7 @@ export const getTest = (token, test_id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -110,7 +110,7 @@ export const submitTest = (token, data) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
@@ -155,7 +155,7 @@ export const createNewTest = (token, category_id) => {
             }
         })
         .catch(error => {
-            if(error.response.status == 401)
+            if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
                 dispatch(getUserInfoFailed({ 'message': 'Invalid Token' }));
