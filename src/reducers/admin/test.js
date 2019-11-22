@@ -5,22 +5,23 @@ const defaultState = {
     },
     options: {
         categories: [],
+        users: [],
     },
     status: "",
     message: "",
     redirect: false
 }
 
-export default function adminQuestionsReducer(state = defaultState, action)
+export default function adminTestsReducer(state = defaultState, action)
 {
     switch (action.type){
         case 'GET_OPTIONS_SUCCESSFULLY':
             return { ...state, options: action.options, status: action.status, redirect: false }
         case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status, redirect: false }
-        case 'CREATE_QUESTION_SUCCESSFULLY':
+        case 'CREATE_TEST_SUCCESSFULLY':
             return { ...state, message: action.message, status: action.status, redirect: true }
-        case 'CREATE_QUESTION_FAILED':
+        case 'CREATE_TEST_FAILED':
         case 'GET_OPTIONS_FAILED':
         case 'GET_LIST_FAILED':
             return { ...state, message: action.message, status: action.status, redirect: false }

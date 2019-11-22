@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr';
 
-export const getQuestions = (token, params) => {
+export const getTests = (token, params) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'admin/questions',
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/tests',
             { 
                 params: params,
                 headers: {
@@ -39,11 +39,11 @@ export const getQuestions = (token, params) => {
     }
 }
 
-export const createQuestion = (token, data) => {
+export const createTest = (token, data) => {
     return dispatch => {
-        return axios.post(process.env.REACT_APP_API_URL + 'admin/questions',
+        return axios.post(process.env.REACT_APP_API_URL + 'admin/tests',
             {
-                question: data
+                test: data
             },
             {
                 headers: {
@@ -56,7 +56,7 @@ export const createQuestion = (token, data) => {
                 var d = res.data;
                 if (d.status === "success") {
                     toastr.success(d.message);
-                    dispatch(createQuestionSuccessfully(d.data));
+                    dispatch(createTestSuccessfully(d.data));
                 }
                 else
                 {
@@ -71,14 +71,14 @@ export const createQuestion = (token, data) => {
                         }
                         toastr.error("Failed to create new Word!", msg);
                     }
-                    dispatch(createQuestionFailed({"message": msg}));
+                    dispatch(createTestFailed({"message": msg}));
                     console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
-                dispatch(createQuestionFailed({"message": msg}));
+                dispatch(createTestFailed({"message": msg}));
                 console.log(msg);
             }
         })
@@ -87,7 +87,7 @@ export const createQuestion = (token, data) => {
             if(error.response && error.response.status == 401)
             {
                 localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY); // Delete Invalid Token (if exist)
-                dispatch(createQuestionFailed({ 'message': 'Invalid Token' }));
+                dispatch(createTestFailed({ 'message': 'Invalid Token' }));
                 var msg = "Failed to send data to Server!";
                 console.log(msg);
                 toastr.error("", msg);
@@ -98,14 +98,14 @@ export const createQuestion = (token, data) => {
                 toastr.error("Failed to get data from server!", msg);
                 console.log(error)
             }
-            dispatch(createQuestionFailed({"message": msg}));
+            dispatch(createTestFailed({"message": msg}));
         });
     }
 }
 
-export const deleteQuestion = (token, id) => {
+export const deleteTest = (token, id) => {
     return dispatch => {
-        return axios.delete(process.env.REACT_APP_API_URL + 'admin/questions/' + id,
+        return axios.delete(process.env.REACT_APP_API_URL + 'admin/tests/' + id,
             {
                 headers: {
                     "Authorization": token
@@ -117,20 +117,20 @@ export const deleteQuestion = (token, id) => {
                 var d = res.data;
                 if (d.status === "success") {
                     toastr.success(d.message);
-                    dispatch(deleteQuestionSuccessfully(d.data));
+                    dispatch(deleteTestSuccessfully(d.data));
                 }
                 else
                 {
                     var msg = "Couldn't get data from server!" + res.status;
                     toastr.error(msg);
-                    dispatch(deleteQuestionFailed({"message": msg}));
+                    dispatch(deleteTestFailed({"message": msg}));
                     console.log(msg);
                 }
             }
             else {
                 var msg = "Server returned error code: " + res.status;
                 toastr.error(msg);
-                dispatch(deleteQuestionFailed({"message": msg}));
+                dispatch(deleteTestFailed({"message": msg}));
                 console.log(msg);
             }
         })
@@ -143,7 +143,7 @@ export const deleteQuestion = (token, id) => {
 
 export const getOptions = (token) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'admin/questions/options',
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/tests/options',
             { 
                 headers: {
                     "Authorization": token,
@@ -204,23 +204,23 @@ const getListFailed = data => ({
     status: 'error',
     message: data
 });
-const deleteQuestionSuccessfully = data => ({
-    type: 'DELETE_QUESTION_SUCCESSFULLY',
+const deleteTestSuccessfully = data => ({
+    type: 'DELETE_TEST_SUCCESSFULLY',
     status: 'success',
     message: data
 });
-const deleteQuestionFailed = data => ({
-    type: 'DELETE_QUESTION_FAILED',
+const deleteTestFailed = data => ({
+    type: 'DELETE_TEST_FAILED',
     status: 'error',
     message: data.message
 });
-const createQuestionSuccessfully = data => ({
-    type: 'CREATE_QUESTION_SUCCESSFULLY',
+const createTestSuccessfully = data => ({
+    type: 'CREATE_TEST_SUCCESSFULLY',
     status: 'success',
     message: data
 });
-const createQuestionFailed = data => ({
-    type: 'CREATE_QUESTION_FAILED',
+const createTestFailed = data => ({
+    type: 'CREATE_TEST_FAILED',
     status: 'error',
     message: data.message
 });
