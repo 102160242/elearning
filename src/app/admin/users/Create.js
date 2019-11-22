@@ -11,7 +11,7 @@ export default function Users_Create(props) {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfrimation] = useState("");
   const dispatch = useDispatch();
-  const requestStatus = useSelector(state => state.admin.users.status);
+  const redirect = useSelector(state => state.admin.users.redirect);
 
   useEffect(() => {
     document.title = 'Create new User';
@@ -22,14 +22,14 @@ export default function Users_Create(props) {
 
   // Xu ly ket qua Request
   useEffect(() => {
-    if(requestStatus == "success")
+    if(redirect)
     {
       props.history.push("/admin/users");
     }
     return () => {
       dispatch(clearResponse());
     }
-  }, [requestStatus]);
+  }, [redirect]);
 
   const submitHandler = (e) => 
   {

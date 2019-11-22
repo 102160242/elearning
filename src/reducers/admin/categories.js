@@ -10,23 +10,25 @@ const defaultState = {
         list: []
     },
     status: "",
-    message: ""
+    message: "",
+    redirect: false
 }
 
 export default function adminCategoriesReducer(state = defaultState, action)
 {
     switch (action.type) {
         case 'GET_LIST_SUCCESSFULLY':
-            return { ...state, data: action.data, status: action.status }
+            return { ...state, data: action.data, status: action.status, redirect: false }
         case 'CREATE_CATEGORY_SUCCESSFULLY':
+            return { ...state, status: action.status, message: action.message, redirect: true }
         case 'DELETE_CATEGORY_SUCCESSFULLY':
-            return { ...state, status: action.status, message: action.message }
+            return { ...state, status: action.status, message: action.message, redirect: false }
         case 'GET_LIST_FAILED':
         case 'CREATE_CATEGORY_FAILED':
         case 'DELETE_CATEGORY_FAILED':
-            return { ...state, status: action.status, message: action.message }
+            return { ...state, status: action.status, message: action.message, redirect: false }
         case 'CLEAR_RESPONSE':
-            return { ...state, status: "", message: "" }
+            return { ...state, status: "", message: "", redirect: false }
         default:
             return state;
     }

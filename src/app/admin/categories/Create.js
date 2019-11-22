@@ -8,7 +8,7 @@ export default function Categories_Create(props) {
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
   const dispatch = useDispatch();
-  const requestStatus = useSelector(state => state.admin.categories.status);
+  const redirect = useSelector(state => state.admin.categories.redirect);
   // Thiet lap ban dau
   useEffect(() => {
     document.title = 'Create new Category';
@@ -21,15 +21,14 @@ export default function Categories_Create(props) {
 
   // Xu ly ket qua Request
   useEffect(() => {
-    console.log(requestStatus)
-    if(requestStatus == "success")
+    if(redirect)
     {
       props.history.push("/admin/categories"); // Chuyen huong ve categories sau khi Submit thanh cong
     }
     return () => {
       dispatch(clearResponse());
     }
-  }, [requestStatus]);
+  }, [redirect]);
 
   const onChangeImageHandler = (e)  =>
   {
