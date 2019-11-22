@@ -111,7 +111,7 @@ class Followers extends React.Component {
     render() {
         //console.log(this.state);
         // console.log(this.props.isLoggedIn)
-        if(!this.props.isLoggedIn)
+        if(this.props.isLoggedIn === false)
         {
             return (<Redirect to={"/auth/login"} />);
         }

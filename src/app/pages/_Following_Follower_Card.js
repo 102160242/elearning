@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { follow, unfollow, getFollowers } from '../../actions/user';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 class _Following_Follower_Card extends React.Component {
     constructor(props) {
@@ -83,7 +84,7 @@ class _Following_Follower_Card extends React.Component {
                             <div className="row">
                                 <div className="col-auto "> <h1 className="avatar-img rounded-circle"><i className="fas fa-user-circle "></i> </h1></div>
                                 <div className="col ml-n2 ">
-                                    <h5>{data.name}</h5>
+                                    <Link to={"/" + data.id + "/newsfeed"} className="h5" style={{ textDecoration: "none"}}>{data.name}</Link>
                                     <p className="card-text small text-muted mb-1">No test done</p>
                                     <p className="card-text small"><span className="text-default">•</span>Offline</p>
                                 </div>
