@@ -35,7 +35,7 @@ export default function Sidebar() {
             <nav id="sidebar" className="sidebar-wrapper">
             <div className="sidebar-content">
                 <div className="sidebar-brand">
-                    <Link to="#">Admin CP</Link>
+                    <Link to="/">HOME</Link>
                     <div id="close-sidebar">
                         <i className="fas fa-times"></i>
                     </div>
