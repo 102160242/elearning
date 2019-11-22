@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLoadingStatus } from '../../../actions/app';
 import { getCategoryInfo } from '../../../actions/admin/categories';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
 export default function Categories_Show(props) {
@@ -26,11 +25,11 @@ export default function Categories_Show(props) {
     }
   }, []);
 
-  useEffect(() => {
-    if (categoriesData.redirect) {
-      props.history.push("/admin/categories");
-    }
-  }, [categoriesData.redirect]);
+  // useEffect(() => {
+  //   if (categoriesData.redirect) {
+  //     props.history.push("/admin/categories");
+  //   }
+  // }, [categoriesData.redirect]);
 
   // Goi khi auth co su thay doi
   useEffect(() => {
