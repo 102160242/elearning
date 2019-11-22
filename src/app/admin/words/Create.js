@@ -75,6 +75,7 @@ export default function Words_Create(props) {
     //console.log(Array.from(e.target.selectedOptions, (item) => item.value))
     setCategories(ids);
   }
+  console.log(image)
   const formSubmitHandler = (e) => 
   {
     e.preventDefault();

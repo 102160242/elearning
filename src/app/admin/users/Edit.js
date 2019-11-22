@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLoadingStatus } from '../../../actions/app';
 import { getUserInfo, updateUser } from '../../../actions/admin/users';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
 export default function Users_Edit(props) {

@@ -42,6 +42,7 @@ export default function Words_Index(props) {
   // Goi khi wordsData co su thay doi
   useEffect(() => {
     // Neu load thanh cong
+    console.log(wordsData)
     if (wordsData.data.status != "") {
       dispatch(changeLoadingStatus(false));
     }

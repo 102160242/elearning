@@ -42,6 +42,7 @@ export default function Users_Show(props) {
 
   useEffect(() => {
     // Neu load thanh cong 
+    
     if (usersData.newsFeed.timeline.length != 0) {
       // console.log(usersData.newsFeed);
       // setTimeLine(usersData.newsFeed.timeline);
