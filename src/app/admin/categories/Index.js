@@ -30,6 +30,7 @@ export default function Categories_Index(props) {
   // Goi khi auth co su thay doi
   useEffect(() => {
     // Neu da xac thuc user hop le
+    // console.log(auth.isLoggedIn)
     if (auth.isLoggedIn == true) {
       // Lay danh sach categories
       dispatch(getCategories(localStorage.getItem("token"), getQueries()))
@@ -43,6 +44,7 @@ export default function Categories_Index(props) {
   // Goi khi categoriesData co su thay doi
   useEffect(() => {
     // Neu load thanh cong
+
     if (categoriesData.data.status != "") {
       dispatch(changeLoadingStatus(false));
     }
