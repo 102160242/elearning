@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeLoadingStatus } from '../../actions/app';
-import { getNewsFeed } from '../../actions/user';
+import { follow, unfollow, getNewsFeed } from '../../actions/user';
+import ReactDOM from 'react-dom';
 
 class NewsFeed extends React.Component {
     constructor(props) {
@@ -12,6 +13,8 @@ class NewsFeed extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderActivities = this.renderActivities.bind(this);
+        this.handleFollowClick = this.handleFollowClick.bind(this);
+        this.handleUnFollowClick = this.handleUnFollowClick.bind(this);
     }
     static getDerivedStateFromProps(props, prevState){
         //console.log("getDerivedStateFromProps called")
@@ -37,6 +40,37 @@ class NewsFeed extends React.Component {
         //     props.history.push("/403");
         // }
         return null;
+    }
+    handleUnFollowClick(event, user_id)
+    {
+        var token = localStorage.getItem('token');
+        //console.log(token);
+        this.props.unfollow(token, user_id).then(() => {
+            if(this.props.status === "success")
+            {
+                var btnDiv = document.querySelector("#btnFollowUnfollow" );
+                var btn = this.renderBtn(true, user_id);
+                ReactDOM.render(btn, btnDiv);
+            }
+        });
+    }
+    
+    handleFollowClick(event, user_id)
+    {
+        var token = localStorage.getItem('token');
+        this.props.follow(token, user_id).then(() => {
+            if(this.props.status === "success")
+            {
+                var btnDiv = document.querySelector("#btnFollowUnfollow");
+                var btn = this.renderBtn(false, user_id);
+                ReactDOM.render(btn, btnDiv);
+            }
+        });
+    }
+    renderBtn(isFollowBtn = true, user_id)
+    {
+        if(isFollowBtn) return <button className="btn btn-success" onClick={(e) => { this.handleFollowClick(e, user_id) }}>Follow</button>;
+        else return <button className="btn btn-warning" onClick={(e) => { this.handleUnFollowClick(e, user_id) }}>Unfollow</button>;
     }
     componentDidMount() {
         document.title = "News Feed";
@@ -149,6 +183,14 @@ class NewsFeed extends React.Component {
             if(!this.props.newsFeed) return <></>
             var activities = this.renderActivities();
             var user_info = this.props.newsFeed.user_info;
+            if(this.props.currentUser.following_user_ids && this.props.currentUser.following_user_ids.includes(user_info.id)) // Neu dang follow user nay
+            {
+                var btn = this.renderBtn(false, user_info.id);
+            }
+            else
+            {
+                var btn = this.renderBtn(true, user_info.id);
+            }
             return (
                 <div>
                     <div className="container mt-6">
@@ -159,12 +201,15 @@ class NewsFeed extends React.Component {
                                         <img src={user_info.avatar_url} alt="image" className="img-responsive" width="60" height="60"></img>
                                     </div>
                                 </div>
-                                <div className="col mb-3  ml-md-n2">
+                                <div className="col mb-3 ml-md-n2">
                                     <div className="mt-5">
                                         <p>{user_info.name}</p>
                                     </div>
                                     <div className="mt-2">
                                         <p><i className="far fa-envelope mt-2 mr-2"></i>{user_info.email}</p>
+                                    </div>
+                                    <div className="mt-2" id="btnFollowUnfollow">
+                                        {btn}
                                     </div>
                                 </div>
                             </div>
@@ -220,12 +265,15 @@ const mapStateToProps = (state /*, ownProps*/) => {
     return {
         currentUser: state.auth.currentUser,
         isLoggedIn: state.auth.isLoggedIn,
-        newsFeed: state.user.newsFeed
+        newsFeed: state.user.newsFeed,
+        status: state.user.status
     }
 }
 const mapDispatchToProps = dispatch => ({
     changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status)),
-    getNewsFeed: (token, user_id) => dispatch(getNewsFeed(token, user_id))
+    getNewsFeed: (token, user_id) => dispatch(getNewsFeed(token, user_id)),
+    follow: (token, id) => dispatch(follow(token, id)),
+    unfollow: (token, id) => dispatch(unfollow(token, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);
