@@ -14,6 +14,7 @@ export default function Tests_Index(props) {
   const testsData = useSelector(state => state.admin.tests);
 
   const [orderValue, setOrderValue] = useState("asc");
+  const [orderByValue, setOrderByValue] = useState("id");
   const [searchValue, setSearchValue] = useState("");
   const [perPageValue, setPerPageValue] = useState(10);
 
@@ -55,6 +56,7 @@ export default function Tests_Index(props) {
     // Set lai State
     setSearchValue(queries.search ? queries.search : "");
     setOrderValue(queries.order ? queries.order : "asc");
+    setOrderByValue(queries.order_by ? queries.order_by : "id");
     setPerPageValue(queries.per_page ? queries.per_page : 10);
 
     dispatch(getTests(localStorage.getItem("token"), queries))
@@ -72,6 +74,7 @@ export default function Tests_Index(props) {
     queries["search"] = query.search ? query.search : "";
     queries["page"] = query.page ? query.page : 1;
     queries["order"] = query.order ? query.order : "asc";
+    queries["order_by"] = query.order_by ? query.order_by : "id";
     queries["per_page"] = query.per_page ? query.per_page : 10;
     return queries;
   }
@@ -88,6 +91,14 @@ export default function Tests_Index(props) {
   const orderHandler = (e) => {
     var queries = getQueries();
     queries["order"] = e.target.value;
+    props.history.push({
+      search: "?" + new URLSearchParams(queries).toString()
+    });
+  }
+
+  const orderByHandler = (e) => {
+    var queries = getQueries();
+    queries["order_by"] = e.target.value;
     props.history.push({
       search: "?" + new URLSearchParams(queries).toString()
     });
@@ -127,6 +138,13 @@ export default function Tests_Index(props) {
         <div className="row align-items-center">
           <div className="col-auto">
             <input type="text" className="form-control mr-3 d-inline" placeholder="For example: a mind..." value={searchValue} onChange={searchHandler} title="Search Test"/>
+          </div>
+          <div className="col-auto">
+            <select className="custom-select mr-3 d-inline" value={orderByValue} onChange={orderByHandler} title="Order By">
+              <option value="id">ID</option>
+              <option value="user">User</option>
+              <option value="category">Category</option>
+            </select>
           </div>
           <div className="col-auto">
             <select className="custom-select mr-3 d-inline" value={orderValue} onChange={orderHandler} title="Order">

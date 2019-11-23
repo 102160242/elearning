@@ -86,8 +86,11 @@ export default function Users_Edit(props) {
     const formData = new FormData();
     formData.append('user[name]', name)
     formData.append('user[email]', email)
-    formData.append('user[password]', password)
-    formData.append('user[password_confirmation]', passwordconfirm)
+    if(password !== "")
+    {
+      formData.append('user[password]', password)
+      formData.append('user[password_confirmation]', passwordconfirm)
+    }
     dispatch(updateUser(token, formData, user_id));
   }
   return (
@@ -106,11 +109,11 @@ export default function Users_Edit(props) {
             </div>
             <div className="form-group">
               <label htmlFor="user_password">Password</label>
-              <input className="form-control" type="password" id="user_password" required onChange={onPasswordChangeHandler} />
+              <input className="form-control" type="password" id="user_password" onChange={onPasswordChangeHandler} />
             </div>
             <div className="form-group">
               <label htmlFor="user_password_confirmation">Password Confirm</label>
-              <input className="form-control" type="password" id="user_password_confirmation" required onChange={onPasswordConfirmChangeHandler} />
+              <input className="form-control" type="password" id="user_password_confirmation" onChange={onPasswordConfirmChangeHandler} />
             </div>
 
             <div className="form-group">
