@@ -141,6 +141,44 @@ export const deleteTest = (token, id) => {
     }
 }
 
+export const getTestInfo = (token, id) => {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/tests/'+ id + "/edit",
+                    { 
+                        id: id,
+                        headers: {
+                            "Authorization": token
+                        }}
+        )
+        .then(res => {
+            if (res.status === 200) {
+                var d = res.data;
+                // console.log(d.category)
+                if (d.status === "success") {
+                    dispatch(getInfoSuccessfully(d.category));
+                }
+                else
+                {
+                    var msg = "Couldn't get data from server!" + res.status;
+                    toastr.error(msg);
+                    dispatch(getInfoFailed({"message": msg}));
+                    console.log(msg);
+                }
+            }
+            else {
+                var msg = "Server returned error code: " + res.status;
+                toastr.error(msg);
+                dispatch(getInfoFailed({"message": msg}));
+                console.log(msg);
+            }
+        })
+        .catch(error => {
+            toastr.error("Failed to get data from server!", error);
+            console.log(error)
+        });
+    }
+}
+
 export const getOptions = (token) => {
     return dispatch => {
         return axios.get(process.env.REACT_APP_API_URL + 'admin/tests/options',
@@ -223,4 +261,15 @@ const createTestFailed = data => ({
     type: 'CREATE_TEST_FAILED',
     status: 'error',
     message: data.message
+});
+const getInfoSuccessfully = data => ({
+    type: 'GET_INFO_SUCCESSFULLY',
+    status: 'success',
+    data: data
+});
+
+const getInfoFailed = data => ({
+    type: 'ADMIN_GET_INFO_FAILED',
+    status: 'error',
+    message: data
 });

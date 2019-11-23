@@ -14,20 +14,26 @@ const defaultState = {
 
 export default function adminTestsReducer(state = defaultState, action)
 {
-    switch (action.type){
-        case 'GET_OPTIONS_SUCCESSFULLY':
-            return { ...state, options: action.options, status: action.status, redirect: false }
+    switch (action.type) {
+        case 'UPDATE_TEST_SUCCESSFULLY':
+            return { ...state, status: action.status, redirect: true }
+        case 'GET_INFO_SUCCESSFULLY': 
+            return { ...state, category: action.data, status: action.status, redirect: false }
         case 'GET_LIST_SUCCESSFULLY':
             return { ...state, data: action.data, status: action.status, redirect: false }
         case 'CREATE_TEST_SUCCESSFULLY':
-            return { ...state, message: action.message, status: action.status, redirect: true }
-        case 'CREATE_TEST_FAILED':
-        case 'GET_OPTIONS_FAILED':
+            return { ...state, status: action.status, message: action.message, redirect: true }
+        case 'DELETE_TEST_SUCCESSFULLY':
+            return { ...state, status: action.status, message: action.message, redirect: false }
         case 'GET_LIST_FAILED':
-            return { ...state, message: action.message, status: action.status, redirect: false }
+        case 'CREATE_TEST_FAILED':
+        case 'UPDATE_TEST_FAILED':
+        case 'ADMIN_GET_INFO_FAILED':
+        case 'DELETE_TEST_FAILED':
+            return { ...state, status: action.status, message: action.message, redirect: false }
         case 'CLEAR_RESPONSE':
             return { ...state, status: "", message: "", redirect: false }
         default:
-            return state
+            return state;
     }
 }
