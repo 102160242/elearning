@@ -168,9 +168,9 @@ export default function Answers_Index(props) {
                     <td>{i.answer_content}</td>
                     <td>{String(i.right_answer)}</td>
                     <td>
-                      <Link to={"admin/answers" + i.id} className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem",color:"#007bff" }}></i></Link>
-                      <Link to={"admin/answers" + i.id + "/edit"} className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
-                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545" }}></i></Link>
+                      <Link to={"/admin/answers/" + i.id } className="mr-3" title="Show"><i className="far fa-eye" style={{ fontSize: "1.3rem",color:"#007bff",color:"#007bff" }}></i></Link>
+                      <Link to={"/admin/answers/" + i.id + "/edit" } className="mr-3" title="Edit"><i className="far fa-edit" style={{ fontSize: "1.3rem",color:"#ffc107" }}></i></Link>
+                      <Link to={props.history.location.search === "" ? "#" : props.history.location.search} className="" onClick={() => { deleteItem(i.id) }} title="Delete"><i className="far fa-trash-alt" style={{ fontSize: "1.3rem",color:"#dc3545"  }}></i></Link>
                     </td>
                   </tr>
                 )

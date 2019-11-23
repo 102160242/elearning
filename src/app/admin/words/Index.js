@@ -120,7 +120,7 @@ export default function Words_Index(props) {
     <div className="container-fluid">
       <h1>Words</h1>
       <div className="row justify-content-between mt-4">
-        <Link to="/admin/words/new" className="btn btn-outline-success"><i class="far fa-plus-square mr-3"></i>New Word</Link>
+        <Link to="/admin/words/new" className="btn btn-outline-success"><i className="far fa-plus-square mr-3"></i>New Word</Link>
         <div className="row align-items-center">
           <div className="col-auto">
             <input type="text" className="form-control mr-3 d-inline" placeholder="For example: juxtaposition" value={searchValue} onChange={searchHandler} title="Search Word"/>
