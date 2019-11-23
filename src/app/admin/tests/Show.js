@@ -12,10 +12,9 @@ export default function Tests_Show(props) {
   const testsData = useSelector(state => state.admin.tests);
   var test_id = props.match.params.test_id;
   var token = localStorage.getItem('token');
-
+  var score = testsData.test.score;
   const [question_content, setQuestionContent] = useState("");
   const [answer_content, setAnswerContent] = useState("");
-  const [score, setScore] = useState(0);
   const [category_name, setCategoryName] = useState("");
 
   useEffect(() => {
@@ -43,18 +42,16 @@ export default function Tests_Show(props) {
   // Goi khi testsData co su thay doi
   useEffect(() => {
     // Neu load thanh cong 
-     console.log(testsData);
     if (testsData.test !== 0) {
       setQuestionContent(testsData.question_content);
       setAnswerContent(testsData.answer_content);
-      setScore(testsData.score);
       setCategoryName(testsData.category_name);
     }
     if (testsData.status != "") {
       dispatch(changeLoadingStatus(false));
     }
     // console.log(testsData.data.list[0]);
-  }, [testsData]);
+  }, [testsData.test]);
   return (
     <div className="container mb-2">
         <div className="row d-flex justify-content-center mt-5">
@@ -74,7 +71,7 @@ export default function Tests_Show(props) {
                                         <div className="row align-items-center no-gutters">
                                             <div className="col-auto">
                                                 <span className="h2 mr-2 mb-0">
-                                                    {score}/20
+                                                    {testsData.test.score}/20
                                                 </span>
                                             </div>
                                             <div className="col">
@@ -97,7 +94,7 @@ export default function Tests_Show(props) {
                                         <h6 className="card-title text-uppercase text-muted mb-2">
                                             Category
                                         </h6>
-                                        <span>{category_name}</span>
+                                        <span>{testsData.test.category}</span>
                                     </div>
                                 </div>
                             </div>
@@ -110,15 +107,16 @@ export default function Tests_Show(props) {
                     </div>
                     <div className="card-body">
                         {
-                            testsData.data.list && testsData.data.list.map((question, qIndex) => {
+                            score === null ? <span className="text-danger">This test haven't been done yet</span> :
+                            testsData.test.questions && testsData.test.questions.map((question, qIndex) => {
                                 return (
                                     <div className="m-1 border-1" key={qIndex}>
                                         <span className="text-info font-weight-bold">
-                                            {(qIndex + 1) + ". " + question_content}
+                                            {(qIndex + 1) + ". " + question.question_content}
                                         </span>
                                         <div className="ml-3">
                                             {
-                                                testsData.data.list && testsData.data.list.map((answer, aIndex) => {
+                                                question.answers && question.answers.map((answer, aIndex) => {
                                                     var checked = "";
                                                     var textClass = "";
                                                     if (question.chosen_answer_id === answer.id) checked = "checked";
@@ -126,7 +124,7 @@ export default function Tests_Show(props) {
                                                     return (
                                                         <div className="form-check" key={aIndex}>
                                                             <label className="form-check-label">
-                                                                <input type="radio" className="form-check-input" disabled checked={`${checked}`} /><span className={`${textClass}`} >{answer_content}</span>
+                                                                <input type="radio" className="form-check-input" disabled checked={`${checked}`} /><span className={`${textClass}`} >{answer.answer_content}</span>
                                                             </label>
                                                         </div>
                                                     );

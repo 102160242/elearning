@@ -107,37 +107,37 @@ export default function Questions_Create(props) {
 
             <div className="form-group">
               <label htmlFor="answer1">Answer 1</label>
-              <input type="text" class="form-control" id="answer1" placeholder="Answer 1" onChange={answerHandler} />
-              <div class="form-check form-check">
-                <input class="form-check-input" name="answer" type="radio" id="option1" onChange={rightAnswerHandler} checked />
-                <label class="form-check-label" htmlFor="option1">Right Answer</label>
+              <input type="text" className="form-control" id="answer1" placeholder="Answer 1" onChange={answerHandler} />
+              <div className="form-check form-check">
+                <input className="form-check-input" name="answer" type="radio" id="option1" onChange={rightAnswerHandler} checked />
+                <label className="form-check-label" htmlFor="option1">Right Answer</label>
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="answer2">Answer 2</label>
-              <input type="text" class="form-control" id="answer2" placeholder="Answer 2" onChange={answerHandler}/>
-              <div class="form-check form-check">
-                <input class="form-check-input" name="answer" type="radio" id="option2" onChange={rightAnswerHandler} />
-                <label class="form-check-label" htmlFor="option2">Right Answer</label>
+              <input type="text" className="form-control" id="answer2" placeholder="Answer 2" onChange={answerHandler}/>
+              <div className="form-check form-check">
+                <input className="form-check-input" name="answer" type="radio" id="option2" onChange={rightAnswerHandler} />
+                <label className="form-check-label" htmlFor="option2">Right Answer</label>
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="answer3">Answer 3</label>
-              <input type="text" class="form-control" id="answer3" placeholder="Answer 3" onChange={answerHandler}/>
-              <div class="form-check form-check">
-                <input class="form-check-input" name="answer" type="radio" id="option3" onChange={rightAnswerHandler} />
-                <label class="form-check-label" htmlFor="option3">Right Answer</label>
+              <input type="text" className="form-control" id="answer3" placeholder="Answer 3" onChange={answerHandler}/>
+              <div className="form-check form-check">
+                <input className="form-check-input" name="answer" type="radio" id="option3" onChange={rightAnswerHandler} />
+                <label className="form-check-label" htmlFor="option3">Right Answer</label>
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="answer4">Answer 4</label>
-              <input type="text" class="form-control" id="answer4" placeholder="Answer 4" onChange={answerHandler}/>
-              <div class="form-check form-check">
-                <input class="form-check-input" name="answer" type="radio" id="option4" onChange={rightAnswerHandler} />
-                <label class="form-check-label" htmlFor="option4">Right Answer</label>
+              <input type="text" className="form-control" id="answer4" placeholder="Answer 4" onChange={answerHandler}/>
+              <div className="form-check form-check">
+                <input className="form-check-input" name="answer" type="radio" id="option4" onChange={rightAnswerHandler} />
+                <label className="form-check-label" htmlFor="option4">Right Answer</label>
               </div>
             </div>
 

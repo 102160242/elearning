@@ -143,7 +143,7 @@ export const deleteTest = (token, id) => {
 
 export const getTestInfo = (token, id) => {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_API_URL + 'admin/tests/'+ id + "/edit",
+        return axios.get(process.env.REACT_APP_API_URL + 'admin/tests/'+ id,
                     { 
                         id: id,
                         headers: {
@@ -155,7 +155,7 @@ export const getTestInfo = (token, id) => {
                 var d = res.data;
                 // console.log(d.category)
                 if (d.status === "success") {
-                    dispatch(getInfoSuccessfully(d.category));
+                    dispatch(getInfoSuccessfully(d.data));
                 }
                 else
                 {
@@ -263,7 +263,7 @@ const createTestFailed = data => ({
     message: data.message
 });
 const getInfoSuccessfully = data => ({
-    type: 'GET_INFO_SUCCESSFULLY',
+    type: 'GET__INFO_SUCCESSFULLY',
     status: 'success',
     data: data
 });
