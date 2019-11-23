@@ -43,7 +43,7 @@ class Home extends React.Component {
                             <div class="col-md-3 pb-1">
                                 <div class="card card-inverse card-primary h-100 text-center pt-4 p-2 bg-info">
                                     <div class="card-block card-title">
-                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 fas fa-archive"></i></h1>
+                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 fas fa-atlas"></i></h1>
                                         <h6 class="text-light">{this.props.statistics.total_categories} Categories</h6>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@ class Home extends React.Component {
                             <div class="col-md-3 pb-1">
                                 <div class="card card-inverse card-primary h-100 text-center pt-4 p-2 bg-success">
                                     <div class="card-block card-title">
-                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 far fa-sticky-note"></i></h1>
+                                        <h1 class="mb-2"><i class="align-middle md_18 material-icons display-2 far fa-file-word"></i></h1>
                                         <h6 class="text-light">{this.props.statistics.total_words} Words</h6>
                                     </div>
                                 </div>

@@ -41,7 +41,7 @@ export default function Users_Edit(props) {
     // Neu da xac thuc user hop le
     // console.log(auth.isLoggedIn)
     if (auth.isLoggedIn == true) {
-      // Lay danh sach categories
+      // Lay danh sach users
       dispatch(getUserInfo(token, user_id))
     }
     else if (auth.isLoggedIn == false) {
@@ -50,10 +50,9 @@ export default function Users_Edit(props) {
     }
   }, [auth.isLoggedIn]);
 
-  // Goi khi categoriesData co su thay doi
+  // Goi khi usersData co su thay doi
   useEffect(() => {
     // Neu load thanh cong 
-    // console.log(categoriesData.category[0]);
     // console.log(usersData.user.id != null );
     if (usersData.user.id != null) {
       // console.log(usersData.user);
@@ -63,7 +62,7 @@ export default function Users_Edit(props) {
     if (usersData.status != "") {
       dispatch(changeLoadingStatus(false));
     }
-    // console.log(categoriesData.data.list[0]);
+    // console.log(usersData.data.list[0]);
   }, [usersData]);
 
   const onNameChangeHandler = (e) => {
@@ -87,38 +86,40 @@ export default function Users_Edit(props) {
     const formData = new FormData();
     formData.append('user[name]', name)
     formData.append('user[email]', email)
-    formData.append('user[password]', password)
-    formData.append('user[password_confirmation]', passwordconfirm)
+    if(password !== "")
+    {
+      formData.append('user[password]', password)
+      formData.append('user[password_confirmation]', passwordconfirm)
+    }
     dispatch(updateUser(token, formData, user_id));
   }
   return (
     <div className="container mt-3">
       <div className="row d-flex justify-content-center">
         <div className="col-sm-12 col-md-8">
-          <h3>Editing Category</h3>
+          <h3>Editing User</h3>
           <form onSubmit={formSubmitHandler}>
             <div className="form-group">
-              <label htmlFor="category_name">Name</label>
+              <label htmlFor="user_name">Name</label>
               <input className="form-control" type="text" id="user_name" required onChange={onNameChangeHandler} value={name} />
             </div>
             <div className="form-group">
-              <label htmlFor="category_email">Email</label>
+              <label htmlFor="user_email">Email</label>
               <input className="form-control" type="text" id="user_email" required onChange={onEmailChangeHandler} value={email} />
             </div>
             <div className="form-group">
-              <label htmlFor="category_password">Password</label>
-              <input className="form-control" type="password" id="user_password" required onChange={onPasswordChangeHandler} />
+              <label htmlFor="user_password">Password</label>
+              <input className="form-control" type="password" id="user_password" onChange={onPasswordChangeHandler} />
             </div>
             <div className="form-group">
-              <label htmlFor="category_password_confirmation">Password Confirm</label>
-              <input className="form-control" type="password" id="user_password_confirmation" required onChange={onPasswordConfirmChangeHandler} />
+              <label htmlFor="user_password_confirmation">Password Confirm</label>
+              <input className="form-control" type="password" id="user_password_confirmation" onChange={onPasswordConfirmChangeHandler} />
             </div>
 
             <div className="form-group">
               <button className="btn btn-success mt-3 mb-3" type="submit" ><i className="far fa-check-circle"></i> Submit</button>
               <Link to="/admin/users" className="mr-3" title="Back"> <button className="btn btn-outline-secondary"> <i className="fas fa-long-arrow-alt-left" ></i> Back </button> </Link>
             </div>
-            {/* <Link to={"/admin/categories/" + i.id} className="mr-3" title="Show"> <button className="btn btn-outline-info"> <i className="far fa-eye" ></i> Show </button> </Link> */}
           </form>
         </div>
       </div>
