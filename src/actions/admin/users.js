@@ -224,7 +224,7 @@ export const updateUser = (token, formData, id) => {
         return axios.patch(process.env.REACT_APP_API_URL + '/admin/users/' + id,
             formData,
             {
-                idid: id,
+                id: id,
                 headers: {
                     "Authorization": token,
                     'content-type': 'multipart/form-data'
