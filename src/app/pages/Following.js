@@ -102,7 +102,7 @@ class Following extends React.Component {
         this.props.changeLoadingStatus(true);
     }
     render() {
-        if(!this.props.isLoggedIn)
+        if(this.props.isLoggedIn === false)
         {
             return (<Redirect to={"/auth/login"} />);
         }

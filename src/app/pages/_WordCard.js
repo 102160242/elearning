@@ -13,7 +13,7 @@ class _WordCard extends React.Component{
         var id = this.props.data.id;
         this.props.learntWordhandler(id);
         var btnDiv = document.querySelector("#btn_"+id);
-        var btn = <button className="btn btn-warning" onClick={this.dofunUnLearnt} > Remove From List </button>
+        var btn = <button className="btn btn-warning" onClick={this.dofunUnLearnt} > I forgot </button>
         ReactDOM.render(btn, btnDiv);
 
     }
@@ -22,7 +22,7 @@ class _WordCard extends React.Component{
         var id = this.props.data.id;
         this.props.unlearntWordhandler(id);
         var btnDiv = document.querySelector("#btn_"+id);
-        var btn = <button className="btn btn-success" onClick={this.dofunLearnt} > Check as Learnt </button>
+        var btn = <button className="btn btn-success" onClick={this.dofunLearnt} > Learnt this word </button>
         ReactDOM.render(btn, btnDiv);
     }
 
@@ -39,12 +39,12 @@ class _WordCard extends React.Component{
                             <p> {data.meaning} </p>
                             {
                                 this.props.type ? (
-                                <div id={"btn_" + data.id}> 
+                                <div id={"btn_" + data.id} key={data.id}> 
                                 {
                                     data.learnt ? (
-                                        <button className="btn btn-warning" onClick={this.dofunUnLearnt} > Remove From List </button>
+                                        <button className="btn btn-warning" onClick={this.dofunUnLearnt} > I forgot </button>
                                     ) : (
-                                        <button className="btn btn-success" onClick={this.dofunLearnt} > Check as Learnt </button>
+                                        <button className="btn btn-success" onClick={this.dofunLearnt}> Learnt this word </button>
                                     )
                                 }
                                 </div>) : ( <> </>)

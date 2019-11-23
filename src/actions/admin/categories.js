@@ -170,7 +170,7 @@ export const updateCategory = (token, formData, id) => {
                             var nameCapitalized = keys[i].charAt(0).toUpperCase() + keys[i].slice(1);
                             msg += nameCapitalized + " " + d.message[keys[i]][j] + ". ";
                         }
-                        toastr.error("Failed to create new Category!", msg);
+                        toastr.error("Failed to update Category!", msg);
                     }
                     dispatch(updateCategoryFailed({"message": msg}));
                     console.log(msg);
@@ -216,8 +216,9 @@ export const getCategoryInfo = (token, id) => {
         .then(res => {
             if (res.status === 200) {
                 var d = res.data;
+                // console.log(d.category)
                 if (d.status === "success") {
-                    dispatch(getInfoSuccessfully(d.data));
+                    dispatch(getInfoSuccessfully(d.category));
                 }
                 else
                 {

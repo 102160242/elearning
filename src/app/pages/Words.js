@@ -6,6 +6,7 @@ import { getWords, learntWord, unlearntWord } from '../../actions/word';
 import { changeLoadingStatus } from '../../actions/app';
 import queryString from 'query-string';
 import Paginator from '../pages/partials/Paginator';
+import { createNewTest } from '../../actions/test';
 import './Words.css'
 
 class Words extends React.Component {
@@ -22,13 +23,14 @@ class Words extends React.Component {
         this.learntWordhandler = this.learntWordhandler.bind(this);
         this.unlearntWordhandler = this.unlearntWordhandler.bind(this);
         this.Filterhandler = this.Filterhandler.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     getQueries() {
         var query = queryString.parse(this.props.location.search, { ignoreQueryPrefix: true });
         var queries = {};
         queries["search"] = query.search ? query.search : "";
-        queries["page"] = query.page ? query.page : 1;
+        queries["page"] = 1;
         queries["order"] = query.order ? query.order : "asc";
         queries["filter"] = query.filter ? query.filter : "All";
         return queries;
@@ -168,6 +170,19 @@ class Words extends React.Component {
     //     e.target.parentElement.className = "dropdown show";
     //     e.target.nextElementSibling.className = "dropdown-menu show";
     // }
+    handleClick()
+    {
+        var token = localStorage.getItem("token");
+        var category_id = this.props.match.params.category_id;
+        this.props.createNewTest(token, category_id).then(() => {
+            // Neu tao thanh cong thi chuyen huong sang bai test moi
+            if(this.props.testStatus === "success")
+            {
+                //console.log(this.props.test);
+                this.props.history.push("/test/" + this.props.test.id + "/do");
+            }
+        });
+    }
     render() {
         if(this.props.isLoggedIn === false)
         {
@@ -227,6 +242,9 @@ class Words extends React.Component {
                         </div>
                         <div className="card-body">
                             {cards}
+                            <div className="mt-4">
+                                <button className="btn btn-outline-success btn-block" onClick={ this.handleClick }>Wanna do a Test?</button>
+                            </div>
                         </div>
                         <Paginator paginate={this.props.wordsData && this.props.wordsData.paginate} queries={this.getQueries()} />
                     </div>
@@ -241,6 +259,8 @@ const mapStateToProps = (state) => {
         wordsData: state.words.data,
         isLoggedIn: state.auth.isLoggedIn,
         status: state.words.status,
+        testStatus: state.test.status,
+        test: state.test.test
     }
 }
 
@@ -248,6 +268,7 @@ const mapDispatchToProps = dispatch => ({
     getWords: (token, category_id, params) => dispatch(getWords(token, category_id, params)),
     learntWord: (token, word_id) => dispatch(learntWord(token, word_id)),
     unlearntWord: (token, word_id) => dispatch(unlearntWord(token, word_id)),
-    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status))
+    createNewTest: (token, category_id) => dispatch(createNewTest(token, category_id)),
+    changeLoadingStatus: (status) => dispatch(changeLoadingStatus(status)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Words);

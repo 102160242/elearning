@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeLoadingStatus } from '../../../actions/app';
 import { getCategoryInfo, updateCategory } from '../../../actions/admin/categories';
 import ReactDOM from 'react-dom';
-import { Link, Redirect } from 'react-router-dom';
-import Paginator from '../partials/Paginator';
-import queryString from 'query-string';
-import swal from 'sweetalert';
+import { Link } from 'react-router-dom';
 
 export default function Categories_Edit(props) {
   const dispatch = useDispatch();
@@ -17,6 +14,7 @@ export default function Categories_Edit(props) {
   var token = localStorage.getItem('token');
 
   const [image, setImage] = useState(null);
+  const [image_url, setImage_url] = useState(null);
   const [name, setName] = useState("");
   //const [count, setCount] = useState(0)
 
@@ -28,6 +26,13 @@ export default function Categories_Edit(props) {
       dispatch(changeLoadingStatus(true));
     }
   }, []);
+
+  useEffect(() => {
+    if(categoriesData.redirect)
+    {
+      props.history.push("/admin/categories");
+    }
+  }, [categoriesData.redirect]);
 
   // Goi khi auth co su thay doi
   useEffect(() => {
@@ -46,9 +51,11 @@ export default function Categories_Edit(props) {
   // Goi khi categoriesData co su thay doi
   useEffect(() => {
     // Neu load thanh cong 
-    if (categoriesData.data && categoriesData.data.list && categoriesData.data.list.length != []) {
-      setName(categoriesData.data.list[0].name);
-      setImage(categoriesData.data.list[0].image_url);
+    // console.log(categoriesData.category[0]);
+    if (categoriesData.category.length !== 0) {
+      // console.log(categoriesData.category[0].image_url);
+      setName(categoriesData.category[0].name);
+      setImage(categoriesData.category[0].image_url);
     }
     if (categoriesData.status != "") {
       dispatch(changeLoadingStatus(false));
@@ -67,6 +74,7 @@ export default function Categories_Edit(props) {
     var imgtag = document.querySelector("#img_feild");
 
     setImage(img);
+    setImage_url(img);
 
     var labelTag = document.querySelector("#img_name");
     var label = <label className="custom-file-label" id="img_name" htmlFor="customFile"> {img.name} </label>;
@@ -84,8 +92,8 @@ export default function Categories_Edit(props) {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    if (image !== null)
-      formData.append('category[image]', image);
+    if (image_url !== null)
+      formData.append('category[image]', image_url);
     formData.append('category[name]', name)
     var token = localStorage.getItem("token");
     dispatch(updateCategory(token, formData, category_id));
@@ -105,7 +113,7 @@ export default function Categories_Edit(props) {
             <div className="form-group">
               <label >Image</label>
               <div>
-                <img className="mx-auto d-block" id="img_feild" width="500" height="365" src={image} />
+                <img className="mx-auto d-block img-thumbnail" id="img_feild" width="500" height="365" src={image} />
               </div>
               <div className="custom-file form-control mt-3">
                 <input type="file" className="custom-file-input" id="category_image" onChange={onChangeImageHandler} />
@@ -114,7 +122,7 @@ export default function Categories_Edit(props) {
             </div>
             <div className="form-group">
               <button className="btn btn-success mt-3 mb-3" type="submit" ><i className="far fa-check-circle"></i> Submit</button>
-              <Link to="/admin/categories" className="mr-3" title="Back"> <button className="btn btn-outline-secondary"> <i className="fas fa-long-arrow-alt-left"> ></i> Back </button> </Link>
+              <Link to="/admin/categories" className="mr-3" title="Back"> <button className="btn btn-outline-secondary"> <i className="fas fa-long-arrow-alt-left" ></i> Back </button> </Link>
             </div>
             {/* <Link to={"/admin/categories/" + i.id} className="mr-3" title="Show"> <button className="btn btn-outline-info"> <i className="far fa-eye" ></i> Show </button> </Link> */}
           </form>

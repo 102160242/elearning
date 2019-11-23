@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import '../../assets/admin/css/Admin.css';
 import '../../assets/admin/js/Admin.js';
@@ -30,12 +31,24 @@ import Tests_Index from './tests/Index';
 import Tests_Create from './tests/Create';
 import Tests_Show from './tests/Show';
 import Tests_Edit from './tests/Edit';
-
-export default function Admin() {
+export default function Admin(props) {
   //const [count, setCount] = useState(0)
+  const auth = useSelector(state => state.auth);
 
   useEffect(() => {
-  })
+    if(auth.isLoggedIn === false) // Neu chua login
+    {
+      props.history.push(process.env.REACT_APP_ROOT_URL);
+    }
+    else if(auth.isLoggedIn == true)
+    {
+      // Kiem tra quyen Admin
+      if(!auth.currentUser.admin)
+      {
+        props.history.push(process.env.REACT_APP_ROOT_URL);
+      }
+    }
+  }, [auth.isLoggedIn])
 
   return (
     <div className="page-wrapper chiller-theme toggled">
