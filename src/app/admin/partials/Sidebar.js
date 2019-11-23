@@ -217,12 +217,6 @@ export default function Sidebar() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/answers">
-                                <i className="fas fa-font"></i>
-                                <span className="ml-2">Answers</span>
-                            </Link>
-                        </li>
-                        <li>
                             <Link to="/admin/tests">
                                 <i className="fas fa-file-alt"></i>
                                 <span className="ml-2">Tests</span>
