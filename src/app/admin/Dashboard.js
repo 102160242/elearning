@@ -19,7 +19,7 @@ export default function Dashboard() {
   }, [statistics])
   return (
     <div className="container-fluid">
-      <h1>Dashboad</h1>
+      <h1>Dashboard</h1>
       <div className="row mt-5">
         <div class="col-md-3 pb-1">
           <div class="card card-inverse bg-inverse h-100 text-center pt-4 p-2 bg-dark">
